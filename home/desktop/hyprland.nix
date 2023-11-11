@@ -1,11 +1,7 @@
-{ config, pkgs, hyprland, ... }:
+{ config, pkgs, ... }:
 let
   colors = config.colorScheme.colors;
 in {
-  imports = [
-    hyprland.homeManagerModules.default
-  ];
-
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
@@ -32,7 +28,6 @@ in {
 
       decoration {
         rounding = 8
-
         inactive_opacity = 0.9
         dim_inactive = true
         dim_strength = 0.1
@@ -49,12 +44,17 @@ in {
       bind = $wmKey, up, movefocus, u
       bind = $wmKey, down, movefocus, d
 
+      binde = $wmKey $modKeyA, left, resizeactive, -16 0
+      binde = $wmKey $modKeyA, right, resizeactive, 16 0
+      binde = $wmKey $modKeyA, up, resizeactive, 0 -16
+      binde = $wmKey $modKeyA, down, resizeactive, 0 16
+
       bind = $wmKey $modKeyB, left, swapwindow, l
       bind = $wmKey $modKeyB, right, swapwindow, r
       bind = $wmKey $modKeyB, up, swapwindow, u
       bind = $wmKey $modKeyB, down, swapwindow, d
 
-      bind = $wmKey, Space, exec, fuzzel
+      bind = $wmKey, Space, exec, wofi --show run
 
       exec-once = waybar & dunst & hyprpaper
     '';

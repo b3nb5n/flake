@@ -29,6 +29,7 @@
     vim
     curl
     git
+    killall
   ];
 
   users.users.ben = {

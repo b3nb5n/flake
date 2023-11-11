@@ -1,6 +1,6 @@
-{ pkgsUnstable, ... }: {
+{ pkgs, ... }: {
   programs.alacritty = {
     enable = true;
-    package = pkgsUnstable.alacritty;
+    package = pkgs.alacritty;
   };
 }
