@@ -1,5 +1,5 @@
 
-{ confg, pkgs, ... }: {
+{ pkgs, const, ... }: {
   system.stateVersion = "23.05";
   
   imports = [ ./hardware.nix ];
@@ -29,10 +29,9 @@
     vim
     curl
     git
-    killall
   ];
 
-  users.users.ben = {
+  users.users.${const.user.name} = {
     isNormalUser = true;
     initialPassword = "password";
     extraGroups = [
@@ -46,6 +45,7 @@
     bluetooth = {
       enable = true;
       powerOnBoot = true;
+      settings.General.ControllerMode = "bredr";
     };
   }; 
 

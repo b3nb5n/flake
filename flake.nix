@@ -1,48 +1,38 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    nur.url = "github:nix-community/NUR";
 
     homeManager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
-
-    nixColors = {
-      url = "github:Misterio77/nix-colors/4.0.0";
-      # inputs.nixpkgs-lib.follows = "nixpkgs.lib";
-    };
-
-    stylix = {
-      url = "github:danth/stylix";
-      inputs.nixpkgs.follows = "nixpkgs";
-      inputs.home-manager.follows = "homeManager";
-    };
-
-    nixVscodeExtensions = {
-      url = "github:nix-community/nix-vscode-extensions";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
   };
 
-  outputs = { nixpkgs, homeManager, ... }@inputs:
+  outputs = { nixpkgs, nur, homeManager, ... }@inputs:
   let
-    system = "x86_64-linux";
+    utils = import ./utils { lib = nixpkgs.lib; };
+    const = import ./const { inherit utils; };
+    system = const.system.system;
+
+    pkgs = nixpkgs.legacyPackages.${system};
+    nurpkgs = import nur { nurpkgs = pkgs; inherit pkgs; };
+
+    specialArgs = inputs // { inherit nurpkgs const utils; };
   in {
     nixosConfigurations.system = nixpkgs.lib.nixosSystem {
-      inherit system;
+      inherit system specialArgs;
       modules = [ ./system ];
     };
 
     homeConfigurations = {
       desktop = homeManager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = inputs // {
-          vscodeExtensions = inputs.nixVscodeExtensions.extensions.${system};
-        };
+        inherit pkgs;
+        extraSpecialArgs = specialArgs;
         modules = [
-          ./home/desktop
-          ./home/apps/gui
-          ./home/apps/cli
+          ./home/environments/desktop
+          ./home/features
+          ./home/local
         ];
       };
     };

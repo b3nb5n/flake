@@ -1,5 +1,6 @@
 { ... }: {
   imports = [
-    ./git.nix
+    ./cli
+    ./gui
   ];
 }
