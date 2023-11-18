@@ -84,7 +84,9 @@
       bind = $wmKey, Space, exec, wofi
       windowrule = opacity 0.8, Alacritty
 
-      exec-once = waybar & hyprpaper
+      exec-once = hyprpaper
+      exec-once = eww daemon && (${lib.strings.concatMapStringsSep
+        " & " (m: "eww open ${m.name}-status-bar") const.hardware.monitors})
     '';
   };
 }

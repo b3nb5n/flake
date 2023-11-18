@@ -2,6 +2,7 @@
   imports = [
     ../base.nix
 
+    ./eww
     ./gtk.nix
     ./hyprland.nix
     ./hyprpaper.nix
@@ -9,8 +10,6 @@
   ];
 
   home = {
-    username = const.user.name;
-    homeDirectory = "/home/${const.user.name}";
     sessionVariables = {
       EDITOR = "vscode";
       SPAWNEDITOR = "code";

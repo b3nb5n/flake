@@ -1,5 +1,6 @@
 { pkgs, ... }: {
   imports = [
+    ./gcc.nix
     ./git.nix
     ./nodejs.nix
     ./rust.nix

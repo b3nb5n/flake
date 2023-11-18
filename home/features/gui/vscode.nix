@@ -3,7 +3,7 @@
     owner = "nix-community";
     repo = "nix-vscode-extensions";
     rev = "master";
-    sha256 = "EHcoK/LUo3wI/IFTRWkXWKow58zy6x25MXvz48izSLs=";
+    sha256 = "lea3Wog1Lmwj8HQT9znmB3LrYErJkTMJm79AcXRdc4Q=";
   })).extensions.${const.system.system}.vscode-marketplace;
 in {
   programs.vscode = {
@@ -33,6 +33,7 @@ in {
       uctakeoff.vscode-counter
       antiantisepticeye.vscode-color-picker
       redhat.vscode-yaml
+      eww-yuck.yuck
     ];
     keybindings = [];
     languageSnippets = {};
