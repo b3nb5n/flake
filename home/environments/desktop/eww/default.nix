@@ -1,11 +1,11 @@
-{ stdenv, pkgs, lib, const, utils, ... }: {
+{ stdenv, pkgs, lib, const, usrLib, ... }: {
   home.packages = with pkgs; [
     eww-wayland
   ];
 
   imports = [
-    ./assets
     ./scripts
+    ./assets.nix
   ];
 
   xdg.configFile."eww/widgets.yuck".source = ./widgets.yuck;
@@ -34,12 +34,12 @@
     }
   '';
 
-  xdg.configFile."eww/eww.scss".text = with const.theme.colors // utils.theme; ''
+  xdg.configFile."eww/eww.scss".text = with const.theme.color // usrLib.color; ''
     .widget-group {
-      padding: 4px 8px;
+      padding: 4px 12px;
       border-radius: 4px;
-      background: #${hex base01};
-      color: #${hex base05};
+      background: ${hex (builtins.elemAt bg 1)};
+      color: ${hex (builtins.elemAt fg 0)};
     }
 
     .home-icon {
@@ -49,17 +49,16 @@
     .workspace-button {
       all: unset;
       padding: 0px 12px;
-      background: #${hex base01};
-      color: #${hex base05};
+      background: ${hex (builtins.elemAt bg 1)};
+      color: ${hex (builtins.elemAt fg 0)};
 
       &:hover {
-        background: #${hex base02}
+        background: ${hex (builtins.elemAt bg 2)}
       }
 
       &.active {
-        background: #${hex base0D};
-        color: #${hex base00};
-        outline: #${hex base01} inset 2px;
+        background: ${hex accent.default};
+        color: ${hex (builtins.elemAt bg 0)};
       }
     }
 
@@ -80,7 +79,7 @@
     .status-bar {
       margin: 0px 8px;
       padding: 6px;
-      background: #${hex base00};
+      background: ${hex (builtins.elemAt bg 0)};
       border-radius: 8px;
     }
   '';

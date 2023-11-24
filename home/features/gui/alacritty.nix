@@ -1,4 +1,4 @@
-{ pkgs, const, utils, ... }: {
+{ pkgs, const, usrLib, ... }: {
   programs.alacritty = {
     enable = true;
     settings = {
@@ -18,29 +18,42 @@
         };
         blink_timeout = 0;
       };
-      font.normal.family = const.theme.fonts.mono;
-      colors = with const.theme.colors // utils.theme; rec {
+      font.normal.family = const.theme.font.mono;
+      colors = with const.theme.color // usrLib.color; rec {
         primary = {
-          foreground = "#${hex base05}";
-          background = "#${hex base00}";
-          dim_foreground = "#${hex base04}";
-          dim_background = "#${hex base01}";
-          bright_foreground = "#${hex base06}";
+          background = hex (builtins.elemAt bg 0);
+          foreground = hex (builtins.elemAt fg 0);
+          dim_foreground = (builtins.elemAt fg 2);
         };
         normal = {
-          black = "#${hex base00}";
-          red = "#${hex base08}";
-          green = "#${hex base0B}";
-          yellow = "#${hex base0A}";
-          blue = "#${hex base0D}";
-          magenta = "#${hex base0E}";
-          cyan = "#${hex base0C}";
-          white = "#${hex base05}";
+          black = hex black.default;
+          red = hex red.default;
+          green = hex green.default;
+          yellow = hex yellow.default;
+          blue = hex blue.default;
+          magenta = hex pink.default;
+          cyan = hex cyan.default;
+          white = hex white.default;
         };
-        vi_mode_cursor = cursor; 
-        cursor = {
-          text = "#${hex base00}";
-          cursor = "#${hex base05}";
+        bright = {
+          black = hex black.light;
+          red = hex red.light;
+          green = hex green.light;
+          yellow = hex yellow.light;
+          blue = hex blue.light;
+          magenta = hex pink.light;
+          cyan = hex cyan.light;
+          white = hex white.light;
+        };
+        dim = {
+          black = hex black.dark;
+          red = hex red.dark;
+          green = hex green.dark;
+          yellow = hex yellow.dark;
+          blue = hex blue.dark;
+          magenta = hex pink.dark;
+          cyan = hex cyan.dark;
+          white = hex white.dark;
         };
         search = {
           matches = {

@@ -1,32 +1,35 @@
 {
   inputs = {
     nixpkgs.url = "nixpkgs/nixos-unstable";
+    nixpkgs-stable.url = "nixpkgs/release-23.11";
+
     nur.url = "github:nix-community/NUR";
 
-    homeManager = {
+    home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
   };
 
-  outputs = { nixpkgs, nur, homeManager, ... }@inputs:
-  let
-    utils = import ./utils { lib = nixpkgs.lib; };
-    const = import ./const { inherit utils; };
-    system = const.system.system;
+  outputs = { nixpkgs, nixpkgs-stable, nur, home-manager, ... }: let
+    usrLib = import ./lib { lib = nixpkgs.lib; };
+    const = import ./const { inherit usrLib; };
 
+    system = "x86_64-linux";
     pkgs = nixpkgs.legacyPackages.${system};
-    nurpkgs = import nur { nurpkgs = pkgs; inherit pkgs; };
+    stablePkgs = nixpkgs-stable.legacyPackages.${system};
 
-    specialArgs = inputs // { inherit nurpkgs const utils; };
+    nurPkgs = import nur { nurpkgs = pkgs; inherit pkgs; };
+
+    specialArgs = { inherit stablePkgs nurPkgs system const usrLib; };
   in {
-    nixosConfigurations.system = nixpkgs.lib.nixosSystem {
+    nixosConfigurations.system = nixpkgs-stable.lib.nixosSystem {
       inherit system specialArgs;
       modules = [ ./system ];
     };
 
     homeConfigurations = {
-      desktop = homeManager.lib.homeManagerConfiguration {
+      desktop = home-manager.lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = specialArgs;
         modules = [

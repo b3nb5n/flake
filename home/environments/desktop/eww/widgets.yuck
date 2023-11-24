@@ -3,6 +3,7 @@
     :class "widget-group"
     :orientation "h"
     :spacing 8
+    :space-evenly false
     (children)
   )
 )
@@ -10,7 +11,7 @@
 (defwidget home []
   (image
     :class "home-icon"
-    :path "./assets/nixos-logo.png"
+    :path "./assets/nix-logo.svg"
     :image-width 24
   )
 )
@@ -49,28 +50,28 @@
   (widget-group
     (label :text "${round(EWW_NET[interface_id].NET_UP / 1000000, 2)}↑")
     (label :text "${round(EWW_NET[interface_id].NET_DOWN / 1000000, 2)}↓")
-    (image :path "./assets/network-wifi-3.svg" :image-width 24)
+    (image :path "./assets/network-wifi-3.svg" :image-width 18)
   )
 )
 
 (defwidget cpu []
   (widget-group
     (label :text "${round(EWW_CPU.avg, 0)}%")
-    (image :path "./assets/cpu.svg" :image-width 24)
+    (image :path "./assets/cpu.svg" :image-width 18)
   )
 )
 
 (defwidget ram []
   (widget-group
     (label :text "${round(EWW_RAM.used_mem_perc, 0)}%")
-    (image :path "./assets/ram.svg" :image-width 24)
+    (image :path "./assets/ram.svg" :image-width 18)
   )
 )
 
 (defwidget disk []
   (widget-group
     (label :text "${round(EWW_DISK["/"].used_perc, 0)}%")
-    (image :path "./assets/disk.svg" :image-width 24)
+    (image :path "./assets/disk.svg" :image-width 18)
   )
 )
 

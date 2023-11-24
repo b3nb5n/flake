@@ -9,6 +9,7 @@
   home.packages = with pkgs; [
     spotify
     blueberry
-    foot
+    inkscape
+    hyprpicker
   ];
 }

@@ -1,8 +1,8 @@
-{ lib, const, utils, ... }: {
+{ lib, const, usrLib, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    extraConfig = with const.theme.colors // utils.theme; ''
+    extraConfig = with const.theme.color // usrLib.color; ''
       $wmKey = SUPER
       $appKey = CTRL 
       $modKeyA = SHIFT
@@ -26,8 +26,8 @@
         gaps_in = 6
         gaps_out = 8
         border_size = 2
-        col.active_border = rgb(${hex base04})
-        col.inactive_border = rgb(${hex base01})
+        col.active_border = rgb(${lib.strings.removePrefix "#" (hex (builtins.elemAt fg 0))})
+        col.inactive_border = rgba(00000000)
         resize_on_border = true
       }
 

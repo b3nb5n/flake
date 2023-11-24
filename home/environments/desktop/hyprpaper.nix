@@ -4,20 +4,17 @@
   ];
 
   home.file = let
-    wallpaperPath = "~/${config.home.file.wallpapers.target}/treehouse.png";
+    wallpaperPath = "~/${config.home.file.wallpapers.target}/waterfall_village_night.png";
   in {
     hyprpaperConfig = {
       target = ".config/hypr/hyprpaper.conf";
       text = ''
-        # wallpaper = , ~/path_to_wallpaper
-
-        ${lib.concatStrings
-          (map
-            (m: ''
-              preload = ${wallpaperPath}
-              wallpaper = ${m.name}, ${wallpaperPath}
-            '')
-            const.hardware.monitors)}
+        ${lib.concatMapStrings
+          (m: ''
+            preload = ${wallpaperPath}
+            wallpaper = ${m.name}, ${wallpaperPath}
+          '')
+          const.hardware.monitors}
       '';
     };
   };

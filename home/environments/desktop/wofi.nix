@@ -1,4 +1,4 @@
-{ const, utils, ... }: {
+{ const, usrLib, ... }: {
   programs.wofi = {
     enable = true;
     settings = {
@@ -6,18 +6,18 @@
       width = 512;
       height = 360;
     };
-    style = with const.theme.colors // utils.theme; ''
-      #window {
-        border-radius = 8px;
-      }
+    # style = with const.theme // usrLib.color; ''
+    #   #window {
+    #     border-radius = ${toString radius.md}px;
+    #   }
 
-      #input {
-        background: #${hex base01}
-      }
+    #   #input {
+    #     background: ${hex (builtins.elemAt color.bg 0)}
+    #   }
 
-      #inner-box {
-        background: ${hex base02}
-      }
-    '';
+    #   #inner-box {
+    #     background: ${hex (builtins.elemAt color.bg 1)}
+    #   }
+    # '';
   };
 }

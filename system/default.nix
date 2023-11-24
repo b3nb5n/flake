@@ -23,13 +23,18 @@
     allowUnfreePredicate = (_: true);
   };
 
-  programs.dconf.enable = true;
-
   environment.systemPackages = with pkgs; [
     vim
     curl
     git
+    zip
+    unzip
+    htop
+    tree
   ];
+
+  time.timeZone = "America/Phoenix";
+  i18n.defaultLocale = "en_US.UTF-8";
 
   users.users.${const.user.name} = {
     isNormalUser = true;
@@ -59,14 +64,13 @@
     jack.enable = true;
   };
 
-  time.timeZone = "America/Phoenix";
-  i18n.defaultLocale = "en_US.UTF-8";
+  programs.dconf.enable = true;
 
   xdg.portal = {
     enable = true;
+    config.common.default = "*";
     extraPortals = with pkgs; [
       xdg-desktop-portal
-      xdg-desktop-portal-gtk 
       xdg-desktop-portal-hyprland
     ];
   };
