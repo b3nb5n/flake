@@ -18,7 +18,7 @@
         };
         blink_timeout = 0;
       };
-      font.normal.family = const.theme.font.mono;
+      font.normal.family = const.theme.font.mono.name;
       colors = with const.theme.color // usrLib.color; rec {
         primary = {
           background = hex (builtins.elemAt bg 0);

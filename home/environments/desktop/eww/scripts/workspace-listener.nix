@@ -5,8 +5,8 @@
     owner = "FieldofClay";
     repo = "hyprland-workspaces";
     rev = "v1.2.5";
-    sha256 = "5/add1VSJe5ChKi4UU5iUKRAj4kMjOnbB76QX/FkA6k=";
+    sha256 = "";
   };
 
-  cargoHash = "sha256-kUDo+6fsrzzojHYNMNBYpztGJPPtPp/OXUypUJnzebY=";
+  cargoHash = "";
 }

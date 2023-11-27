@@ -1,15 +1,12 @@
 { pkgs, ... }: {
   imports = [
     ./alacritty.nix
+    ./blueberry.nix
     ./firefox.nix
+    ./hyprpicker.nix
+    ./inkscape.nix
     ./nemo.nix
+    ./spotify.nix
     ./vscode.nix
-  ];
-
-  home.packages = with pkgs; [
-    spotify
-    blueberry
-    inkscape
-    hyprpicker
   ];
 }

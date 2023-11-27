@@ -1,4 +1,4 @@
-{ usrLib, ... }: {
+{ pkgs, usrLib, ... }: {
   color = usrLib.mapRec (usrLib.color.parseHex)  rec {
     bg = [
       "#141418"
@@ -13,7 +13,7 @@
       "#92929c"
     ];
 
-    accent = green;
+    accent = purple;
 
     red = {
       dark = "#b12e42";
@@ -46,14 +46,14 @@
       light = "#86b8ff";
     };
     purple = {
-      dark = "#581C87";
+      dark = "#522a80";
       default = "#7C3AED";
       light = "#C084FC";
     };
     pink = {
-      dark = "#b41e62";
-      default = "#dd4489";
-      light = "#fc78b3";
+      dark = "#c43676";
+      default = "#e75d9b";
+      light = "#f896c2";
     };
     black = {
       dark = "#06060D";
@@ -75,9 +75,18 @@
   font = rec {
     default = sans;
     serif = sans;
-    sans = "DejaVu Sans";
-    mono = "DejaVu Sans Mono";
-    emoji = "Noto Color Emoji";
+    sans = {
+      name = "DejaVu Sans";
+      pkg = pkgs.dejavu_fonts;
+    };
+    mono = {
+      name = "DejaVu Sans Mono";
+      pkg = pkgs.dejavu_fonts;
+    };
+    emoji = {
+      name = "Noto Color Emoji";
+      pkg = pkgs.noto-fonts-emoji;
+    };
   };
 
   radius = {

@@ -7,8 +7,11 @@
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
-  networking.hostName = "bnixdsk";
-  networking.networkmanager.enable = true;
+  networking = {
+    hostName = "bnixdsk";
+    networkmanager.enable = true;
+    firewall.enable = true;
+  };
 
   nix = {
     optimise.automatic = true;
@@ -23,6 +26,9 @@
     allowUnfreePredicate = (_: true);
   };
 
+  time.timeZone = "America/Phoenix";
+  i18n.defaultLocale = "en_US.UTF-8";
+
   environment.systemPackages = with pkgs; [
     vim
     curl
@@ -33,14 +39,16 @@
     tree
   ];
 
-  time.timeZone = "America/Phoenix";
-  i18n.defaultLocale = "en_US.UTF-8";
+  programs.zsh.enable = true;
+  programs.dconf.enable = true;
 
   users.users.${const.user.name} = {
     isNormalUser = true;
-    initialPassword = "password";
+    shell = pkgs.zsh;
     extraGroups = [
       "wheel"
+      "video"
+      "audio"
       "networkmanager"
     ];
   };
@@ -63,8 +71,6 @@
     pulse.enable = true;
     jack.enable = true;
   };
-
-  programs.dconf.enable = true;
 
   xdg.portal = {
     enable = true;

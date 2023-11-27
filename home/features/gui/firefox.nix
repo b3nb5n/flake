@@ -180,6 +180,26 @@
           --link-color-active: ${hex accent.dark};
           --link-color-visited: ${hex purple.default};
           --text-color: ${hex (builtins.elemAt fg 0)};
+
+          #TabsToolbar {
+            background: ${hex (builtins.elemAt bg 0)} !important;
+          }
+
+          .tab-background:is([selected], [multiselected]) {
+            background: ${hex (builtins.elemAt bg 1)} !important;
+          }
+
+          #urlbar-background {
+            background: ${hex (builtins.elemAt bg 0)} !important;
+          }
+
+          .browser-toolbar:not(.titlebar-color) {
+            background: ${hex (builtins.elemAt bg 1)} !important;
+          }
+
+          #tabbrowser-tabpanels {
+            background: ${hex (builtins.elemAt bg 0)} !important;
+          }
         }
       '';
       userContent = ''
@@ -209,7 +229,12 @@
 
         ::selection,
         ::-moz-selection {
-          background: ${hex accent.default}; !imprtant
+          background: ${hex accent.default} !important;
+        }
+
+        a, a * {
+          color: ${hex accent.default} !important;
+          fill: ${hex accent.default} !important;
         }
       '';
     };

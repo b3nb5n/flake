@@ -1,37 +1,42 @@
 {
   inputs = {
-    nixpkgs.url = "nixpkgs/nixos-unstable";
-    nixpkgs-stable.url = "nixpkgs/release-23.11";
-
+    # nixpkgs-stable.url = "nixpkgs/release-23.11";
+    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
 
     home-manager = {
       url = "github:nix-community/home-manager";
-      inputs.nixpkgs.follows = "nixpkgs";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
   };
-
-  outputs = { nixpkgs, nixpkgs-stable, nur, home-manager, ... }: let
-    usrLib = import ./lib { lib = nixpkgs.lib; };
-    const = import ./const { inherit usrLib; };
-
+  
+  outputs = {
+    # nixpkgs-stable,
+    nixpkgs-unstable,
+    nur,
+    home-manager,
+    ...
+  }: let
     system = "x86_64-linux";
-    pkgs = nixpkgs.legacyPackages.${system};
-    stablePkgs = nixpkgs-stable.legacyPackages.${system};
 
+    # stablePkgs = nixpkgs-stable.legacyPackages.${system};
+    pkgs = nixpkgs-unstable.legacyPackages.${system};
     nurPkgs = import nur { nurpkgs = pkgs; inherit pkgs; };
 
-    specialArgs = { inherit stablePkgs nurPkgs system const usrLib; };
+    usrLib = import ./lib { lib = nixpkgs-unstable.lib; };
+    const = import ./const { inherit pkgs usrLib; };
+
+    specialArgs = { inherit nurPkgs system usrLib const; };
+    extraSpecialArgs = specialArgs;
   in {
-    nixosConfigurations.system = nixpkgs-stable.lib.nixosSystem {
+    nixosConfigurations.system = nixpkgs-unstable.lib.nixosSystem {
       inherit system specialArgs;
       modules = [ ./system ];
     };
 
     homeConfigurations = {
       desktop = home-manager.lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = specialArgs;
+        inherit pkgs extraSpecialArgs;
         modules = [
           ./home/environments/desktop
           ./home/features

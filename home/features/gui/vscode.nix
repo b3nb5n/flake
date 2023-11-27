@@ -3,7 +3,7 @@
     owner = "nix-community";
     repo = "nix-vscode-extensions";
     rev = "master";
-    sha256 = "lea3Wog1Lmwj8HQT9znmB3LrYErJkTMJm79AcXRdc4Q=";
+    sha256 = "";
   })).extensions.${system}.vscode-marketplace;
 in {
   programs.vscode = {
@@ -45,7 +45,7 @@ in {
       "window.menuBarVisibility" = "toggle";
       "workbench.productIconTheme" = "fluent-icons";
       "workbench.iconTheme" = "material-icon-theme";
-      "editor.fontFamily" = const.theme.font.mono;
+      "editor.fontFamily" = const.theme.font.mono.name;
       "editor.quickSuggestions" = {
         other = true;
         comments = false;
@@ -59,16 +59,18 @@ in {
       "editor.minimap.enabled" = false;
       "explorer.confirmDragAndDrop" = false;
       "explorer.confirmDelete" = false;
-      "terminal.integrated.fontFamily" = const.theme.font.mono;
+      "terminal.integrated.fontFamily" = const.theme.font.mono.name;
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.cursorStyle" = "line";
       "terminal.integrated.enableMultiLinePasteWarning" = false;
       "terminal.integrated.env.linux" = {};
       "telemetry.telemetryLevel" = "off";
+      "git.enableSmartCommit" = true;
+      "git.openRepositoryInParentFolders" = "always";
       "editor.tokenColorCustomizations" = {
         comments = hex gray.default;
-        functions = hex blue.dark;
-        keywords = hex cyan.default;
+        functions = hex blue.default;
+        keywords = hex cyan.light;
         numbers = hex orange.default;
         strings = hex green.default;
         types = hex yellow.default;
@@ -265,22 +267,22 @@ in {
         # "editor.symbolHighlightBackground" = ; # Background color of highlighted symbol. The color must not be opaque so as not to hide underlying decorations.
         # "editor.symbolHighlightBorder" = ; # Background color of the border around highlighted symbols.
         # "editorWhitespace.foreground" = ; # Color of whitespace characters in the editor.
-        "editorIndentGuide.background" = hex gray.default; # Color of the editor indentation guides.
+        "editorIndentGuide.background1" = hex gray.default; # Color of the editor indentation guides.
         # "editorIndentGuide.background1" = ; # Color of the editor indentation guides (1).
         # "editorIndentGuide.background2" = ; # Color of the editor indentation guides (2).
         # "editorIndentGuide.background3" = ; # Color of the editor indentation guides (3).
         # "editorIndentGuide.background4" = ; # Color of the editor indentation guides (4).
         # "editorIndentGuide.background5" = ; # Color of the editor indentation guides (5).
         # "editorIndentGuide.background6" = ; # Color of the editor indentation guides (6).
-        "editorIndentGuide.activeBackground" = hex (builtins.elemAt fg 1); # Color of the active editor indentation guide.
+        "editorIndentGuide.activeBackground1" = hex (builtins.elemAt fg 1); # Color of the active editor indentation guide.
         # "editorIndentGuide.activeBackground1" = ; # Color of the active editor indentation guides (1).
         # "editorIndentGuide.activeBackground2" = ; # Color of the active editor indentation guides (2).
         # "editorIndentGuide.activeBackground3" = ; # Color of the active editor indentation guides (3).
         # "editorIndentGuide.activeBackground4" = ; # Color of the active editor indentation guides (4).
         # "editorIndentGuide.activeBackground5" = ; # Color of the active editor indentation guides (5).
         # "editorIndentGuide.activeBackground6" = ; # Color of the active editor indentation guides (6).
-        "editorInlayHint.background" = hex (builtins.elemAt bg 0); # Background color of inline hints.
-        "editorInlayHint.foreground" = hex (builtins.elemAt fg 1); # Foreground color of inline hints.
+        "editorInlayHint.background" = "#00000000"; # Background color of inline hints.
+        "editorInlayHint.foreground" = hex (builtins.elemAt bg 3); # Foreground color of inline hints.
         # "editorInlayHint.typeForeground" = ; # Foreground color of inline hints for types
         # "editorInlayHint.typeBackground" = ; # Background color of inline hints for types
         # "editorInlayHint.parameterForeground" = ; # Foreground color of inline hints for parameters
@@ -288,8 +290,8 @@ in {
         # "editorRuler.foreground" = ; # Color of the editor rulers.
         # "editor.linkedEditingBackground" = ; # Background color when the editor is in linked editing mode.
         # "editorCodeLens.foreground" = ; # Foreground color of an editor CodeLens.
-        "editorLightBulb.foreground" = yellow.default; # The color used for the lightbulb actions icon.
-        "editorLightBulbAutoFix.foreground" = yellow.default;# The color used for the lightbulb auto fix actions icon.
+        "editorLightBulb.foreground" = hex yellow.default; # The color used for the lightbulb actions icon.
+        "editorLightBulbAutoFix.foreground" = hex yellow.default;# The color used for the lightbulb auto fix actions icon.
         "editorBracketMatch.background" = "#00000000"; # Background color behind matching brackets.
         "editorBracketMatch.border" = "#00000000"; # Color for matching brackets boxes.
         "editorBracketHighlight.foreground1" = hex yellow.light; # Foreground color of brackets (1). Requires enabling bracket pair colorization.
