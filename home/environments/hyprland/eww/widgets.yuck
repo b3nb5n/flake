@@ -1,0 +1,105 @@
+(defwidget widget-group []
+  (box
+    :class "widget-group"
+    :orientation "h"
+    :spacing 8
+    :space-evenly false
+    (children)
+  )
+)
+
+(defwidget home []
+  (image
+    :class "home-icon"
+    :path "./assets/nix-logo.svg"
+    :image-width 24
+  )
+)
+
+(defwidget workspace [id name active]
+  (button
+    :class "workspace-button ${active ? "active" : "inactive"}"
+    :onclick "hyprctl dispatch workspace ${id}"
+    {name}
+  )
+)
+
+(defwidget workspaces [workspaces]
+  (box
+    :class "workspace-group"
+    :orientation "h"
+    :spacing 0
+    (for w in workspaces
+      (workspace
+        :id {w.id}
+        :name {w.name}
+        :active {w.active}
+      )
+    )
+  )
+)
+
+(defpoll time :interval "10s" "date '+%I:%M'")
+(defwidget clock []
+  (widget-group time)
+)
+
+(defpoll interface_id :interval "30s" "route | grep default | head -n1 | awk '{print $8}'")
+(defpoll wireless_strength :interval "10s" "awk 'NR==3 {printf(\"%.0f%%\",$3*10/7)}' /proc/net/wireless")
+(defwidget network []
+  (widget-group
+    (label :text "${round(EWW_NET[interface_id].NET_UP / 1000000, 2)}↑")
+    (label :text "${round(EWW_NET[interface_id].NET_DOWN / 1000000, 2)}↓")
+    (image :path "./assets/network-wifi-3.svg" :image-width 18)
+  )
+)
+
+(defwidget cpu []
+  (widget-group
+    (label :text "${round(EWW_CPU.avg, 0)}%")
+    (image :path "./assets/cpu.svg" :image-width 18)
+  )
+)
+
+(defwidget ram []
+  (widget-group
+    (label :text "${round(EWW_RAM.used_mem_perc, 0)}%")
+    (image :path "./assets/ram.svg" :image-width 18)
+  )
+)
+
+(defwidget disk []
+  (widget-group
+    (label :text "${round(EWW_DISK["/"].used_perc, 0)}%")
+    (image :path "./assets/disk.svg" :image-width 18)
+  )
+)
+
+(defwidget status-bar-section [align]
+  (box
+    :orientation "h"
+    :halign align
+    :hexpand true
+    :spacing 6
+    :space-evenly false
+    (children)
+  )
+)
+
+(defwidget status-bar [workspaces]
+  (centerbox
+    :class "status-bar"
+    :orientation "h"
+    (status-bar-section
+      :align "start"
+      (home) (workspaces :workspaces workspaces)
+    )
+    (status-bar-section
+      :align "center"
+    )
+    (status-bar-section
+      :align "end"
+      (disk) (ram) (cpu) (network) (clock)
+    )
+  )
+)
