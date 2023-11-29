@@ -3,9 +3,14 @@
     owner = "nix-community";
     repo = "nix-vscode-extensions";
     rev = "master";
-    sha256 = "";
+    sha256 = "esWkfkEM5P78BKtVIf5qbgcD3L4CdXpkkWv+LhPr6PE=";
   })).extensions.${system}.vscode-marketplace;
 in {
+  home.sessionVariables = {
+    EDITOR = "vscode";
+    SPAWNEDITOR = "code";
+  };
+  
   programs.vscode = {
     enable = true;
     enableUpdateCheck = false;

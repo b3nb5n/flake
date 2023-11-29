@@ -1,4 +1,6 @@
 { pkgs, const, usrLib, ... }: {
+  home.sessionVariables.TERM = "alacritty";
+
   programs.alacritty = {
     enable = true;
     settings = {

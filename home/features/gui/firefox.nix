@@ -1,4 +1,6 @@
 { pkgs, nurPkgs, const, usrLib, ... }: {
+  home.sessionVariables.BROWSER = "firefox";
+
   programs.firefox = {
     enable = true;
     profiles.${const.user.name} = with const.theme.color // usrLib.color; {
