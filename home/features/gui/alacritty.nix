@@ -1,4 +1,4 @@
-{ pkgs, const, usrLib, ... }: {
+{ pkgs, const, usrLib, config, ... }: {
   home.sessionVariables.TERM = "alacritty";
 
   programs.alacritty = {
@@ -20,8 +20,8 @@
         };
         blink_timeout = 0;
       };
-      font.normal.family = const.theme.font.mono.name;
-      colors = with const.theme.color // usrLib.color; rec {
+      font.normal.family = config.theme.font.mono.name;
+      colors = with config.theme.color // usrLib.color; rec {
         primary = {
           background = hex (builtins.elemAt bg 0);
           foreground = hex (builtins.elemAt fg 0);

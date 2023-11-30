@@ -1,5 +1,5 @@
 args: {
   hardware = import ./hardware args;
-  theme = import ./theme.nix args;
-  user = import ./user.nix args;
+  systems = import ./systems args;
+  users = import ./users args;
 }

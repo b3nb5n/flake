@@ -1,10 +1,11 @@
-{ pkgs, const, ... }: {
+{ pkgs, const, config, ... }: {
   system.stateVersion = "23.05";
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
 
   networking = {
+    hostName = const.system.name;
     networkmanager.enable = true;
     firewall.enable = true;
   };

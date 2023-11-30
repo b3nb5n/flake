@@ -1,8 +1,8 @@
-{ lib, const, usrLib, ... }: {
+{ lib, const, usrLib, config, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    settings = with const.hardware // const.theme // usrLib.color; {
+    settings = with const.hardware // config.theme // usrLib.color; {
       monitor = map
         (m: "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.position.x}x${toString m.position.y}, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
         monitors;

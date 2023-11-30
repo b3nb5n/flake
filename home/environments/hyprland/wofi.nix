@@ -6,7 +6,7 @@
       width = 512;
       height = 360;
     };
-    # style = with const.theme // usrLib.color; ''
+    # style = with config.theme // usrLib.color; ''
     #   #window {
     #     border-radius = ${toString radius.md}px;
     #   }

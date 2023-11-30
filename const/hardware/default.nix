@@ -1,3 +1,3 @@
 args: {
-  monitors = import ./monitors.nix args;
+  monitors = import ./monitors args;
 }

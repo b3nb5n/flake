@@ -1,4 +1,4 @@
-{ stdenv, pkgs, lib, const, usrLib, ... }: {
+{ stdenv, pkgs, lib, const, usrLib, config, ... }: {
   home.packages = with pkgs; [
     eww-wayland
   ];
@@ -34,7 +34,7 @@
     }
   '';
 
-  xdg.configFile."eww/eww.scss".text = with const.theme.color // usrLib.color; ''
+  xdg.configFile."eww/eww.scss".text = with config.theme.color // usrLib.color; ''
     .widget-group {
       padding: 4px 12px;
       border-radius: 4px;

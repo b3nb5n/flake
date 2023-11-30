@@ -1,9 +1,9 @@
-{ pkgs, nurPkgs, const, usrLib, ... }: {
+{ pkgs, registries, const, usrLib, config, ... }: {
   home.sessionVariables.BROWSER = "firefox";
 
   programs.firefox = {
     enable = true;
-    profiles.${const.user.name} = with const.theme.color // usrLib.color; {
+    profiles.${const.user.name} = with config.theme.color // usrLib.color; {
       search = {
         force = true;
         default = "Google";
@@ -52,7 +52,7 @@
           };
         };
       };
-      extensions = with nurPkgs.repos.rycee.firefox-addons; [
+      extensions = with registries.nurpkgs.repos.rycee.firefox-addons; [
         ublock-origin
         sponsorblock
         react-devtools
@@ -165,8 +165,8 @@
           --color-yellow-30: ${hex yellow.light} !important;
           --color-yellow-50: ${hex yellow.default} !important;
           --color-yellow-80: ${hex yellow.dark} !important;
-          --border-radius-circle: ${toString const.theme.radius.full}px !important;
-          --border-radius-small: ${toString const.theme.radius.sm}px !important;
+          --border-radius-circle: ${toString config.theme.radius.full}px !important;
+          --border-radius-small: ${toString config.theme.radius.sm}px !important;
           --border-width: 1px !important;
           --font-weight-bold: 700 !important;
 

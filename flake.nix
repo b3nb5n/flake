@@ -17,47 +17,76 @@
     home-manager,
     ...
   }: let
-    system = "x86_64-linux";
-    pkgsArgs = {
-      inherit system;
-      config = {
-        allowUnfree = true;
-        allowUnfreePredicate =  _: true;
+    importRegistries = system: let
+      pkgsArgs = {
+        inherit system;
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate =  _: true;
+        };
+      };
+    in rec {
+      nixpkgsStable = import nixpkgs-stable pkgsArgs;
+      nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
+      nurpkgs = import nur { pkgs = nixpkgsStable; nurpkgs = nixpkgsStable; };
+    };
+
+    inherit (nixpkgs-stable) lib;
+    usrLib = import ./lib { inherit lib; };
+    const = import ./const { inherit lib usrLib; };
+    modules = import ./modules {};
+
+    specialArgs = { inherit usrLib; };
+
+    mkSystem = { const, modules }: let
+      registries = importRegistries const.system.arch-os;
+    in {
+      ${const.system.name} = lib.nixosSystem {
+        pkgs = registries.nixpkgsStable;
+        system = const.system.arch-os;
+        specialArgs = specialArgs // { inherit registries const; };
+        modules = modules ++ [ ./modules/options ];
       };
     };
 
-    pkgs = import nixpkgs-stable pkgsArgs;
-    unstablePkgs = import nixpkgs-unstable pkgsArgs;
-    nurPkgs = import nur { nurpkgs = pkgs; inherit pkgs; };
-
-    usrLib = import ./lib { lib = nixpkgs-stable.lib; };
-    const = import ./const { inherit pkgs usrLib; };
-
-    specialArgs = { inherit unstablePkgs nurPkgs system usrLib const; };
-
-    mkSystem = { name, modules }: {
-      ${name} = nixpkgs-stable.lib.nixosSystem {
-        inherit pkgs system specialArgs;
-        modules = modules ++ [
-          { networking.hostName = name; }
-        ];
+    mkUser = { const, modules }: let
+      registries = importRegistries const.system.arch-os;
+    in {
+      "${const.user.name}@${const.system.name}" = home-manager.lib.homeManagerConfiguration {
+        pkgs = registries.nixpkgsStable;
+        extraSpecialArgs = specialArgs // { inherit registries const; };
+        modules = modules ++ [ ./modules/options ];
       };
-    };
-
-    mkUser = modules: home-manager.lib.homeManagerConfiguration {
-      inherit pkgs modules;
-      extraSpecialArgs = specialArgs;
     };
   in {
     nixosConfigurations = 
-      mkSystem { name = "bnixdsk"; modules = [ ./system/desktop ]; };
+      mkSystem {
+        const = {
+          user = const.users.ben;
+          system = const.systems.bnixdsk;
+          hardware.monitors = const.hardware.monitors.desktop;
+        };
+        modules = [ 
+          ./system/desktop
 
-    homeConfigurations = {
-      ${const.user.name} = mkUser [
-        ./home/environments/hyprland
-        ./home/features
-        ./home/local
-      ];
-    };
+          ./modules/themes/basic.nix
+        ];
+      };
+
+    homeConfigurations =
+      mkUser {
+        const = {
+          user = const.users.ben;
+          system = const.systems.bnixdsk;
+          hardware.monitors = const.hardware.monitors.desktop;
+        };
+        modules = [
+          ./home/environments/hyprland
+          ./home/features
+          ./home/local
+
+          ./modules/themes/basic.nix
+        ];
+      };
   };
 }
