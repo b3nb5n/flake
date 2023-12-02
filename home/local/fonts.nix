@@ -1,7 +1,7 @@
-{ pkgs, const, config, ... }: {
+{ pkgs, config, ... }: {
   fonts.fontconfig.enable = true;
   
-  home.packages = (with config.theme.font; [
+  home.packages = (with config.custom.theme.font; [
     default.pkg
     serif.pkg
     sans.pkg

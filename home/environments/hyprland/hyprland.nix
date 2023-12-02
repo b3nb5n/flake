@@ -1,15 +1,15 @@
-{ lib, const, usrLib, config, ... }: {
+{ lib, usrLib, config, ... }: {
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    settings = with const.hardware // config.theme // usrLib.color; {
+    settings = with config.custom.system.hardware // config.custom.theme // usrLib.color; {
       monitor = map
-        (m: "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.position.x}x${toString m.position.y}, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
+        (m: "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
         monitors;
       
       workspace = lib.lists.imap0
         (i: m: "${m.name}, ${toString i}, monitor:${m.name}, default:true, persistent:true")
-        const.hardware.monitors;
+        monitors;
 
       input = {
         numlock_by_default = true;
@@ -41,7 +41,7 @@
         "$wmKey, Escape, exit"
         "$wmKey, R, exec, hyprctl reload"
         "$wmKey, Q, killactive"
-        "$wmKey, Return, fullscreen"
+        "$wmKey, F, fullscreen"
         "$wmKey, A, togglefloating"
         "$wmKey, Space, exec, wofi"
 

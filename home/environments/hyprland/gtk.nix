@@ -1,5 +1,5 @@
-{ pkgs, const, usrLib, config, ... }: let
-  isDarkTheme = usrLib.theme.isDarkTheme config.theme;
+{ pkgs, usrLib, config, ... }: let
+  isDarkTheme = usrLib.theme.isDarkTheme config.custom.theme;
 in {
   gtk = rec {
     enable = true;
@@ -30,7 +30,7 @@ in {
     "gtk-4.0/gtk.css".text = gtkCss.text;
     gtkCss = {
       target = "gtk-3.0/gtk.css";
-      text = with config.theme.color // usrLib.color; ''
+      text = with config.custom.theme.color // usrLib.color; ''
         @define-color accent_color ${hex accent.default};
         @define-color accent_bg_color ${hex accent.default};
         @define-color accent_fg_color ${hex (builtins.elemAt bg 0)};

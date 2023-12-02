@@ -1,4 +1,4 @@
-{ stdenv, pkgs, lib, const, usrLib, config, ... }: {
+{ stdenv, pkgs, lib, usrLib, config, ... }: {
   home.packages = with pkgs; [
     eww-wayland
   ];
@@ -30,11 +30,11 @@
           (status-bar :workspaces ${m.name}-workspaces)
         )
       '')
-      const.hardware.monitors)
+      config.custom.system.hardware.monitors)
     }
   '';
 
-  xdg.configFile."eww/eww.scss".text = with config.theme.color // usrLib.color; ''
+  xdg.configFile."eww/eww.scss".text = with config.custom.theme.color // usrLib.color; ''
     .widget-group {
       padding: 4px 12px;
       border-radius: 4px;

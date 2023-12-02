@@ -1,9 +1,9 @@
-{ pkgs, registries, const, usrLib, config, ... }: {
+{ pkgs, registries, usrLib, config, ... }: {
   home.sessionVariables.BROWSER = "firefox";
 
   programs.firefox = {
     enable = true;
-    profiles.${const.user.name} = with config.theme.color // usrLib.color; {
+    profiles.${config.custom.user.name} = with config.custom.theme.color // usrLib.color; {
       search = {
         force = true;
         default = "Google";
@@ -165,8 +165,8 @@
           --color-yellow-30: ${hex yellow.light} !important;
           --color-yellow-50: ${hex yellow.default} !important;
           --color-yellow-80: ${hex yellow.dark} !important;
-          --border-radius-circle: ${toString config.theme.radius.full}px !important;
-          --border-radius-small: ${toString config.theme.radius.sm}px !important;
+          --border-radius-circle: ${toString config.custom.theme.radius.full}px !important;
+          --border-radius-small: ${toString config.custom.theme.radius.sm}px !important;
           --border-width: 1px !important;
           --font-weight-bold: 700 !important;
 

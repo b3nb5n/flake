@@ -1,14 +1,10 @@
-{ pkgs, const, config, ... }: {
+
+{ pkgs, config, ... }: {
   system.stateVersion = "23.05";
 
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
-
-  networking = {
-    hostName = const.system.name;
-    networkmanager.enable = true;
-    firewall.enable = true;
-  };
+  imports = [
+    ./hardware.nix
+  ];
 
   nix = {
     optimise.automatic = true;
@@ -18,8 +14,33 @@
     ];
   };
 
+  boot = {
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+    initrd.kernelModules = [ "amdgpu" ];
+  };
+
   time.timeZone = "America/Phoenix";
   i18n.defaultLocale = "en_US.UTF-8";
+  
+  networking = {
+    hostName = config.custom.system.name;
+    networkmanager.enable = true;
+    firewall.enable = true;
+  };
+
+  users.users.ben = {
+    isNormalUser = true;
+    shell = pkgs.zsh;
+    extraGroups = [
+      "wheel"
+      "video"
+      "audio"
+      "networkmanager"
+    ];
+  };
 
   environment.systemPackages = with pkgs; [
     vim
@@ -34,17 +55,7 @@
   programs.zsh.enable = true;
   programs.dconf.enable = true;
 
-  users.users.${const.user.name} = {
-    isNormalUser = true;
-    shell = pkgs.zsh;
-    extraGroups = [
-      "wheel"
-      "video"
-      "audio"
-      "networkmanager"
-    ];
-  };
-
+  services.xserver.videoDrivers = [ "amdgpu" ];
   hardware = {
     opengl.enable = true;
     bluetooth = {

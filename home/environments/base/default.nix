@@ -1,4 +1,4 @@
-{ pkgs, const, ... }: {
+{ pkgs, config, ... }: {
   nix.package = pkgs.nixFlakes;
   nixpkgs.config = {
     allowUnfree = true;
@@ -8,8 +8,8 @@
   programs.home-manager.enable = true;
   home = {
     stateVersion = "23.05";
-    username = const.user.name;
-    homeDirectory = "/home/${const.user.name}";
+    username = config.custom.user.name;
+    homeDirectory = "/home/${config.custom.user.name}";
     packages = with pkgs; [
       xdg-utils
     ];

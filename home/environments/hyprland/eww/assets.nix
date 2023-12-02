@@ -1,7 +1,7 @@
-{ const, usrLib, config, ... }: {
+{ usrLib, config, ... }: {
   home.file = let
     dir = ".config/eww/assets";
-  in with config.theme.color // usrLib.color; {
+  in with config.custom.theme.color // usrLib.color; {
     ewwNixIcon = {
       target = "${dir}/nix-logo.svg";
       text = ''

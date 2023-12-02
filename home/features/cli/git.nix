@@ -1,8 +1,8 @@
-{ const, ... }: {
+{ config, ... }: {
   programs.git = {
     enable = true;
-    userName = const.user.name;
-    userEmail = const.user.email;
+    userName = config.custom.user.name;
+    userEmail = config.custom.user.email;
     extraConfig = {
       http = {
         postBuffer = 524288000;

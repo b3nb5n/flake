@@ -1,10 +1,10 @@
-{ pkgs, const, usrLib, config, ... }: let
+{ pkgs, usrLib, config, ... }: let
   extensions = (import (pkgs.fetchFromGitHub {
     owner = "nix-community";
     repo = "nix-vscode-extensions";
     rev = "master";
     sha256 = "esWkfkEM5P78BKtVIf5qbgcD3L4CdXpkkWv+LhPr6PE=";
-  })).extensions.${const.system.arch-os}.vscode-marketplace;
+  })).extensions.${config.custom.system.arch-os}.vscode-marketplace;
 in {
   home.sessionVariables = {
     EDITOR = "vscode";
@@ -44,13 +44,13 @@ in {
     keybindings = [];
     languageSnippets = {};
     userSettings = let
-      isDarkTheme = usrLib.theme.isDarkTheme config.theme;
+      isDarkTheme = usrLib.theme.isDarkTheme config.custom.theme;
       highlightAlpha = 0.8;
-    in with config.theme.color // usrLib.color; {
+    in with config.custom.theme.color // usrLib.color; {
       "window.menuBarVisibility" = "toggle";
       "workbench.productIconTheme" = "fluent-icons";
       "workbench.iconTheme" = "material-icon-theme";
-      "editor.fontFamily" = config.theme.font.mono.name;
+      "editor.fontFamily" = config.custom.theme.font.mono.name;
       "editor.quickSuggestions" = {
         other = true;
         comments = false;
@@ -64,7 +64,7 @@ in {
       "editor.minimap.enabled" = false;
       "explorer.confirmDragAndDrop" = false;
       "explorer.confirmDelete" = false;
-      "terminal.integrated.fontFamily" = config.theme.font.mono.name;
+      "terminal.integrated.fontFamily" = config.custom.theme.font.mono.name;
       "terminal.integrated.cursorBlinking" = true;
       "terminal.integrated.cursorStyle" = "line";
       "terminal.integrated.enableMultiLinePasteWarning" = false;

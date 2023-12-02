@@ -17,76 +17,72 @@
     home-manager,
     ...
   }: let
-    importRegistries = system: let
+    inherit (nixpkgs-stable) lib;
+    modules = import ./modules { inherit lib; };
+
+    mkSystem = args: let
       pkgsArgs = {
-        inherit system;
+        system = args.arch-os;
         config = {
           allowUnfree = true;
           allowUnfreePredicate =  _: true;
         };
       };
-    in rec {
+
       nixpkgsStable = import nixpkgs-stable pkgsArgs;
       nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
       nurpkgs = import nur { pkgs = nixpkgsStable; nurpkgs = nixpkgsStable; };
-    };
 
-    inherit (nixpkgs-stable) lib;
-    usrLib = import ./lib { inherit lib; };
-    const = import ./const { inherit lib usrLib; };
-    modules = import ./modules {};
-
-    specialArgs = { inherit usrLib; };
-
-    mkSystem = { const, modules }: let
-      registries = importRegistries const.system.arch-os;
-    in {
-      ${const.system.name} = lib.nixosSystem {
-        pkgs = registries.nixpkgsStable;
-        system = const.system.arch-os;
-        specialArgs = specialArgs // { inherit registries const; };
-        modules = modules ++ [ ./modules/options ];
+      specialArgs = {
+        usrLib = import ./lib { inherit lib; };
+        registries = { inherit nixpkgsStable nixpkgsUnstable nurpkgs; };
       };
-    };
 
-    mkUser = { const, modules }: let
-      registries = importRegistries const.system.arch-os;
+      sharedModules = args.sharedModules ++ [
+        { custom.system = { inherit (args) name arch-os; }; }
+      ];
     in {
-      "${const.user.name}@${const.system.name}" = home-manager.lib.homeManagerConfiguration {
-        pkgs = registries.nixpkgsStable;
-        extraSpecialArgs = specialArgs // { inherit registries const; };
-        modules = modules ++ [ ./modules/options ];
-      };
-    };
-  in {
-    nixosConfigurations = 
-      mkSystem {
-        const = {
-          user = const.users.ben;
-          system = const.systems.bnixdsk;
-          hardware.monitors = const.hardware.monitors.desktop;
-        };
-        modules = [ 
-          ./system/desktop
-
-          ./modules/themes/basic.nix
+      nixosConfigurations.${args.name} = lib.nixosSystem {
+        pkgs = nixpkgsStable;
+        system = args.arch-os;
+        inherit specialArgs;
+        modules = args.modules ++ sharedModules ++ [
+          modules.nixos.options
         ];
       };
 
-    homeConfigurations =
-      mkUser {
-        const = {
-          user = const.users.ben;
-          system = const.systems.bnixdsk;
-          hardware.monitors = const.hardware.monitors.desktop;
+      homeConfigurations = lib.attrsets.mapAttrs'
+        (name: user: {
+          name = "${name}@${args.name}";
+          value = home-manager.lib.homeManagerConfiguration {
+            pkgs = nixpkgsStable;
+            extraSpecialArgs = specialArgs // { user = user // { inherit name; }; };
+            modules = user.modules ++ sharedModules ++ [
+              modules.hm.options
+              { custom.user = { inherit name; }; }
+            ];
+          }; 
+        })
+        args.users;
+    };
+  in 
+    mkSystem {
+      name = "bnixdsk";
+      arch-os = "x86_64-linux";
+      modules = [ ./system/bnixdsk ];
+      sharedModules = [
+        modules.shared.system.bnixdsk
+        modules.shared.theme.basic
+      ];
+      users = {
+        ben = {
+          modules = [
+            modules.hm.user.ben
+            ./home/environments/hyprland
+            ./home/features
+            ./home/local
+          ];
         };
-        modules = [
-          ./home/environments/hyprland
-          ./home/features
-          ./home/local
-
-          ./modules/themes/basic.nix
-        ];
       };
-  };
+    };
 }

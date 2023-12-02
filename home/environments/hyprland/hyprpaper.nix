@@ -1,4 +1,4 @@
-{ pkgs, lib, const, config, ... }: {
+{ pkgs, lib, config, ... }: {
   home.packages = with pkgs; [
     hyprpaper
   ];
@@ -14,7 +14,7 @@
             preload = ${wallpaperPath}
             wallpaper = ${m.name}, ${wallpaperPath}
           '')
-          const.hardware.monitors}
+          config.custom.system.hardware.monitors}
       '';
     };
   };

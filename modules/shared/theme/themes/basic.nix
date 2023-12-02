@@ -1,5 +1,5 @@
 { pkgs, usrLib, ... }: {
-  theme = {
+  custom.theme = {
     color = usrLib.mapRec (usrLib.color.parseHex)  rec {
       bg = [
         "#141418"
