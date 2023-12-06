@@ -5,6 +5,7 @@
     ./firefox.nix
     ./hyprpicker.nix
     ./inkscape.nix
+    ./lmms.nix
     ./nemo.nix
     ./spotify.nix
     ./vscode.nix
