@@ -50,6 +50,7 @@
     unzip
     htop
     tree
+    jq
   ];
 
   programs.zsh.enable = true;
