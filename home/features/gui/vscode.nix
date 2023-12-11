@@ -72,6 +72,7 @@ in {
       "telemetry.telemetryLevel" = "off";
       "git.enableSmartCommit" = true;
       "git.openRepositoryInParentFolders" = "always";
+      "git.confirmSync" = false;
       "rust-analyzer.cargo.sysrootSrc" = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
       "editor.tokenColorCustomizations" = {
         comments = hex gray.default;

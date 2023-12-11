@@ -1,5 +1,5 @@
-{ pkgs, ... }: {
+{ pkgs, ... }@args: {
   home.packages = with pkgs; [
-    (callPackage ./workspace-listener.nix { inherit pkgs; })
+    (callPackage ./workspace-listener.nix args)
   ];
 }
