@@ -15,4 +15,9 @@ in {
   home.packages = with pkgs; [
     huectl
   ];
+
+  home.sessionVariables = {
+    HUECTL_BRIDGE_IP = "192.168.0.216";
+    HUECTL_BRIDGE_USERNAME = "mjP8--c2dzGUAaL8YFw86CEpCWuJUBFTlspuxMoB";
+  };
 }

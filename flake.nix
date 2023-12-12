@@ -4,6 +4,8 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nur.url = "github:nix-community/NUR";
 
+    nixos-hardware.url = "github:NixOS/nixos-hardware";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-23.11";
       inputs.nixpkgs.follows = "nixpkgs-stable";
@@ -14,11 +16,13 @@
     nixpkgs-stable,
     nixpkgs-unstable,
     nur,
+    nixos-hardware,
     home-manager,
     ...
   }: let
     inherit (nixpkgs-stable) lib;
     modules = import ./modules { inherit lib; };
+    usrLib = import ./lib { inherit lib; };
 
     mkSystem = args: let
       pkgsArgs = {
@@ -34,7 +38,7 @@
       nurpkgs = import nur { pkgs = nixpkgsStable; nurpkgs = nixpkgsStable; };
 
       specialArgs = {
-        usrLib = import ./lib { inherit lib; };
+        inherit usrLib nixos-hardware;
         registries = { inherit nixpkgsStable nixpkgsUnstable nurpkgs; };
       };
 
@@ -65,8 +69,8 @@
         })
         args.users;
     };
-  in 
-    mkSystem {
+  in usrLib.mergeRec [
+    (mkSystem {
       name = "bnixdsk";
       arch-os = "x86_64-linux";
       modules = [ ./system/bnixdsk ];
@@ -84,5 +88,25 @@
           ];
         };
       };
-    };
+    })
+    (mkSystem {
+      name = "aptnixsrv";
+      arch-os = "x86_64-linux";
+      modules = [ ./system/aptnixsrv ];
+      sharedModules = [
+        modules.shared.system.aptnixsrv
+        modules.shared.theme.basic
+      ];
+      users = {
+        ben = {
+          modules = [
+            modules.hm.user.ben
+            ./home/environments/hyprland
+            ./home/features
+            ./home/local
+          ];
+        };
+      };
+    })
+  ];
 }
