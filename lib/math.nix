@@ -1,4 +1,6 @@
-{ lib, ... }: rec {
+{ nixpkgs-stable, ... }: let
+  inherit (nixpkgs-stable) lib;
+in rec {
   pow = base: exponent:
     if exponent > 1 then
       let

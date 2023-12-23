@@ -1,4 +1,4 @@
-{ lib, ... }@args: hex: let
+{ nixpkgs-stable, ... }@args: hex: let
   hexToDecMap = {
     "0" = 0;
     "1" = 1;
@@ -18,6 +18,7 @@
     "f" = 15;
   };
 
+  inherit (nixpkgs-stable) lib;
   math = import ./math.nix args;
   base16To10 = exponent: scalar: scalar * math.pow 16 exponent;
   

@@ -1,4 +1,6 @@
-{ lib, ... }@args: rec {
+{ nixpkgs-stable, ... }@args: let
+  inherit (nixpkgs-stable) lib;
+in rec {
   isDarkTheme = theme: let
     colorusrLib = import ./color.nix args;
   in colorusrLib.channelAvg (builtins.elemAt theme.color.bg 0) <

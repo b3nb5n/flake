@@ -1,4 +1,6 @@
-{ lib, ... }@args: rec {
+{ nixpkgs-stable, ... }@args: let
+  inherit (nixpkgs-stable) lib;
+in rec {
   color = r: g: b: { inherit r g b; };
 
   parseHex = hexStr: let

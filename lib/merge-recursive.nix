@@ -1,5 +1,7 @@
-{ lib, ... }: with lib; let
-  recursiveMerge = attrList: let
+{ nixpkgs-stable, ... }: let
+  inherit (nixpkgs-stable) lib;
+
+  recursiveMerge = attrList: with lib; let
     f = attrPath:
       zipAttrsWith (n: values:
         if tail values == []
