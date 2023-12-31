@@ -5,7 +5,11 @@
     enableBashIntegration = true;
     enableZshIntegration = config.programs.zsh.enable;
     config = {
-      global.load_dotenv = true;
+      global = {
+        load_dotenv = true;
+        disable_stdin = true;
+        warn_timeout = "0s";
+      };
       whitelist.prefix = [
         "~/Projects"
       ];
