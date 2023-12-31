@@ -3,7 +3,7 @@
     owner = "nix-community";
     repo = "nix-vscode-extensions";
     rev = "master";
-    sha256 = "esWkfkEM5P78BKtVIf5qbgcD3L4CdXpkkWv+LhPr6PE=";
+    sha256 = "lbioI+/sipflPD0XmJOjYfCioPIg/3cRo87l4hp6i7s=";
   })).extensions.${pkgs.system}.vscode-marketplace;
 in {
   home.sessionVariables = {
@@ -39,7 +39,7 @@ in {
       antiantisepticeye.vscode-color-picker
       redhat.vscode-yaml
       eww-yuck.yuck
-      # remember to invalidate the extensions repo hash
+      brettm12345.nixfmt-vscode
     ];
     keybindings = [];
     languageSnippets = {};

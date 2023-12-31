@@ -3,6 +3,7 @@ args: {
     ./alacritty.nix
     ./blueberry.nix
     ./direnv.nix
+    ./discord.nix
     ./firefox.nix
     ./gcc.nix
     ./git.nix

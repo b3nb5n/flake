@@ -234,10 +234,12 @@
           background: ${hex accent.default} !important;
         }
 
+        /*
         a, a * {
           color: ${hex accent.default} !important;
           fill: ${hex accent.default} !important;
         }
+        */
       '';
     };
   };

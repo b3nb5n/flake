@@ -6,4 +6,8 @@
     ./hyprpaper.nix
     ./wofi.nix
   ];
+
+  home.packages = with pkgs; [
+    xdg-utils
+  ];
 }
