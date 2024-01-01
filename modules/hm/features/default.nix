@@ -11,6 +11,7 @@ args: {
     ./hyprpicker.nix
     ./inkscape.nix
     ./kubernetes.nix
+    ./lldb.nix
     ./lmms.nix
     ./nemo.nix
     ./neofetch.nix
