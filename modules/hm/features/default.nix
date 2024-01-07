@@ -18,6 +18,7 @@ args: {
     ./nodejs.nix
     ./playerctl.nix
     ./pulseaudio.nix
+    ./qalculate.nix
     ./rust.nix
     ./spotify.nix
     ./vscode.nix
