@@ -103,6 +103,8 @@
 
       windowrule = [
         "opacity 0.8, Alacritty"
+        "opacity 0.8, qalculate-gtk"
+        "float, qalculate-gtk"
       ];
 
       exec-once = [
