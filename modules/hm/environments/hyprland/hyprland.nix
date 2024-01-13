@@ -84,10 +84,10 @@
 
         ",XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
         ",XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        ",XF86AudioMute, exec, amixer ssset 'Master' toggle"
-        ",XF86AudioPlay, exec, playerctl play-pause"
-        ",XF86AudioNext, exec, playerctl next"
-        ",XF86AudioPrev, exec, playerctl previous"
+        # ",XF86AudioMute, exec, amixer ssset 'Master' toggle"
+        ",XF86AudioPlay, exec, playerctl --player=spotify,firefox play-pause"
+        ",XF86AudioNext, exec, playerctl --player=spotify,firefox next"
+        ",XF86AudioPrev, exec, playerctl --player=spotify,firefox previous"
       ];
 
       binde = [

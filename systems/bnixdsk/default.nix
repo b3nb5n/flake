@@ -68,7 +68,21 @@ in {
         ../../modules/hm/local
 
         {
-          home.username = "ben";
+          home = {
+            username = "ben";
+            packages = with nixpkgsStable; [
+              blueberry
+              gcc
+              hyprpicker
+              inkscape
+              cinnamon.nemo
+              lmms
+              playerctl
+              pulseaudio # do I actually need this here?
+              qalculate-gtk
+              spotify
+            ];
+          };
         }
       ];
     };
