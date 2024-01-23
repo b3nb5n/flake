@@ -43,11 +43,25 @@
               params = [{ name = "q"; value = "{searchTerms}"; }];
             }];
           };
-          "My NixOS" = {
-            definedAliases = [ "@nix" ];
+          "Nix Pkgs" = {
+            definedAliases = [ "@nixpkgs" ];
             urls = [{
               template = "https://mynixos.com/search";
-              params = [{ name = "q"; value = "{searchTerms}"; }];
+              params = [{ name = "q"; value = "nixpkgs+{searchTerms}"; }];
+            }];
+          };
+          "NixOS Opts" = {
+            definedAliases = [ "@nixos" ];
+            urls = [{
+              template = "https://mynixos.com/search";
+              params = [{ name = "q"; value = "nixpkgs%2Foption+{searchTerms}"; }];
+            }];
+          };
+          "HM Opts" = {
+            definedAliases = [ "@hm" ];
+            urls = [{
+              template = "https://mynixos.com/search";
+              params = [{ name = "q"; value = "home-manager+{searchTerms}"; }];
             }];
           };
         };
@@ -231,7 +245,7 @@
 
         ::selection,
         ::-moz-selection {
-          background: ${hex accent.default} !important;
+          background: ${hexA accent.default 0.6} !important;
         }
 
         /*

@@ -40,6 +40,8 @@ in {
       redhat.vscode-yaml
       eww-yuck.yuck
       brettm12345.nixfmt-vscode
+      tonybaloney.vscode-pets
+      vscodevim.vim
     ];
     keybindings = [];
     languageSnippets = {};
@@ -74,6 +76,8 @@ in {
       "git.openRepositoryInParentFolders" = "always";
       "git.confirmSync" = false;
       "rust-analyzer.cargo.sysrootSrc" = "${pkgs.rust.packages.stable.rustPlatform.rustLibSrc}";
+      "rust-analyzer.files.excludeDirs" = [ ".direnv" "target" "node_modules" ];
+      "vscode-pets.petSize" = "large";
       "editor.tokenColorCustomizations" = {
         comments = hex gray.default;
         functions = hex blue.default;

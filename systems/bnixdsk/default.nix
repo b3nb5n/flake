@@ -72,7 +72,6 @@ in {
             username = "ben";
             packages = with nixpkgsStable; [
               blueberry
-              gcc
               hyprpicker
               inkscape
               cinnamon.nemo
@@ -81,6 +80,7 @@ in {
               pulseaudio # do I actually need this here?
               qalculate-gtk
               spotify
+              neovim
             ];
           };
         }

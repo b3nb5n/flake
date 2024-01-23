@@ -10,6 +10,7 @@ args: {
     ./huectl.nix
     ./kubernetes.nix
     ./neofetch.nix
+    ./neovim.nix
     ./vscode.nix
     ./zsh.nix
   ];
