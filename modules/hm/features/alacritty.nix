@@ -1,5 +1,8 @@
 { pkgs, usrLib, config, ... }: {
   home.sessionVariables.TERM = "alacritty";
+  home.packages = with pkgs; [
+    fira-code-nerdfont
+  ];
 
   programs.alacritty = {
     enable = true;
@@ -8,6 +11,7 @@
       window = {
         padding = { x = 12; y = 6; };
         decorations = "None";
+        dynamic_padding = true;
       };
       scrolling = {
         history = 10000;
@@ -20,8 +24,8 @@
         };
         blink_timeout = 0;
       };
-      font.normal.family = config.theme.font.mono.name;
-      colors = with config.theme.color // usrLib.color; rec {
+      font.normal.family = "FiraCode Nerd Font Mono"; 
+      colors = with config.theme.color // usrLib.color; {
         primary = {
           background = hex (builtins.elemAt bg 0);
           foreground = hex (builtins.elemAt fg 0);

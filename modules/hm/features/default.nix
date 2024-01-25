@@ -1,5 +1,7 @@
 args: {
   imports = [
+    ./neovim
+
     ./alacritty.nix
     ./direnv.nix
     ./discord.nix
@@ -10,7 +12,6 @@ args: {
     ./huectl.nix
     ./kubernetes.nix
     ./neofetch.nix
-    ./neovim.nix
     ./vscode.nix
     ./zsh.nix
   ];

@@ -80,7 +80,6 @@ in {
               pulseaudio # do I actually need this here?
               qalculate-gtk
               spotify
-              neovim
             ];
           };
         }

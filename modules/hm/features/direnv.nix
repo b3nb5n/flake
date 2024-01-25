@@ -11,7 +11,7 @@
         warn_timeout = "0s";
       };
       whitelist.prefix = [
-        "~/Projects"
+        "~/Desktop"
       ];
     };
   };
