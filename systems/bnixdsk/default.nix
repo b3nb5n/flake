@@ -21,14 +21,14 @@
   nurpkgs = import nur { pkgs = nixpkgsStable; nurpkgs = nixpkgsStable; };
 
   sharedArgs = {
+		flakeInputs = inputs;
+    usrLib = import ../../lib inputs;
     registries = {
       inherit
         nixpkgsStable
         nixpkgsUnstable
         nurpkgs;
     };
-
-    usrLib = import ../../lib inputs;
   };
 
   sharedModules = [
@@ -58,7 +58,7 @@ in {
 
   homeConfigurations = {
     "ben@${systemName}" = home-manager.lib.homeManagerConfiguration {
-      pkgs = nixpkgsStable;
+      pkgs = nixpkgsUnstable;
       extraSpecialArgs = sharedArgs // {};
       modules = sharedModules ++ [
         ./home.nix
