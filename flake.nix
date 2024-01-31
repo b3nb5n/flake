@@ -11,18 +11,39 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
-		nixvim = {
-			url = "github:nix-community/nixvim";
-			inputs = {
-				nixpkgs.follows = "nixpkgs-unstable";
-				home-manager.follows = "home-manager";
-			};
-		};
+    nixvim = {
+      url = "github:nix-community/nixvim";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        home-manager.follows = "home-manager";
+      };
+    };
+
+    flake-utils.url = "github:numtide/flake-utils";
   };
-  
-  outputs = inputs: let
-    usrLib = import ./lib inputs;
-  in usrLib.mergeRec [
-    (import ./systems/bnixdsk inputs)
-  ];
+
+  outputs = { nixpkgs-stable, nixpkgs-unstable, nur, home-manager, flake-utils
+    , ... }@inputs:
+    (flake-utils.lib.eachDefaultSystem (system:
+      let
+        pkgsArgs = {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+          };
+        };
+
+        nixpkgsStable = import nixpkgs-stable pkgsArgs;
+        nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
+        nurpkgs = import nur {
+          pkgs = nixpkgsUnstable;
+          nurpkgs = nixpkgsUnstable;
+        };
+      in (import ./config {
+        flakeInputs = inputs;
+        pkgs = nixpkgsUnstable;
+        registries = { inherit nixpkgsStable nixpkgsUnstable nurpkgs; };
+        usrLib = (import ./lib { inherit (nixpkgs-unstable) lib; });
+      })));
 }

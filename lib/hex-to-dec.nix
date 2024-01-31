@@ -1,4 +1,6 @@
-{ nixpkgs-stable, ... }@args: hex: let
+{ lib, ... }@args:
+hex:
+let
   hexToDecMap = {
     "0" = 0;
     "1" = 1;
@@ -18,11 +20,11 @@
     "f" = 15;
   };
 
-  inherit (nixpkgs-stable) lib;
   math = import ./math.nix args;
   base16To10 = exponent: scalar: scalar * math.pow 16 exponent;
-  
-  decimals = builtins.map (ch: hexToDecMap."${ch}") (lib.strings.stringToCharacters (lib.strings.toLower hex));
+
+  decimals = builtins.map (ch: hexToDecMap."${ch}")
+    (lib.strings.stringToCharacters (lib.strings.toLower hex));
   decimalsAscending = lib.lists.reverseList decimals;
   decimalsPowered = lib.lists.imap0 base16To10 decimalsAscending;
 in lib.lists.foldl builtins.add 0 decimalsPowered
