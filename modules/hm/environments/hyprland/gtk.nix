@@ -1,5 +1,5 @@
-{ pkgs, config, usrLib, ... }: let
-  isDarkTheme = usrLib.theme.isDarkTheme config.theme;
+{ pkgs, config, usrLib, ... }:
+let isDarkTheme = usrLib.theme.isDarkTheme config.theme;
 in {
   gtk = rec {
     enable = true;
@@ -9,17 +9,14 @@ in {
     };
 
     gtk4.extraConfig = gtk3.extraConfig;
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = isDarkTheme;
-    };
+    gtk3.extraConfig = { gtk-application-prefer-dark-theme = isDarkTheme; };
   };
 
   home = {
-    packages = with pkgs; [
-      bibata-cursors
-    ];
+    packages = with pkgs; [ bibata-cursors ];
     pointerCursor = {
-      name = if isDarkTheme then "Bibata-Modern-Classic" else "Bibata-Modern-Ice";
+      name =
+        if isDarkTheme then "Bibata-Modern-Classic" else "Bibata-Modern-Ice";
       package = pkgs.bibata-cursors;
       size = 24;
       gtk.enable = true;
@@ -58,7 +55,7 @@ in {
         @define-color card_bg_color ${hex (builtins.elemAt bg 1)};
         @define-color card_fg_color ${hex (builtins.elemAt fg 0)};
         @define-color card_shade_color rgba(0, 0, 0, 0.07);
-        @define-color dialog_bg_color ${hex (builtins.elemAt fg 0)};
+        @define-color dialog_bg_color ${hex (builtins.elemAt bg 1)};
         @define-color dialog_fg_color ${hex (builtins.elemAt fg 0)};
         @define-color popover_bg_color ${hex (builtins.elemAt bg 1)};
         @define-color popover_fg_color ${hex (builtins.elemAt fg 0)};
