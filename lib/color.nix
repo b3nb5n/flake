@@ -1,11 +1,11 @@
-{ lib, ... }@args: rec {
+{ pkgs, ... }@args: rec {
   color = r: g: b: { inherit r g b; };
 
   parseHex = hexStr:
     let
       hexToDec = import ./hex-to-dec.nix args;
 
-      hex = lib.strings.removePrefix "#" hexStr;
+      hex = pkgs.lib.strings.removePrefix "#" hexStr;
       r = hexToDec (builtins.substring 0 2 hex);
       g = hexToDec (builtins.substring 2 2 hex);
       b = hexToDec (builtins.substring 4 2 hex);
@@ -13,7 +13,7 @@
 
   hexChannel = c:
     let
-      str = "0${lib.trivial.toHexString c}";
+      str = "0${pkgs.lib.trivial.toHexString c}";
       len = builtins.stringLength str;
     in builtins.substring (len - 2) 2 str;
 
@@ -26,7 +26,7 @@
 
   channelAvg = color:
     let
-      values = (lib.attrsets.attrValues color);
+      values = (pkgs.lib.attrsets.attrValues color);
       sum = builtins.foldl' builtins.add 0 values;
       n = builtins.length values;
     in sum / n;

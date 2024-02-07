@@ -1,4 +1,4 @@
-{ pkgs, ... }@inputs: {
+{ usrDrv, ... }@inputs: {
   programs.bash.shellAliases = {
     vim = "nvim";
     vi = "nvim";
@@ -9,5 +9,5 @@
     vi = "nvim";
   };
 
-  home.packages = [ (import ../../../drv/neovim inputs) ];
+  home.packages = [ usrDrv.neovim ];
 }

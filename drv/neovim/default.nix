@@ -83,7 +83,7 @@
       layout = [
         {
           type = "padding";
-          val = 4;
+          val = 8;
         }
         {
           type = "text";

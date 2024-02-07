@@ -40,10 +40,13 @@
           pkgs = nixpkgsUnstable;
           nurpkgs = nixpkgsUnstable;
         };
-      in (import ./config {
-        flakeInputs = inputs;
-        pkgs = nixpkgsUnstable;
-        registries = { inherit nixpkgsStable nixpkgsUnstable nurpkgs; };
-        usrLib = (import ./lib { inherit (nixpkgs-unstable) lib; });
-      })));
+
+        args = {
+          flakeInputs = inputs;
+          pkgs = nixpkgsUnstable;
+          registries = { inherit nixpkgsStable nixpkgsUnstable nurpkgs; };
+          usrLib = import ./lib args;
+          usrDrv = import ./drv args;
+        };
+      in (import ./outputs args)));
 }

@@ -1,4 +1,4 @@
-{ lib, ... }@args:
+{ pkgs, ... }@args:
 hex:
 let
   hexToDecMap = {
@@ -24,7 +24,7 @@ let
   base16To10 = exponent: scalar: scalar * math.pow 16 exponent;
 
   decimals = builtins.map (ch: hexToDecMap."${ch}")
-    (lib.strings.stringToCharacters (lib.strings.toLower hex));
-  decimalsAscending = lib.lists.reverseList decimals;
-  decimalsPowered = lib.lists.imap0 base16To10 decimalsAscending;
-in lib.lists.foldl builtins.add 0 decimalsPowered
+    (pkgs.lib.strings.stringToCharacters (pkgs.lib.strings.toLower hex));
+  decimalsAscending = pkgs.lib.lists.reverseList decimals;
+  decimalsPowered = pkgs.lib.lists.imap0 base16To10 decimalsAscending;
+in pkgs.lib.lists.foldl builtins.add 0 decimalsPowered

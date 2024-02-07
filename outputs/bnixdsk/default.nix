@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, ... }@args: {
+{ flakeInputs, pkgs, usrDrv, ... }@args: {
   nixosConfigurations.bnixdsk = flakeInputs.nixpkgs-unstable.lib.nixosSystem {
     inherit pkgs;
     inherit (pkgs) system;
@@ -36,6 +36,7 @@
           home = {
             username = "ben";
             packages = with pkgs; [
+              usrDrv.dev-env
               blueberry
               hyprpicker
               inkscape
@@ -46,6 +47,7 @@
               qalculate-gtk
               spotify
               scarab
+              nvtop
             ];
           };
         })

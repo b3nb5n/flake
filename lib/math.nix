@@ -1,9 +1,9 @@
-{ lib, ... }: rec {
+{ pkgs, ... }: rec {
   pow = base: exponent:
     if exponent > 1 then
       let
         x = pow base (exponent / 2);
-        odd_exp = lib.mod exponent 2 == 1;
+        odd_exp = pkgs.lib.mod exponent 2 == 1;
       in x * x * (if odd_exp then base else 1)
     else if exponent == 1 then
       base

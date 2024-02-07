@@ -1,7 +1,7 @@
-{ lib, ... }:
+{ pkgs, ... }:
 let
   recursiveMerge = attrList:
-    with lib;
+    with pkgs.lib;
     let
       f = attrPath:
         zipAttrsWith (n: values:
