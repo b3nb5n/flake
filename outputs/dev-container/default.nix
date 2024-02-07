@@ -1,7 +1,7 @@
 { pkgs, usrDrv, ... }: {
   dockerContainers.dev-container = pkgs.dockerTools.buildLayeredImage {
     name = "dev-container";
-    contents = [ usrDrv.development ];
+    contents = [ usrDrv.dev-env ];
     config = { Cmd = "${pkgs.zsh}/bin/zsh"; };
   };
 }
