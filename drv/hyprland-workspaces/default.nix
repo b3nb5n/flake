@@ -1,4 +1,5 @@
-{ pkgs, ... }: pkgs.rustPlatform.buildRustPackage {
+{ pkgs, ... }:
+pkgs.rustPlatform.buildRustPackage {
   pname = "hyprland-workspaces";
   version = "1.2.5";
   src = pkgs.fetchFromGitHub {

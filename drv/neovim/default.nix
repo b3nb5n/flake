@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, ... }:
+{ flakeInputs, pkgs, usrDrv, ... }:
 (flakeInputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
   colorschemes.tokyonight = {
     enable = true;
@@ -35,22 +35,17 @@
       action = "<cmd>lua vim.lsp.buf.hover() vim.lsp.buf.hover()<CR>";
     }
     {
-      key = "<leader>tt";
+      key = "<leader>bt";
       action = "<cmd>Neotree filesystem focus toggle left<CR>";
     }
     {
-      key = "<leader>tr";
+      key = "<leader>br";
       action = "<cmd>Neotree filesystem focus reveal left<CR>";
-    }
-    {
-      key = "<leader>git";
-      action = "<cmd>LazyGit<CR>";
     }
     {
       key = "<leader>db";
       action = "<cmd>DapToggleBreakpoint<CR>";
     }
-
     {
       key = "<leader>dq";
       action = "<cmd>DapTerminate<CR>";
@@ -75,6 +70,15 @@
       key = "<leader>ds";
       action = "<cmd>DapStepOver<CR>";
     }
+    {
+      key = "<leader>tt";
+      action = "<cmd>ToggleTerm<CR>";
+    }
+    {
+      mode = "t";
+      key = "<c-esc>";
+      action = "<C-\\><C-n>";
+    }
   ];
 
   plugins = {
@@ -83,7 +87,7 @@
       layout = [
         {
           type = "padding";
-          val = 8;
+          val = 6;
         }
         {
           type = "text";
@@ -252,6 +256,14 @@
       };
     };
 
+    toggleterm = {
+      enable = true;
+      direction = "float";
+      floatOpts.border = "curved";
+      insertMappings = false;
+      terminalMappings = false;
+    };
+
     dap = {
       enable = true;
       extensions.dap-ui.enable = true;
@@ -290,18 +302,29 @@
   clipboard.providers.wl-copy.enable = true;
 
   extraConfigLua = ''
-    	local dap, dapui = require("dap"), require("dapui")
-        dap.listeners.before.attach.dapui_config = function()
-    	  dapui.open()
-        	end
-    	dap.listeners.before.launch.dapui_config = function()
-    	  dapui.open()
-    	end
-        dap.listeners.before.event_terminated.dapui_config = function()
-          dapui.close()
-        end
-        dap.listeners.before.event_exited.dapui_config = function()
-          dapui.close()
-        end
+            local dap, dapui = require("dap"), require("dapui")
+            dap.listeners.before.attach.dapui_config = function()
+            	dapui.open()
+            end
+            dap.listeners.before.launch.dapui_config = function()
+            	dapui.open()
+            end
+            dap.listeners.before.event_terminated.dapui_config = function()
+                dapui.close()
+            end
+            dap.listeners.before.event_exited.dapui_config = function()
+        		dapui.close()
+            end
+
+        	local Terminal = require('toggleterm.terminal').Terminal
+
+        	local lazygit = Terminal:new({ cmd = "${pkgs.lazygit}/bin/lazygit", hidden = true })
+        	vim.keymap.set('n', "<leader>git", function() lazygit:toggle() end)
+
+    		local lazysql = Terminal:new({ cmd = "${usrDrv.lazysql}/bin/lazysql", hidden = true })
+    		vim.keymap.set('n', '<leader>sql', function() lazysql:toggle() end)
+
+    		local lazydocker = Terminal:new({ cmd = "${pkgs.lazydocker}/bin/lazydocker", hidden = true })
+    		vim.keymap.set('n', '<leader>dkr', function() lazydocker:toggle() end)
   '';
 })
