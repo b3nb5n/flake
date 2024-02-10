@@ -1,5 +1,5 @@
 { pkgs, ... }: {
-  imports = [ ../base ./hardware.nix ];
+  imports = [ ./hardware.nix ];
 
   system.stateVersion = "23.05";
 
@@ -14,7 +14,7 @@
   users.users.ben = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
+    extraGroups = [ "wheel" "video" "audio" "networkmanager" "docker" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -30,4 +30,5 @@
 
   programs.zsh.enable = true;
   programs.dconf.enable = true;
+  virtualisation.docker.enable = true;
 }

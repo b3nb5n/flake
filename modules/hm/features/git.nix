@@ -9,4 +9,6 @@
       };
     };
   };
+
+  programs.gh.enable = true;
 }

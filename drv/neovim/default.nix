@@ -75,6 +75,14 @@
       action = "<cmd>ToggleTerm<CR>";
     }
     {
+      key = "<leader>ft";
+      action = "<cmd>TermSelect<CR>";
+    }
+    {
+      key = "<leader>tn";
+      action = ''<cmd>TermExec cmd=""<CR>'';
+    }
+    {
       mode = "t";
       key = "<c-esc>";
       action = "<C-\\><C-n>";
@@ -164,8 +172,8 @@
           "<leader>fmt" = "format";
         };
         diagnostic = {
-          # "<leader>dn" = "goto_next";
-          # "<leader>dp" = "goto_prev";
+          "<leader>en" = "goto_next";
+          "<leader>ep" = "goto_prev";
         };
       };
     };
@@ -211,8 +219,10 @@
         "<CR>" = "cmp.mapping.confirm({ select = true })";
         "<ESC>" = "cmp.mapping.close()";
         "<Down>" = "cmp.mapping.select_next_item()";
+        "<C-j>" = "cmp.mapping.select_next_item()";
         "<Tab>" = "cmp.mapping.select_next_item()";
         "<Up>" = "cmp.mapping.select_prev_item()";
+        "<C-k>" = "cmp.mapping.select_prev_item()";
         "<S-Tab>" = "cmp.mapping.select_prev_item()";
       };
     };
@@ -302,29 +312,32 @@
   clipboard.providers.wl-copy.enable = true;
 
   extraConfigLua = ''
-            local dap, dapui = require("dap"), require("dapui")
-            dap.listeners.before.attach.dapui_config = function()
-            	dapui.open()
-            end
-            dap.listeners.before.launch.dapui_config = function()
-            	dapui.open()
-            end
-            dap.listeners.before.event_terminated.dapui_config = function()
-                dapui.close()
-            end
-            dap.listeners.before.event_exited.dapui_config = function()
-        		dapui.close()
-            end
+    local dap, dapui = require("dap"), require("dapui")
+    dap.listeners.before.attach.dapui_config = function()
+        dapui.open()
+    end
+    dap.listeners.before.launch.dapui_config = function()
+        dapui.open()
+    end
+    dap.listeners.before.event_terminated.dapui_config = function()
+        dapui.close()
+    end
+    dap.listeners.before.event_exited.dapui_config = function()
+        dapui.close()
+    end
 
-        	local Terminal = require('toggleterm.terminal').Terminal
+    local Terminal = require('toggleterm.terminal').Terminal
 
-        	local lazygit = Terminal:new({ cmd = "${pkgs.lazygit}/bin/lazygit", hidden = true })
-        	vim.keymap.set('n', "<leader>git", function() lazygit:toggle() end)
+    local lazygit = Terminal:new({ cmd = "${pkgs.lazygit}/bin/lazygit", count = 900 })
+    vim.keymap.set('n', "<leader>git", function() lazygit:toggle() end)
 
-    		local lazysql = Terminal:new({ cmd = "${usrDrv.lazysql}/bin/lazysql", hidden = true })
-    		vim.keymap.set('n', '<leader>sql', function() lazysql:toggle() end)
+    local lazysql = Terminal:new({ cmd = "${usrDrv.lazysql}/bin/lazysql", count = 901 })
+    vim.keymap.set('n', '<leader>sql', function() lazysql:toggle() end)
 
-    		local lazydocker = Terminal:new({ cmd = "${pkgs.lazydocker}/bin/lazydocker", hidden = true })
-    		vim.keymap.set('n', '<leader>dkr', function() lazydocker:toggle() end)
+    local lazydocker = Terminal:new({ cmd = "${pkgs.lazydocker}/bin/lazydocker", count = 902 })
+    vim.keymap.set('n', '<leader>dkr', function() lazydocker:toggle() end)
+
+    local wuzz = Terminal:new({ cmd = "${pkgs.wuzz}/bin/wuzz", count = 903 })
+    vim.keymap.set('n', '<leader>http', function() wuzz:toggle() end)
   '';
 })
