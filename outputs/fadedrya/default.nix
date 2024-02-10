@@ -4,6 +4,7 @@
       inherit pkgs;
       extraSpecialArgs = args;
       modules = [
+        ./home.nix
         ../../modules/hm/features/direnv.nix
         ../../modules/hm/features/git.nix
         ../../modules/hm/features/neofetch.nix
