@@ -174,6 +174,7 @@
         diagnostic = {
           "<leader>en" = "goto_next";
           "<leader>ep" = "goto_prev";
+          "<leader>eh" = "open_float";
         };
       };
     };
@@ -238,7 +239,7 @@
         "<leader>ff" = "find_files";
         "<leader>fg" = "live_grep";
         "<leader>fb" = "buffers";
-        "<leader>fd" = "diagnostics";
+        "<leader>fe" = "diagnostics";
         "<leader>fl" = "current_buffer_fuzzy_find";
 
         "<leader>fs" = "lsp_document_symbols";
@@ -306,7 +307,7 @@
     lsp-format.enable = true;
     markdown-preview.enable = true;
     ts-autotag.enable = true;
-    # nvim-autopairs.enable = true;
+    nvim-autopairs.enable = true;
   };
 
   clipboard.providers.wl-copy.enable = true;
