@@ -1,13 +1,5 @@
 { pkgs, ... }: {
-  imports = [
-    ./eww
-    ./gtk.nix
-    ./hyprland.nix
-    ./hyprpaper.nix
-    ./wofi.nix
-  ];
+  imports = [ ./eww ./gtk.nix ./hyprland.nix ./hyprpaper.nix ./wofi.nix ];
 
-  home.packages = with pkgs; [
-    xdg-utils
-  ];
+  home.packages = with pkgs; [ xdg-utils ];
 }

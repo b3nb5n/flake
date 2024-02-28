@@ -6,25 +6,25 @@
   xdg.configFile."eww/widgets.yuck".source = ./widgets.yuck;
   xdg.configFile."eww/eww.yuck".text = ''
     (include "./widgets.yuck")
-
-    ${lib.concatStrings (lib.lists.imap0 (i: m: ''
-      (deflisten ${m.name}-workspaces "${usrDrv.hyprland-workspaces}/bin/hyprland-workspaces ${m.name}")
-      (defwindow ${m.name}-status-bar
-        :monitor ${toString i}
-        :stacking "fg"
-        :exclusive true
-        :focusable false
-        :geometry (geometry
-          :x "0%"
-          :y "8px"
-          :width "100%"
-          :height "36px"
-          :anchor "top center"
-        )
-        (status-bar :workspaces ${m.name}-workspaces)
+    (deflisten workspaces "${usrDrv.hyprland-workspaces}/bin/hyprland-workspaces _")
+    (defwindow status-bar
+      :monitor 1
+      :stacking "fg"
+      :exclusive true
+      :focusable false
+      :geometry (geometry
+        :x "0%"
+        :y "8px"
+        :width "100%"
+        :height "36px"
+        :anchor "top center"
       )
-    '') config.hardwareInfo.monitors)}
+      (status-bar :workspaces workspaces)
+    )
   '';
+
+  # ${lib.concatStrings
+  # (lib.lists.imap0 (i: m: "\n") config.hardwareInfo.monitors)}
 
   xdg.configFile."eww/eww.scss".text =
     with config.theme.color // usrLib.color; ''

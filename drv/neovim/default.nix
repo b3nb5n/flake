@@ -18,9 +18,6 @@
     smartindent = true;
 
     termguicolors = true;
-
-    swapfile = false;
-    backup = false;
   };
 
   globals = { mapleader = " "; };
@@ -29,10 +26,7 @@
     {
       key = "<C-s>";
       action = "<cmd>w<CR>";
-    }
-    {
-      key = "<leader>sh";
-      action = "<cmd>lua vim.lsp.buf.hover() vim.lsp.buf.hover()<CR>";
+      mode = [ "n" "v" "i" ];
     }
     {
       key = "<leader>bt";
@@ -119,12 +113,19 @@
 
     neo-tree = {
       enable = true;
+      filesystem.filteredItems = {
+        hideDotfiles = false;
+        hideGitignored = false;
+      };
       eventHandlers = {
         file_opened = ''function() vim.cmd("Neotree close") end'';
       };
     };
 
-    lualine.enable = true;
+    lualine = {
+      enable = true;
+      globalstatus = true;
+    };
 
     treesitter = {
       enable = true;
@@ -166,7 +167,7 @@
           "<leader>sa" = "code_action";
           "<leader>sd" = "definition";
           "<leader>su" = "document_highlight";
-          # "<leader>sh" = "hover"; # declared in global keybinds
+          "<leader>sh" = "hover"; # declared in global keybinds
           "<leader>sr" = "rename";
           "<leader>st" = "type_definition";
           "<leader>fmt" = "format";
@@ -193,6 +194,7 @@
         rustfmt.enable = true;
         stylua.enable = true;
         trim_whitespace.enable = true;
+        trim_newlines.enable = true;
       };
     };
 
@@ -217,7 +219,7 @@
       ];
       mapping = {
         "<C-Space>" = "cmp.mapping.complete()";
-        "<CR>" = "cmp.mapping.confirm({ select = true })";
+        "<CR>" = "cmp.mapping.confirm()";
         "<ESC>" = "cmp.mapping.close()";
         "<Down>" = "cmp.mapping.select_next_item()";
         "<C-j>" = "cmp.mapping.select_next_item()";
@@ -244,8 +246,6 @@
 
         "<leader>fs" = "lsp_document_symbols";
         "<leader>fsr" = "lsp_references";
-        "<leader>fsi" = "lsp_incoming_calls";
-        "<leader>fso" = "lsp_outgoing_calls";
         "<leader>fsd" = "lsp_definitions";
         "<leader>fst" = "lsp_type_definitions";
 
@@ -311,6 +311,8 @@
   };
 
   clipboard.providers.wl-copy.enable = true;
+
+  # extraPlugins = with pkgs.vimPlugins; [ lsp-status-nvim ];
 
   extraConfigLua = ''
     local dap, dapui = require("dap"), require("dapui")

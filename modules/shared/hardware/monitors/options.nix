@@ -1,8 +1,9 @@
-args: let
-  inherit (args.lib) mkOption types;
+args:
+let inherit (args.lib) mkOption types;
 in mkOption {
   type = types.listOf (types.submodule {
     options = {
+      id = mkOption { type = types.str; };
       name = mkOption { type = types.str; };
       x = mkOption { type = types.int; };
       y = mkOption { type = types.int; };

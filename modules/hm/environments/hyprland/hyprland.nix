@@ -5,12 +5,14 @@
     enable = true;
     xwayland.enable = true;
     settings = with config.hardwareInfo // config.theme // usrLib.color; {
-      monitor = map
-        (m: "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
+      monitor = map (m:
+        "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${
+          toString m.y
+        }, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
         monitors;
-      
-      workspace = lib.lists.imap0
-        (i: m: "${m.name}, ${toString i}, monitor:${m.name}, default:true, persistent:true")
+
+      workspace =
+        map (m: "${m.id}, monitor:${m.name}, default:true, persistent:true")
         monitors;
 
       input = {
@@ -97,9 +99,7 @@
         "$wmKey $modKeyB, down, resizeactive, 0 16"
       ];
 
-      bindm = [
-        "$wmKey, mouse:272, movewindow"
-      ];
+      bindm = [ "$wmKey, mouse:272, movewindow" ];
 
       windowrule = [
         "opacity 0.8, Alacritty"
@@ -109,8 +109,11 @@
 
       exec-once = [
         "hyprpaper"
-        "eww daemon && (${lib.strings.concatMapStringsSep
-          " & " (m: "eww open ${m.name}-status-bar") monitors})"
+        "eww daemon && eww open status-bar"
+        # (${
+        #         lib.strings.concatMapStringsSep " & "
+        #         (m: "eww open ${m.name}-status-bar") monitors
+        #       })
       ];
     };
   };
