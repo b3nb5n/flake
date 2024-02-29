@@ -9,6 +9,7 @@
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
+    flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
 
     nixvim = {
@@ -19,11 +20,17 @@
       };
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
+    rust-overlay = {
+      url = "github:oxalica/rust-overlay";
+      inputs = {
+        nixpkgs.follows = "nixpkgs-unstable";
+        flake-utils.follows = "flake-utils";
+      };
+    };
   };
 
   outputs = { nixpkgs-stable, nixpkgs-unstable, nur, home-manager, flake-utils
-    , ... }@inputs:
+    , rust-overlay, ... }@inputs:
     (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgsArgs = {
@@ -32,6 +39,7 @@
             allowUnfree = true;
             allowUnfreePredicate = _: true;
           };
+          overlays = [ (import rust-overlay) ];
         };
 
         nixpkgsStable = import nixpkgs-stable pkgsArgs;

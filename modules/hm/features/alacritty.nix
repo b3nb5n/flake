@@ -1,14 +1,15 @@
 { pkgs, usrLib, config, ... }: {
   home.sessionVariables.TERM = "alacritty";
-  home.packages = with pkgs; [
-    fira-code-nerdfont
-  ];
+  home.packages = with pkgs; [ fira-code-nerdfont ];
 
   programs.alacritty = {
     enable = true;
     settings = {
       window = {
-        padding = { x = 12; y = 6; };
+        padding = {
+          x = 6;
+          y = 0;
+        };
         decorations = "None";
         dynamic_padding = true;
       };
@@ -23,7 +24,7 @@
         };
         blink_timeout = 0;
       };
-      font.normal.family = "FiraCode Nerd Font Mono"; 
+      font.normal.family = "FiraCode Nerd Font Mono";
       colors = with config.theme.color // usrLib.color; {
         primary = {
           background = hex (builtins.elemAt bg 0);

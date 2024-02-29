@@ -1,11 +1,5 @@
 { flakeInputs, pkgs, usrDrv, ... }:
 (flakeInputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
-  colorschemes.tokyonight = {
-    enable = true;
-    style = "night";
-    styles.keywords.italic = false;
-  };
-
   options = {
     number = true;
     relativenumber = true;
@@ -29,57 +23,55 @@
       mode = [ "n" "v" "i" ];
     }
     {
-      key = "<leader>bt";
-      action = "<cmd>Neotree filesystem focus toggle left<CR>";
+      mode = "t";
+      key = "<c-esc>";
+      action = "<C-\\><C-n>";
     }
     {
-      key = "<leader>br";
-      action = "<cmd>Neotree filesystem focus reveal left<CR>";
+      key = "<leader>tt";
+      action = "<cmd>terminal<cr>";
+    }
+    {
+      key = "<leader>ex";
+      action = "<cmd>terminal ${pkgs.xplr}/bin/xplr<cr>";
+    }
+    {
+      key = "<leader>git";
+      action = "<cmd>terminal ${pkgs.lazygit}/bin/lazygit<cr>";
+    }
+    {
+      key = "<leader>http";
+      action = "<cmd>terminal ${pkgs.wuzz}/bin/wuzz<cr>";
+    }
+    {
+      key = "<leader>sql";
+      action = "<cmd>terminal ${usrDrv.lazysql}/bin/lazysql<cr>";
     }
     {
       key = "<leader>db";
       action = "<cmd>DapToggleBreakpoint<CR>";
     }
+  ];
+
+  colorschemes.tokyonight = {
+    enable = true;
+    style = "night";
+    styles.keywords.italic = false;
+  };
+
+  autoCmd = [
     {
-      key = "<leader>dq";
-      action = "<cmd>DapTerminate<CR>";
+      event = "TermOpen";
+      command = "startinsert";
     }
     {
-      key = "<leader>dr";
-      action = "<cmd>DapRestartFrame<CR>";
+      event = "TermOpen";
+      command = "setlocal nonumber norelativenumber";
     }
     {
-      key = "<leader>dc";
-      action = "<cmd>DapContinue<CR>";
-    }
-    {
-      key = "<leader>di";
-      action = "<cmd>DapStepInto<CR>";
-    }
-    {
-      key = "<leader>do";
-      action = "<cmd>DapStepOut<CR>";
-    }
-    {
-      key = "<leader>ds";
-      action = "<cmd>DapStepOver<CR>";
-    }
-    {
-      key = "<leader>tt";
-      action = "<cmd>ToggleTerm<CR>";
-    }
-    {
-      key = "<leader>ft";
-      action = "<cmd>TermSelect<CR>";
-    }
-    {
-      key = "<leader>tn";
-      action = ''<cmd>TermExec cmd=""<CR>'';
-    }
-    {
-      mode = "t";
-      key = "<c-esc>";
-      action = "<C-\\><C-n>";
+      event = "TermClose";
+      command =
+        "lua vim.api.nvim_buf_delete(tonumber(vim.fn.expand('<abuf>')), {})";
     }
   ];
 
@@ -109,17 +101,6 @@
           ];
         }
       ];
-    };
-
-    neo-tree = {
-      enable = true;
-      filesystem.filteredItems = {
-        hideDotfiles = false;
-        hideGitignored = false;
-      };
-      eventHandlers = {
-        file_opened = ''function() vim.cmd("Neotree close") end'';
-      };
     };
 
     lualine = {
@@ -160,6 +141,7 @@
         lua-ls.enable = true;
         nil_ls.enable = true;
         tsserver.enable = true;
+        taplo.enable = true;
         # rust-analyzer.enable = true; # installed by rustaceanvim
       };
       keymaps = {
@@ -167,10 +149,9 @@
           "<leader>sa" = "code_action";
           "<leader>sd" = "definition";
           "<leader>su" = "document_highlight";
-          "<leader>sh" = "hover"; # declared in global keybinds
+          "<leader>sh" = "hover";
           "<leader>sr" = "rename";
           "<leader>st" = "type_definition";
-          "<leader>fmt" = "format";
         };
         diagnostic = {
           "<leader>en" = "goto_next";
@@ -180,6 +161,7 @@
       };
     };
 
+    lsp-format.enable = true;
     none-ls = {
       enable = true;
       enableLspFormat = true;
@@ -195,6 +177,8 @@
         stylua.enable = true;
         trim_whitespace.enable = true;
         trim_newlines.enable = true;
+        sqlfluff.enable = true;
+        taplo.enable = true;
       };
     };
 
@@ -233,11 +217,6 @@
     telescope = {
       enable = true;
       keymaps = {
-        "<leader>fk" = "keymaps";
-        "<leader>fc" = "commands";
-        "<leader>fm" = "man_pages";
-        "<leader>fh" = "help_tags";
-
         "<leader>ff" = "find_files";
         "<leader>fg" = "live_grep";
         "<leader>fb" = "buffers";
@@ -265,14 +244,6 @@
           "--smart-case"
         ];
       };
-    };
-
-    toggleterm = {
-      enable = true;
-      direction = "float";
-      floatOpts.border = "curved";
-      insertMappings = false;
-      terminalMappings = false;
     };
 
     dap = {
@@ -304,10 +275,7 @@
       mappings.extra = false;
     };
 
-    lsp-format.enable = true;
-    markdown-preview.enable = true;
     ts-autotag.enable = true;
-    nvim-autopairs.enable = true;
   };
 
   clipboard.providers.wl-copy.enable = true;
@@ -328,19 +296,5 @@
     dap.listeners.before.event_exited.dapui_config = function()
         dapui.close()
     end
-
-    local Terminal = require('toggleterm.terminal').Terminal
-
-    local lazygit = Terminal:new({ cmd = "${pkgs.lazygit}/bin/lazygit", count = 900 })
-    vim.keymap.set('n', "<leader>git", function() lazygit:toggle() end)
-
-    local lazysql = Terminal:new({ cmd = "${usrDrv.lazysql}/bin/lazysql", count = 901 })
-    vim.keymap.set('n', '<leader>sql', function() lazysql:toggle() end)
-
-    local lazydocker = Terminal:new({ cmd = "${pkgs.lazydocker}/bin/lazydocker", count = 902 })
-    vim.keymap.set('n', '<leader>dkr', function() lazydocker:toggle() end)
-
-    local wuzz = Terminal:new({ cmd = "${pkgs.wuzz}/bin/wuzz", count = 903 })
-    vim.keymap.set('n', '<leader>http', function() wuzz:toggle() end)
   '';
 })
