@@ -4,8 +4,8 @@ pkgs.buildGoModule {
   src = pkgs.fetchFromGitHub {
     owner = "jorgerojas26";
     repo = "lazysql";
-    rev = "v0.1.6";
-    sha256 = "1qxYrzbtdVAxJ7WQf0IbMhGnF7tiw4gmqjAq7Ytd9z8=";
+    rev = "main";
+    sha256 = "thlfGw5E5maarcdOcPdggHaJ7H4TnIFw9I0pQ9npUqo=";
   };
   nativeBuildInputs = with pkgs; [ pkg-config ];
   buildInputs = with pkgs; [ xorg.libX11.dev ];

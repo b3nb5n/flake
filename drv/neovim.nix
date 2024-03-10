@@ -43,10 +43,10 @@
       key = "<leader>http";
       action = "<cmd>terminal ${pkgs.wuzz}/bin/wuzz<cr>";
     }
-    {
-      key = "<leader>sql";
-      action = "<cmd>terminal ${usrDrv.lazysql}/bin/lazysql<cr>";
-    }
+    # {
+    #   key = "<leader>sql";
+    #   action = "<cmd>terminal ${usrDrv.lazysql}/bin/lazysql<cr>";
+    # }
     {
       key = "<leader>db";
       action = "<cmd>DapToggleBreakpoint<CR>";
@@ -262,8 +262,8 @@
           host = "127.0.0.1";
           port = "6866";
           executable = {
-            command =
-              "${pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter}/bin/codelldb";
+            command ="";
+      #        "${pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter}/bin/codelldb";
             args = [ "--port" port ];
           };
         };

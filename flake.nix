@@ -2,8 +2,12 @@
   inputs = {
     nixpkgs-stable.url = "nixpkgs/release-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nur.url = "github:nix-community/NUR";
 
+    nix-darwin = {
+      url = "github:LnL7/nix-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
+    
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
@@ -11,6 +15,7 @@
 
     flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
+    nur.url = "github:nix-community/NUR";
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -38,6 +43,7 @@
           config = {
             allowUnfree = true;
             allowUnfreePredicate = _: true;
+            allowUnsupportedSystem = true;
           };
           overlays = [ (import rust-overlay) ];
         };

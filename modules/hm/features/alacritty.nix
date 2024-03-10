@@ -1,4 +1,4 @@
-{ pkgs, usrLib, config, ... }: {
+{ pkgs, lib, usrLib, config, ... }: {
   home.sessionVariables.TERM = "alacritty";
   home.packages = with pkgs; [ fira-code-nerdfont ];
 
@@ -10,7 +10,7 @@
           x = 6;
           y = 0;
         };
-        decorations = "None";
+        decorations = lib.mkIf (!pkgs.stdenv.isDarwin) "None";
         dynamic_padding = true;
       };
       scrolling = {
