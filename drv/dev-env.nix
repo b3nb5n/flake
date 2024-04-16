@@ -3,7 +3,12 @@ pkgs.buildEnv {
   name = "development-env";
   paths = with pkgs // usrDrv; [
     neovim
+    awk
+    curl
+    ripgrep
+    locale
     git
+    gh
     lazygit
     lazydocker
     lazysql
@@ -11,5 +16,6 @@ pkgs.buildEnv {
     (rust-bin.stable.latest.default.override {
       extensions = [ "rust-src" "rustfmt" ];
     })
+    zig
   ];
 }
