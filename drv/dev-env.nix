@@ -3,7 +3,7 @@ pkgs.buildEnv {
   name = "development-env";
   paths = with pkgs // usrDrv; [
     neovim
-    awk
+    nawk
     curl
     ripgrep
     locale
