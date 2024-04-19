@@ -3,7 +3,6 @@
 
   programs.firefox = {
     enable = true;
-    package = registries.nixpkgsStable.firefox;
     profiles.${config.home.username} =
       with config.theme.color // usrLib.color; {
         search = {
@@ -70,6 +69,16 @@
                 }];
               }];
             };
+            "Rust Docs" = {
+              definedAliases = [ "@rs" ];
+              urls = [{
+                template = "https://docs.rs/releases/search";
+                params = [{
+                  name = "query";
+                  value = "{searchTerms}";
+                }];
+              }];
+            };
             "Nix Pkgs" = {
               definedAliases = [ "@nixpkgs" ];
               urls = [{
@@ -126,6 +135,7 @@
           ublock-origin
           sponsorblock
           react-devtools
+          darkreader
         ];
         settings = {
           "browser.newtabpage.pinned" = [

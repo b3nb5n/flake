@@ -1,6 +1,7 @@
 args: {
   imports = [
     ./alacritty.nix
+	./cubemx.nix
     ./direnv.nix
     ./discord.nix
     ./firefox.nix
@@ -9,6 +10,7 @@ args: {
     ./neofetch.nix
     ./neovim.nix
     ./vscode.nix
+    ./xplr.nix
     ./zsh.nix
   ];
 }

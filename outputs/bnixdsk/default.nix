@@ -15,6 +15,7 @@
       ../../modules/nixos/portals.nix
       ../../modules/nixos/sound.nix
       ../../modules/nixos/steam.nix
+      ../../modules/nixos/ssh.nix
 
       { networking.hostName = "bnixdsk"; }
     ];
@@ -48,6 +49,8 @@
               spotify
               scarab
               nvtop
+              kicad-small
+              helvum
             ];
           };
         })

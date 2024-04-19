@@ -3,5 +3,5 @@
   owner = "nix-community";
   repo = "nix-vscode-extensions";
   rev = "master";
-  sha256 = "jLEVnMZBxZ/0ziOvzrM9t5NvrwYFvhWLG9lh+ZS6Hhs=";
+  sha256 = "A2s6Mx1oXZFFjZGrPIJpOGfZnQpKlBEEADIjLe1dPqY=";
 })).extensions.${pkgs.system}.vscode-marketplace

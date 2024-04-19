@@ -1,6 +1,12 @@
 { flakeInputs, pkgs, usrDrv, ... }:
 (flakeInputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
+  extraConfigLua = builtins.readFile ./neovim.lua;
+
+  globals = { mapleader = " "; };
+
   options = {
+    termguicolors = true;
+
     number = true;
     relativenumber = true;
     scrolloff = 8;
@@ -11,10 +17,8 @@
     expandtab = false;
     smartindent = true;
 
-    termguicolors = true;
+    swapfile = false;
   };
-
-  globals = { mapleader = " "; };
 
   keymaps = [
     {
@@ -47,17 +51,69 @@
     #   key = "<leader>sql";
     #   action = "<cmd>terminal ${usrDrv.lazysql}/bin/lazysql<cr>";
     # }
+
+    {
+      key = "<leader>fg";
+      lua = true;
+      action = "require('telescope.builtin').live_grep";
+    }
+    {
+      key = "<leader>fl";
+      lua = true;
+      action = "require('telescope.builtin').current_buffer_fuzzy_find";
+    }
+    {
+      key = "<leader>ff";
+      lua = true;
+      action = ''
+        function()
+          require('telescope.builtin').find_files({
+            hidden = true,
+            no_ignore = true,
+            no_ignore_parent = true,
+          })
+        end
+      '';
+    }
+    {
+      key = "<leader>fb";
+      lua = true;
+      action = ''
+        function()
+          require('telescope.builtin').buffers({
+            sort_lastused = true,
+            ignore_current_buffer = true,
+          })
+        end
+      '';
+    }
+    {
+      key = "<leader>fe";
+      lua = true;
+      action =
+        "function() require('telescope.builtin').diagnostics({ sort_by = 'severity' }) end";
+    }
+
+    {
+      key = "<leader>fsr";
+      lua = true;
+      action = "require('telescope.builtin').lsp_references";
+    }
+    {
+      key = "<leader>fsd";
+      lua = true;
+      action = "require('telescope.builtin').lsp_definitions";
+    }
+    {
+      key = "<leader>fst";
+      lua = true;
+      action = "require('telescope.builtin').lsp_type_definitions";
+    }
     {
       key = "<leader>db";
       action = "<cmd>DapToggleBreakpoint<CR>";
     }
   ];
-
-  colorschemes.tokyonight = {
-    enable = true;
-    style = "night";
-    styles.keywords.italic = false;
-  };
 
   autoCmd = [
     {
@@ -74,6 +130,14 @@
         "lua vim.api.nvim_buf_delete(tonumber(vim.fn.expand('<abuf>')), {})";
     }
   ];
+
+  clipboard.providers.wl-copy.enable = true;
+
+  colorschemes.tokyonight = {
+    enable = true;
+    style = "night";
+    styles.keywords.italic = false;
+  };
 
   plugins = {
     alpha = {
@@ -216,26 +280,11 @@
 
     telescope = {
       enable = true;
-      keymaps = {
-        "<leader>ff" = "find_files";
-        "<leader>fg" = "live_grep";
-        "<leader>fb" = "buffers";
-        "<leader>fe" = "diagnostics";
-        "<leader>fl" = "current_buffer_fuzzy_find";
-
-        "<leader>fs" = "lsp_document_symbols";
-        "<leader>fsr" = "lsp_references";
-        "<leader>fsd" = "lsp_definitions";
-        "<leader>fst" = "lsp_type_definitions";
-
-        "<leader>fgc" = "git_commits";
-        "<leader>fgb" = "git_branches";
-        "<leader>fgs" = "git_stash";
-      };
       defaults = {
-        file_ignore_patterns = [ "target" "node_modules" ];
+        file_ignore_patterns = [ ".git" ".direnv" "target" "node_modules" ];
         vimgrep_arguments = [
           "${pkgs.ripgrep}/bin/rg"
+          "--hidden"
           "--color=never"
           "--no-heading"
           "--with-filename"
@@ -262,8 +311,8 @@
           host = "127.0.0.1";
           port = "6866";
           executable = {
-            command ="";
-      #        "${pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter}/bin/codelldb";
+            command =
+              "${pkgs.vscode-extensions.vadimcn.vscode-lldb.adapter}/bin/codelldb";
             args = [ "--port" port ];
           };
         };
@@ -277,24 +326,4 @@
 
     ts-autotag.enable = true;
   };
-
-  clipboard.providers.wl-copy.enable = true;
-
-  # extraPlugins = with pkgs.vimPlugins; [ lsp-status-nvim ];
-
-  extraConfigLua = ''
-    local dap, dapui = require("dap"), require("dapui")
-    dap.listeners.before.attach.dapui_config = function()
-        dapui.open()
-    end
-    dap.listeners.before.launch.dapui_config = function()
-        dapui.open()
-    end
-    dap.listeners.before.event_terminated.dapui_config = function()
-        dapui.close()
-    end
-    dap.listeners.before.event_exited.dapui_config = function()
-        dapui.close()
-    end
-  '';
 })
