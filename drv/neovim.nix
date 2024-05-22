@@ -6,18 +6,16 @@
 
   options = {
     termguicolors = true;
-
     number = true;
     relativenumber = true;
     scrolloff = 8;
-
     tabstop = 4;
     softtabstop = 4;
     shiftwidth = 4;
     expandtab = false;
     smartindent = true;
-
     swapfile = false;
+    conceallevel = 1;
   };
 
   keymaps = [
@@ -25,6 +23,10 @@
       key = "<C-s>";
       action = "<cmd>w<CR>";
       mode = [ "n" "v" "i" ];
+    }
+    {
+      key = "<esc>";
+      action = "<cmd>noh<cr>";
     }
     {
       mode = "t";
@@ -37,7 +39,7 @@
     }
     {
       key = "<leader>ex";
-      action = "<cmd>terminal ${pkgs.xplr}/bin/xplr<cr>";
+      action = "<cmd>terminal ${pkgs.lf}/bin/lf<cr>";
     }
     {
       key = "<leader>git";
@@ -47,11 +49,10 @@
       key = "<leader>http";
       action = "<cmd>terminal ${pkgs.wuzz}/bin/wuzz<cr>";
     }
-    # {
-    #   key = "<leader>sql";
-    #   action = "<cmd>terminal ${usrDrv.lazysql}/bin/lazysql<cr>";
-    # }
-
+    {
+      key = "<leader>sql";
+      action = "<cmd>terminal ${usrDrv.lazysql}/bin/lazysql<cr>";
+    }
     {
       key = "<leader>fg";
       lua = true;
@@ -93,25 +94,33 @@
       action =
         "function() require('telescope.builtin').diagnostics({ sort_by = 'severity' }) end";
     }
-
     {
-      key = "<leader>fsr";
+      key = "<leader>fw";
+      lua = true;
+      action = "require('telescope.builtin').spell_suggest";
+    }
+    {
+      key = "<leader>sr";
       lua = true;
       action = "require('telescope.builtin').lsp_references";
     }
     {
-      key = "<leader>fsd";
+      key = "<leader>sd";
       lua = true;
       action = "require('telescope.builtin').lsp_definitions";
     }
     {
-      key = "<leader>fst";
+      key = "<leader>st";
       lua = true;
       action = "require('telescope.builtin').lsp_type_definitions";
     }
     {
       key = "<leader>db";
       action = "<cmd>DapToggleBreakpoint<CR>";
+    }
+    {
+      key = "<leader>ts";
+      action = "<cmd>:setlocal spell! spelllang=en_us<cr>";
     }
   ];
 
@@ -211,11 +220,11 @@
       keymaps = {
         lspBuf = {
           "<leader>sa" = "code_action";
-          "<leader>sd" = "definition";
-          "<leader>su" = "document_highlight";
+          # "<leader>sd" = "definition";
+          # "<leader>su" = "document_highlight";
           "<leader>sh" = "hover";
-          "<leader>sr" = "rename";
-          "<leader>st" = "type_definition";
+          "<leader>sn" = "rename";
+          # "<leader>st" = "type_definition";
         };
         diagnostic = {
           "<leader>en" = "goto_next";
@@ -300,6 +309,11 @@
       extensions.dap-ui.enable = true;
     };
 
+    comment-nvim = {
+      enable = true;
+      mappings.extra = false;
+    };
+
     rustaceanvim = {
       enable = true;
       rustAnalyzerPackage = pkgs.rust-analyzer;
@@ -319,11 +333,8 @@
       };
     };
 
-    comment-nvim = {
-      enable = true;
-      mappings.extra = false;
-    };
-
     ts-autotag.enable = true;
+    obsidian.enable = true;
+    hardtime.enable = true;
   };
 })

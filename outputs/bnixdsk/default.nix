@@ -49,8 +49,11 @@
               spotify
               scarab
               nvtop
-              kicad-small
+              kicad
               helvum
+              lf
+              ttyper
+			  neomutt
             ];
           };
         })

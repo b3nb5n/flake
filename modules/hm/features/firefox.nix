@@ -129,6 +129,18 @@
                 }];
               }];
             };
+            "Dictionary" = {
+              definedAliases = [ "@dictionary" "@define" ];
+              urls = [{
+                template = "https://www.dictionary.com/browse/{searchTerms}";
+              }];
+            };
+            "Thesaurus" = {
+              definedAliases = [ "@thesaurus" "@simile" "@antonym" ];
+              urls = [{
+                template = "https://www.thesaurus.com/browse/{searchTerms}";
+              }];
+            };
           };
         };
         extensions = with registries.nurpkgs.repos.rycee.firefox-addons; [
@@ -136,6 +148,8 @@
           sponsorblock
           react-devtools
           darkreader
+          dearrow
+          copy-selection-as-markdown
         ];
         settings = {
           "browser.newtabpage.pinned" = [
@@ -159,7 +173,14 @@
           "browser.uiCustomization.state" = {
             placements = {
               widget-overflow-fixed-list = [ ];
-              unified-extensions-area = [ ];
+              unified-extensions-area = [
+                "dearrow_ajay_app-browser-action"
+                "youtubeskipad_010pixel_com-browser-action"
+                "addon_darkreader_org-browser-action"
+                "adguardadblocker_adguard_com-browser-action"
+                "password_generator_kolya_ca-browser-action"
+                "sponsorblocker_ajay_app-browser-action"
+              ];
               nav-bar = [
                 "back-button"
                 "forward-button"
@@ -191,6 +212,11 @@
               "sponsorblocker_ajay_app-browser-action"
               "ublock0_raymondhill_net-browser-action"
               "_react-devtools-browser-action"
+              "youtubeskipad_010pixel_com-browser-action"
+              "addon_darkreader_org-browser-action"
+              "adguardadblocker_adguard_com-browser-action"
+              "password_generator_kolya_ca-browser-action"
+              "dearrow_ajay_app-browser-action"
             ];
           };
           "dom.security.https_only_mode" = true;
@@ -337,12 +363,12 @@
             }
           }
 
-          :root {
+          /* :root {
             scrollbar-width: thin; !important
             scrollbar-color: ${hex gray.default} ${
               hex (builtins.elemAt bg 1)
             } !important;
-          }
+          } */
 
           ::selection,
           ::-moz-selection {
