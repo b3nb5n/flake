@@ -1,7 +1,7 @@
-{ registries, ... }: {
+{ repos, ... }: {
   hardware.steam-hardware.enable = true;
   programs.steam = {
     enable = true;
-    package = registries.nixpkgsUnstable.steam;
+    package = repos.nixpkgsUnstable.steam;
   };
 }

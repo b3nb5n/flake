@@ -1,12 +1,12 @@
-{ stdenv, pkgs, lib, usrLib, usrDrv, config, ... }: {
-  home.packages = with pkgs; [ eww-wayland ];
+{ pkgs, repos, usrLib, config, ... }: {
+  home.packages = with pkgs; [ eww ];
 
   imports = [ ./assets.nix ];
 
   xdg.configFile."eww/widgets.yuck".source = ./widgets.yuck;
   xdg.configFile."eww/eww.yuck".text = ''
     (include "./widgets.yuck")
-    (deflisten workspaces "${usrDrv.hyprland-workspaces}/bin/hyprland-workspaces _")
+    (deflisten workspaces "${repos.usrDrv.hyprland-workspaces}/bin/hyprland-workspaces _")
     (defwindow status-bar
       :monitor 1
       :stacking "fg"

@@ -2,20 +2,21 @@
   inputs = {
     nixpkgs-stable.url = "nixpkgs/release-23.11";
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
+    nur.url = "github:nix-community/NUR";
 
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-    
+
     home-manager = {
       url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
-    flake-utils.url = "github:numtide/flake-utils";
     nixos-hardware.url = "github:NixOS/nixos-hardware";
-    nur.url = "github:nix-community/NUR";
+    flake-utils.url = "github:numtide/flake-utils";
+    devshell.url = "github:numtide/devshell";
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -35,7 +36,7 @@
   };
 
   outputs = { nixpkgs-stable, nixpkgs-unstable, nur, home-manager, flake-utils
-    , rust-overlay, ... }@inputs:
+    , devshell, rust-overlay, ... }@inputs:
     (flake-utils.lib.eachDefaultSystem (system:
       let
         pkgsArgs = {
@@ -45,7 +46,7 @@
             allowUnfreePredicate = _: true;
             allowUnsupportedSystem = true;
           };
-          overlays = [ (import rust-overlay) ];
+          overlays = [ (import rust-overlay) devshell.overlays.default ];
         };
 
         nixpkgsStable = import nixpkgs-stable pkgsArgs;
@@ -58,9 +59,11 @@
         args = {
           flakeInputs = inputs;
           pkgs = nixpkgsUnstable;
-          registries = { inherit nixpkgsStable nixpkgsUnstable nurpkgs; };
           usrLib = import ./lib args;
-          usrDrv = import ./drv args;
+          repos = {
+            inherit nixpkgsStable nixpkgsUnstable nurpkgs;
+            usrDrv = import ./drv args;
+          };
         };
       in (import ./outputs args)));
 }

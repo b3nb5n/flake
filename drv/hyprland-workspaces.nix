@@ -5,9 +5,9 @@ pkgs.rustPlatform.buildRustPackage {
   src = pkgs.fetchFromGitHub {
     owner = "FieldofClay";
     repo = "hyprland-workspaces";
-    rev = "v1.2.5";
-    sha256 = "sha256-5/add1VSJe5ChKi4UU5iUKRAj4kMjOnbB76QX/FkA6k=";
+    rev = "v2.0.1";
+    sha256 = "GhUjvFMlgjTdgtV9ASW7IqE2dBktPyOlRwg6qM1r7vc=";
   };
 
-  cargoHash = "sha256-kUDo+6fsrzzojHYNMNBYpztGJPPtPp/OXUypUJnzebY=";
+  cargoHash = "sha256-bK/nJocAhW8mIhx971zssdcW5qRUDciy2IHQcRESlv8=";
 }

@@ -1,14 +1,9 @@
-{ pkgs, usrLib, usrDrv, config, ... }: {
-  home.sessionVariables = {
-    EDITOR = "vscode";
-    SPAWNEDITOR = "code";
-  };
-
+{ pkgs, repos, usrLib, config, ... }: {
   programs.vscode = {
     enable = true;
     enableUpdateCheck = false;
     enableExtensionUpdateCheck = false;
-    extensions = with usrDrv.vscode-marketplace; [
+    extensions = with repos.usrDrv.vscode-marketplace; [
       jnoortheen.nix-ide
       naumovs.color-highlight
       miguelsolorio.fluent-icons

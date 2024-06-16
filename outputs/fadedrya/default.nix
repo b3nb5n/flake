@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, usrDrv, ... }@args: {
+{ flakeInputs, pkgs, repos, ... }@args: {
   homeConfigurations = {
     "ben@fadedrya" = flakeInputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
@@ -18,7 +18,7 @@
         ({ pkgs, ... }: {
           home = {
             username = "ben";
-            packages = with pkgs; [ usrDrv.dev-env ];
+            packages = [ repos.usrDrv.dev-env ];
           };
         })
       ];

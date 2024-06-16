@@ -1,4 +1,4 @@
-{ usrDrv, ... }@inputs: {
+{ repos, ... }: {
   programs.bash.shellAliases = {
     vim = "nvim";
     vi = "nvim";
@@ -9,5 +9,10 @@
     vi = "nvim";
   };
 
-  home.packages = [ usrDrv.neovim ];
+  home.sessionVariables = {
+    EDITOR = "neovim";
+    SPAWNEDITOR = "nvim";
+  };
+
+  home.packages = [ repos.usrDrv.neovim ];
 }

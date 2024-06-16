@@ -1,4 +1,4 @@
-{ pkgs, registries, config, usrLib, ... }: {
+{ pkgs, repos, config, usrLib, ... }: {
   home.sessionVariables.BROWSER = "firefox";
 
   programs.firefox = {
@@ -143,7 +143,7 @@
             };
           };
         };
-        extensions = with registries.nurpkgs.repos.rycee.firefox-addons; [
+        extensions = with repos.nurpkgs.repos.rycee.firefox-addons; [
           ublock-origin
           sponsorblock
           react-devtools
