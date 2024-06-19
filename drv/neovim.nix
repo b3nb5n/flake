@@ -56,60 +56,65 @@
       action = "<cmd>terminal ${repos.usrDrv.lazysql}/bin/lazysql<cr>";
     }
     {
-      key = "<leader>fg";
-      action.__raw = "require('telescope.builtin').live_grep";
-    }
-    {
-      key = "<leader>fl";
-      action.__raw = "require('telescope.builtin').current_buffer_fuzzy_find";
-    }
-    {
       key = "<leader>ff";
       action.__raw = ''
-        function()
-          require('telescope.builtin').find_files({
-            hidden = true,
-            no_ignore = true,
-            no_ignore_parent = true,
-          })
+        function () 
+        	require('telescope.builtin').find_files({
+        		hidden = true,
+        		no_ignore = true,
+        		no_ignore_parent = true
+        	})
         end
       '';
     }
     {
       key = "<leader>fb";
       action.__raw = ''
-        function()
-          require('telescope.builtin').buffers({
-            sort_lastused = true,
-            ignore_current_buffer = true,
-          })
+        function () 
+        	require('telescope.builtin').buffers({
+        		 sort_lastused = true,
+        		 ignore_current_buffer = true
+        	})
         end
       '';
     }
     {
       key = "<leader>fe";
-      action.__raw =
-        "function() require('telescope.builtin').diagnostics({ sort_by = 'severity' }) end";
-    }
-    {
-      key = "<leader>fw";
-      action.__raw = "require('telescope.builtin').spell_suggest";
-    }
-    {
-      key = "<leader>sr";
-      action.__raw = "require('telescope.builtin').lsp_references";
-    }
-    {
-      key = "<leader>sd";
-      action.__raw = "require('telescope.builtin').lsp_definitions";
-    }
-    {
-      key = "<leader>st";
-      action.__raw = "require('telescope.builtin').lsp_type_definitions";
+      action.__raw = ''
+        function () 
+        	require('telescope.builtin').diagnostics({
+        		sort_by= "severity";
+        	})
+        end
+      '';
     }
     {
       key = "<leader>db";
       action = "<cmd>DapToggleBreakpoint<CR>";
+    }
+    {
+      key = "<leader>dq";
+      action = "<cmd>DapTerminate<CR>";
+    }
+    {
+      key = "<leader>dr";
+      action = "<cmd>DapRestartFrame<CR>";
+    }
+    {
+      key = "<leader>dc";
+      action = "<cmd>DapContinue<CR>";
+    }
+    {
+      key = "<leader>di";
+      action = "<cmd>DapStepInto<CR>";
+    }
+    {
+      key = "<leader>do";
+      action = "<cmd>DapStepOut<CR>";
+    }
+    {
+      key = "<leader>ds";
+      action = "<cmd>DapStepOver<CR>";
     }
     {
       key = "<leader>ts";
@@ -228,8 +233,8 @@
           gotoNextEnd."<leader>p${key}e" = "@${selector}.outer";
         };
         select.keymaps = {
-          "<leader>va${key}" = "@${selector}.outer";
-          "<leader>vi${key}" = "@${selector}.inner";
+          "<leader>a${key}" = "@${selector}.outer";
+          "<leader>i${key}" = "@${selector}.inner";
         };
       };
     in usrLib.mergeRec [
@@ -317,8 +322,8 @@
           { name = "buffer"; }
         ];
         mapping = {
-          "<c-n>" = "cmp.mapping.select_next_item()";
-          "<c-p>" = "cmp.mapping.select_prev_item()";
+          "<down>" = "cmp.mapping.select_next_item()";
+          "<up>" = "cmp.mapping.select_prev_item()";
           "<cr>" = "cmp.mapping.confirm()";
           "<esc>" = "cmp.mapping.close()";
         };
@@ -328,6 +333,17 @@
     telescope = {
       enable = true;
       extensions.ui-select.enable = true;
+      keymaps = {
+        "<leader>fg" = "live_grep";
+        "<leader>fl" = "current_buffer_fuzzy_find";
+        "<leader>fw" = "spell_suggest";
+        "<leader>fk" = "keymaps";
+        "<leader>fh" = "help_tags";
+        "<leader>fo" = "vim_options";
+        "<leader>sr" = "lsp_references";
+        "<leader>sd" = "lsp_definitions";
+        "<leader>st" = "lsp_type_definitions";
+      };
       settings.defaults = {
         file_ignore_patterns = [ ".git/" ".direnv/" "target/" "node_modules/" ];
         vimgrep_arguments = [

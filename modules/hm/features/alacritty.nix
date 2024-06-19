@@ -18,10 +18,10 @@
         multiplier = 2;
       };
       cursor = {
-        style = {
-          shape = "Beam";
-          blinking = "On";
-        };
+        # style = {
+        #   shape = "Beam";
+        #   blinking = "On";
+        # };
         blink_timeout = 0;
       };
       font.normal.family = "FiraCode Nerd Font Mono";

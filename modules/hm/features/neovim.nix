@@ -10,8 +10,9 @@
   };
 
   home.sessionVariables = {
-    EDITOR = "neovim";
+    EDITOR = "nvim";
     SPAWNEDITOR = "nvim";
+    VISUAL = "nvim";
   };
 
   home.packages = [ repos.usrDrv.neovim ];

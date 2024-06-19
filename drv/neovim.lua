@@ -25,13 +25,13 @@ vim.api.nvim_create_autocmd("CursorMoved", {
 
 -- snippet completion
 local snip = require("luasnip")
-vim.keymap.set({ "i", "s" }, "<c-k>", function()
+vim.keymap.set({ "i", "s" }, "<c-n>", function()
 	if snip.expand_or_jumpable() then
 		snip.expand_or_jump()
 	end
 end, { silent = true })
 
-vim.keymap.set({ "i", "s" }, "<c-j>", function()
+vim.keymap.set({ "i", "s" }, "<c-p>", function()
 	if snip.jumpable(-1) then
 		snip.jump(-1)
 	end
