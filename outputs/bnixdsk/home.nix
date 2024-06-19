@@ -1,9 +1,12 @@
 { pkgs, repos, ... }: {
   imports = [
     ./shared.nix
-    ../../modules/hm/environments/hyprland
-    ../../modules/hm/features
+    ../../modules/hm/eww
+    ../../modules/hm/hypr
+    ../../modules/hm/gtk
     ../../modules/hm/local
+    ../../modules/hm/gui
+    ../../modules/hm/cli
   ];
 
   nix.package = pkgs.nixFlakes;
@@ -13,29 +16,11 @@
   };
 
   programs.home-manager.enable = true;
+  systemd.user.startServices = true;
   home = rec {
     stateVersion = "23.05";
     username = "ben";
     homeDirectory = "/home/${username}";
-    packages = with pkgs // repos.usrDrv; [
-      blueberry
-      hyprpicker
-      inkscape
-      cinnamon.nemo
-      lmms
-      playerctl
-      pulseaudio # do I actually need this here?
-      qalculate-gtk
-      spotify
-      scarab
-      kicad
-      helvum
-      lf
-      ttyper
-      neomutt
-      sic
-    ];
+    packages = with pkgs // repos.usrDrv; [ inkscape lmms scarab kicad ];
   };
-
-  systemd.user.startServices = true;
 }

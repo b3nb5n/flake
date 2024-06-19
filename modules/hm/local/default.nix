@@ -1,6 +1,1 @@
-args: rec {
-  imports = [
-    ./fonts
-    ./wallpapers
-  ];
-}
+{ ... }: { imports = [ ./wallpapers ]; }

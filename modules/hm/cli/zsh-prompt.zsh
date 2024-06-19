@@ -20,18 +20,23 @@ set_prompt() {
 		os_icon=""
 	fi
 
+	local host_bg_color="blue"
+	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
+		host_bg_color="yellow"
+	fi
+
 	vcs_info
 	local git_pill
 	local git_bg_color="default"
 	if [ $vcs_info_msg_0_ ]; then
-		git_bg_color="magenta"
+		git_bg_color="green"
 
 		local content="$(echo "${vcs_info_msg_0_}" | sed "s/\(^ *\| *\$\)//g")"
 		git_pill=$(pill_segment "black" $git_bg_color $content "default")
 	fi
 
-	local os_pill=$(pill_segment "black" "white" $os_icon "blue")
-	local host_pill=$(pill_segment "black" "blue" "󰖟 %n@%m" "cyan")
+	local os_pill=$(pill_segment "black" "white" $os_icon $host_bg_color)
+	local host_pill=$(pill_segment "black" $host_bg_color "󰖟 %n@%m" "cyan")
 	local path_pill=$(pill_segment "black" "cyan" " %~" $git_bg_color)
 
 	local upper_line="╭─$exit_pill$os_pill$host_pill$path_pill$git_pill"
