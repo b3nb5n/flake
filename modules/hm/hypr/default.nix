@@ -1,4 +1,4 @@
 { pkgs, ... }: {
-  imports = [ ./hyprland.nix ./hyprpaper.nix ];
-  home.packages = with pkgs; [ hyprpicker playerctl ];
+  imports = [ ./hyprland.nix ./hyprpaper.nix ./hyprlock.nix ];
+  home.packages = with pkgs; [ hyprpicker ];
 }

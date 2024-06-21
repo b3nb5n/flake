@@ -6,6 +6,7 @@
     ../../modules/nixos/bluetooth.nix
     ../../modules/nixos/efi-boot.nix
     ../../modules/nixos/firewall.nix
+    ../../modules/nixos/greetd.nix
     ../../modules/nixos/network-manager.nix
     ../../modules/nixos/portals.nix
     ../../modules/nixos/sound.nix
@@ -27,7 +28,7 @@
   users.users.ben = {
     isNormalUser = true;
     shell = pkgs.zsh;
-    extraGroups = [ "wheel" "video" "audio" "networkmanager" "docker" ];
+    extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
   };
 
   environment.systemPackages = with pkgs; [
@@ -36,12 +37,9 @@
     git
     zip
     unzip
-    htop
     tree
-    jq
   ];
 
   programs.zsh.enable = true;
   programs.dconf.enable = true;
-  virtualisation.docker.enable = true;
 }

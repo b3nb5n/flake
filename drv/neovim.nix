@@ -294,7 +294,7 @@
       sources.formatting = {
         gofmt.enable = true;
         goimports.enable = true;
-        nixfmt.enable = true;
+        nixpkgs_fmt.enable = true;
         prettier = {
           enable = true;
           disableTsServerFormatter = true;

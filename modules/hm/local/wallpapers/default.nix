@@ -1,6 +1,6 @@
 { ... }: {
-  home.file.wallpapers = {
-    source = ./.;
-    target = ".local/wallpapers";
+  home.file.wallpaper = {
+    source = ./waterfall_village_night.png;
+    target = ".local/wallpaper.png";
   };
 }

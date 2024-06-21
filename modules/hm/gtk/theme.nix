@@ -1,4 +1,4 @@
-{ pkgs, usrLib, config, ... }: {
+{ pkgs, ... }: {
   home.packages = with pkgs; [ gtk-engine-murrine gnome-themes-extra sassc ];
 
   gtk = rec {
@@ -9,8 +9,6 @@
     };
 
     gtk4.extraConfig = gtk3.extraConfig;
-    gtk3.extraConfig = {
-      gtk-application-prefer-dark-theme = usrLib.theme.isDarkTheme config.theme;
-    };
+    gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
   };
 }

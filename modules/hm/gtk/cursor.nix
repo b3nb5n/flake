@@ -1,10 +1,7 @@
-{ pkgs, usrLib, config, ... }: {
+{ pkgs, ... }: {
   home = {
     pointerCursor = {
-      name = if usrLib.theme.isDarkTheme config.theme then
-        "Bibata-Modern-Classic"
-      else
-        "Bibata-Modern-Ice";
+      name = "Bibata-Modern-Classic";
       package = pkgs.bibata-cursors;
       size = 24;
       gtk.enable = true;

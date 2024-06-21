@@ -1,9 +1,7 @@
 { pkgs, ... }: {
   imports = [
-    ./font.nix
     ./gnome.nix
     ./wofi.nix
-    ./cursor.nix
     ./discord.nix
     ./firefox.nix
     ./alacritty.nix

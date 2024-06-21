@@ -1,19 +1,22 @@
-{ lib, usrLib, config, ... }: {
-  # home.sessionVariables.NIXOS_OZONE_WL = "1";
+{ pkgs, config, ... }: {
+  programs.zsh.initExtra = ''
+    if [ -z "''${WAYLAND_DISPLAY}" ] && [[ "$(tty)" == "/dev/tty1" ]]; then
+    	export AUTO_LOGIN=true
+    	dbus-run-session ${config.wayland.windowManager.hyprland.package}/bin/Hyprland
+    fi
+  '';
 
   wayland.windowManager.hyprland = {
     enable = true;
     xwayland.enable = true;
-    settings = with config.hardwareInfo // config.theme // usrLib.color; {
-      monitor = map (m:
-        "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${
-          toString m.y
-        }, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
-        monitors;
+    settings = {
+      monitor = map
+        (m: "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${toString m.y}, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
+        config.hardwareInfo.monitors;
 
       workspace =
         map (m: "${m.id}, monitor:${m.name}, default:true, persistent:true")
-        monitors;
+          config.hardwareInfo.monitors;
 
       input = {
         numlock_by_default = true;
@@ -21,12 +24,12 @@
       };
 
       general = {
-        gaps_in = gap.sm;
-        gaps_out = gap.md;
+        gaps_in = 6;
+        gaps_out = 12;
         border_size = 2;
         resize_on_border = true;
-        # "col.active_border" = "rgb(${lib.strings.removePrefix "#" (hex (builtins.elemAt color.fg 0))})";
-        "col.inactive_border" = "rgba(00000000)";
+        "col.active_border" = "rgb(c0caf5)";
+        "col.inactive_border" = "rgb(1a1b26)";
       };
 
       decoration = {
@@ -84,12 +87,13 @@
         "$wmKey $modKeyA, 8, movetoworkspace, 8"
         "$wmKey $modKeyA, 9, movetoworkspace, 9"
 
-        ",XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        ",XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
+        # https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
+        # ",XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
+        # ",XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
         # ",XF86AudioMute, exec, amixer ssset 'Master' toggle"
-        ",XF86AudioPlay, exec, playerctl --player=spotify,firefox play-pause"
-        ",XF86AudioNext, exec, playerctl --player=spotify,firefox next"
-        ",XF86AudioPrev, exec, playerctl --player=spotify,firefox previous"
+        ",XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl --player=spotify,firefox play-pause"
+        ",XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl --player=spotify,firefox next"
+        ",XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl --player=spotify,firefox previous"
       ];
 
       binde = [
@@ -107,14 +111,11 @@
         "float, qalculate-gtk"
       ];
 
-      exec-once = [
-        "hyprpaper"
-        "eww daemon && eww open status-bar"
-        # (${
-        #         lib.strings.concatMapStringsSep " & "
-        #         (m: "eww open ${m.name}-status-bar") monitors
-        #       })
-      ];
+      exec-once = [ ]
+        ++ (if config.programs.hyprlock.enable then [ ''if [ "$AUTO_LOGIN" = true ]; then ${config.programs.hyprlock.package}/bin/hyprlock; fi'' ] else [ ])
+        ++ (if config.services.hyprpaper.enable then [ "${config.services.hyprpaper.package}/bin/hyprpaper" ] else [ ])
+        # ++ (if config.programs.eww.enable then [ "${config.programs.eww.package}/bin/eww daemon && ${config.programs.eww.package}/bin/eww open status-bar" ] else [ ]);
+        ++ ([ "eww daemon && eww open status-bar" ]);
     };
   };
 }

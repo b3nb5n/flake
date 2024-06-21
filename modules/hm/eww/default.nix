@@ -1,6 +1,10 @@
 { pkgs, repos, usrLib, config, ... }: {
-  home.packages = with pkgs; [ eww ];
+  # programs.eww = {
+  #   enable = true;
+  #   configDir = ./config;
+  # };
 
+  home.packages = with pkgs; [ eww ];
   imports = [ ./assets.nix ];
 
   xdg.configFile."eww/widgets.yuck".source = ./widgets.yuck;
