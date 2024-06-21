@@ -3,6 +3,7 @@
 
   programs.firefox = {
     enable = true;
+    package = pkgs.rosetta.firefox-bin;
     profiles.${config.home.username} =
       with config.theme.color // usrLib.color; {
         search = {

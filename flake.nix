@@ -33,6 +33,11 @@
         flake-utils.follows = "flake-utils";
       };
     };
+
+    firefox-darwin = {
+      url = "github:bandithedoge/nixpkgs-firefox-darwin";
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
+    };
   };
 
   outputs = { nixpkgs-stable, nixpkgs-unstable, nur, home-manager, flake-utils
@@ -44,9 +49,9 @@
           config = {
             allowUnfree = true;
             allowUnfreePredicate = _: true;
-            allowUnsupportedSystem = true;
           };
-          overlays = [ (import rust-overlay) devshell.overlays.default ];
+          overlays = (import ./overlays inputs)
+            ++ [ (import rust-overlay) devshell.overlays.default ];
         };
 
         nixpkgsStable = import nixpkgs-stable pkgsArgs;
