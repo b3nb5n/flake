@@ -1,6 +1,9 @@
 { pkgs, ... }: {
   home = {
     packages = with pkgs // pkgs.gnome; [
+      nautilus
+      gnome-calculator
+      gnome-calendar
       gnome-maps
       gnome-weather
       gnome-disk-utility

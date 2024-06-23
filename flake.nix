@@ -28,10 +28,7 @@
 
     rust-overlay = {
       url = "github:oxalica/rust-overlay";
-      inputs = {
-        nixpkgs.follows = "nixpkgs-unstable";
-        flake-utils.follows = "flake-utils";
-      };
+      inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
 
     firefox-darwin = {
@@ -40,35 +37,44 @@
     };
   };
 
-  outputs = { nixpkgs-stable, nixpkgs-unstable, nur, home-manager, flake-utils
-    , devshell, rust-overlay, ... }@inputs:
+  outputs =
+    { nixpkgs-stable
+    , nixpkgs-unstable
+    , nur
+    , home-manager
+    , flake-utils
+    , devshell
+    , rust-overlay
+    , ...
+    }@inputs:
     (flake-utils.lib.eachDefaultSystem (system:
-      let
-        pkgsArgs = {
-          inherit system;
-          config = {
-            allowUnfree = true;
-            allowUnfreePredicate = _: true;
-          };
-          overlays = (import ./overlays inputs)
-            ++ [ (import rust-overlay) devshell.overlays.default ];
+    let
+      pkgsArgs = {
+        inherit system;
+        config = {
+          allowUnfree = true;
+          allowUnfreePredicate = _: true;
         };
+        overlays = (import ./overlays inputs)
+          ++ [ (import rust-overlay) devshell.overlays.default ];
+      };
 
-        nixpkgsStable = import nixpkgs-stable pkgsArgs;
-        nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
-        nurpkgs = import nur {
-          pkgs = nixpkgsUnstable;
-          nurpkgs = nixpkgsUnstable;
-        };
+      nixpkgsStable = import nixpkgs-stable pkgsArgs;
+      nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
+      nurpkgs = import nur {
+        pkgs = nixpkgsUnstable;
+        nurpkgs = nixpkgsUnstable;
+      };
 
-        args = {
-          flakeInputs = inputs;
-          pkgs = nixpkgsUnstable;
-          usrLib = import ./lib args;
-          repos = {
-            inherit nixpkgsStable nixpkgsUnstable nurpkgs;
-            usrDrv = import ./drv args;
-          };
+      args = {
+        flakeInputs = inputs;
+        pkgs = nixpkgsUnstable;
+        usrLib = import ./lib args;
+        repos = {
+          inherit nixpkgsStable nixpkgsUnstable nurpkgs;
+          usrDrv = import ./drv args;
         };
-      in (import ./outputs args)));
+      };
+    in
+    (import ./outputs args)));
 }

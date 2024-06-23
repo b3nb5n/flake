@@ -1,8 +1,7 @@
 { pkgs, config, ... }: {
   programs.zsh.initExtra = ''
     if [ -z "''${WAYLAND_DISPLAY}" ] && [[ "$(tty)" == "/dev/tty1" ]]; then
-    	export AUTO_LOGIN=true
-    	dbus-run-session ${config.wayland.windowManager.hyprland.package}/bin/Hyprland
+    	exec env AUTO_LOGIN=true dbus-run-session ${config.wayland.windowManager.hyprland.package}/bin/Hyprland
     fi
   '';
 
@@ -30,6 +29,11 @@
         resize_on_border = true;
         "col.active_border" = "rgb(c0caf5)";
         "col.inactive_border" = "rgb(1a1b26)";
+      };
+
+      misc = {
+        disable_hyprland_logo = true;
+        disable_splash_rendering = true;
       };
 
       decoration = {
@@ -107,8 +111,6 @@
 
       windowrule = [
         "opacity 0.8, Alacritty"
-        "opacity 0.8, qalculate-gtk"
-        "float, qalculate-gtk"
       ];
 
       exec-once = [ ]

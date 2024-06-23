@@ -8,5 +8,5 @@
     ./vscode.nix
   ];
 
-  home.packages = with pkgs; [ qalculate-gtk spotify cinnamon.nemo ];
+  home.packages = with pkgs; [ spotify ];
 }

@@ -5,7 +5,7 @@
 
   programs.firefox = {
     enable = true;
-    package = pkgs.rosetta.firefox-bin;
+    # package = pkgs.rosetta.firefox-bin;
     profiles.${config.home.username} = {
       search = {
         force = true;

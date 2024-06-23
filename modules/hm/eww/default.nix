@@ -12,7 +12,7 @@
     (include "./widgets.yuck")
     (deflisten workspaces "${repos.usrDrv.hyprland-workspaces}/bin/hyprland-workspaces _")
     (defwindow status-bar
-      :monitor 1
+      :monitor 0
       :stacking "fg"
       :exclusive true
       :focusable false

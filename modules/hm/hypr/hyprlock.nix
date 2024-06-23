@@ -4,6 +4,7 @@
     sourceFirst = true;
     settings = {
       general = {
+        # grace = 10; # useful for testing but unsafe for auto login
         hide_cursor = true;
       };
 
