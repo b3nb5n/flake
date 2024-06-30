@@ -1,15 +1,22 @@
 # https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
 # https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information
+# https://vincent.bernat.ch/en/blog/2021-zsh-transient-prompt
+# https://stackoverflow.com/questions/61075356/zle-reset-prompt-not-cleaning-the-prompt
 
-pill_segment() {
+_prompt_segment() {
 	echo "%F{$1}%K{$2} $3 %f%k%F{$2}%K{$4}%f%k"
 }
 
-set_prompt() {
-	local exit_status=$?
-	local exit_pill="%F{white}%f"
-	if [[ $exit_status != 0 ]]; then
-		exit_pill="%F{red}%f%F{black}%K{red} $exit_status %f$exit_pill%k"
+_set_prompt() {
+    if (( $_history_prompt )); then
+		PROMPT="%F{blue}%B~ ❱ %f%b"
+        return
+    fi
+
+	local exit_code=$?
+	local exit_status="%F{white}%f"
+	if (( $exit_code )); then
+		exit_status="%F{red}%f%F{black}%K{red} $exit_code %f$exit_status%k"
 	fi
 
 	local os_type=$OSTYPE
@@ -26,28 +33,66 @@ set_prompt() {
 	fi
 
 	vcs_info
-	local git_pill
+	local git_status
 	local git_bg_color="default"
 	if [ $vcs_info_msg_0_ ]; then
 		git_bg_color="green"
 
 		local content="$(echo "${vcs_info_msg_0_}" | sed "s/\(^ *\| *\$\)//g")"
-		git_pill=$(pill_segment "black" $git_bg_color $content "default")
+		git_status=$(_prompt_segment "black" $git_bg_color $content "default")
 	fi
 
-	local os_pill=$(pill_segment "black" "white" $os_icon $host_bg_color)
-	local host_pill=$(pill_segment "black" $host_bg_color "󰖟 %n@%m" "cyan")
-	local path_pill=$(pill_segment "black" "cyan" " %~" $git_bg_color)
+	local os_status=$(_prompt_segment "black" "white" $os_icon $host_bg_color)
+	local host_status=$(_prompt_segment "black" $host_bg_color "󰖟 %n@%m" "cyan")
+	local path_status=$(_prompt_segment "black" "cyan" " %~" $git_bg_color)
 
-	local upper_line="╭─$exit_pill$os_pill$host_pill$path_pill$git_pill"
+	local upper_line="╭─$exit_status$os_status$host_status$path_status$git_status"
 	local lower_line="╰ %F{blue}%B❱%f%b "
 
 	local CR=$'\n'
 	PROMPT="$upper_line$CR$lower_line"
 }
 
+_draw_line_editor() {
+    [[ $CONTEXT == start ]] || return 0
+
+    # Start regular line editor
+    (( $+zle_bracketed_paste )) && print -r -n - $zle_bracketed_paste[1]
+    zle .recursive-edit
+    local -i ret=$?
+    (( $+zle_bracketed_paste )) && print -r -n - $zle_bracketed_paste[2]
+
+    # If we received EOT, we exit the shell
+    if [[ $ret == 0 && $KEYS == $'\4' ]]; then
+        _history_prompt=1
+        zle .reset-prompt
+        exit
+    fi
+
+    # Line edition is over. Shorten the current prompt.
+    _history_prompt=1
+	local precmd
+	for precmd in $precmd_functions; do
+		$precmd
+	done
+
+    zle .reset-prompt
+    unset _history_prompt
+
+    if (( ret )); then
+        # Ctrl-C
+        zle .send-break
+    else
+        # Enter
+        zle .accept-line
+    fi
+
+    return ret
+}
+
 setopt promptsubst
-precmd_functions+=("set_prompt")
+precmd_functions+=("_set_prompt")
+zle -N zle-line-init _draw_line_editor
 
 autoload -Uz vcs_info
 zstyle ':vcs_info:*' enable git 

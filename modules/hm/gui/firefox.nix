@@ -1,5 +1,5 @@
 { pkgs, repos, config, lib, ... }: {
-  home.sessionVariables.BROWSER = "firefox";
+  home.sessionVariables.BROWSER = "${config.programs.firefox.package}/bin/firefox";
   home.file.".mozilla/native-messaging-hosts/com.github.browserpass.native.json".source =
     "${pkgs.browserpass}/lib/mozilla/native-messaging-hosts/com.github.browserpass.native.json";
 
@@ -88,6 +88,16 @@
               params = [{
                 name = "q";
                 value = "nixpkgs+{searchTerms}";
+              }];
+            }];
+          };
+          "Nix Pkgs Bin" = {
+            definedAliases = "@nixbin";
+            urls = [{
+              template = "https://mynixos.com/search";
+              params = [{
+                name = "q";
+                value = "bin+{searchTerms}";
               }];
             }];
           };

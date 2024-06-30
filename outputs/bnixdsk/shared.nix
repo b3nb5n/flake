@@ -10,10 +10,10 @@
       name = "DP-1";
       x = 0;
       y = 0;
-      width = 3440;
-      height = 1440;
+      width = 3840;
+      height = 2160;
       rotation = 0;
-      scale = 1.0;
+      scale = 1.5;
     }
   ];
 }

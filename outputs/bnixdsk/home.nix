@@ -21,6 +21,11 @@
     stateVersion = "23.05";
     username = "ben";
     homeDirectory = "/home/${username}";
-    packages = with pkgs // repos.usrDrv; [ inkscape lmms scarab kicad ];
+    packages = with pkgs // repos.usrDrv; [
+      inkscape
+      lmms
+      scarab
+      kicad
+    ];
   };
 }

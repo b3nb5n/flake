@@ -1,5 +1,5 @@
-{ pkgs, lib, ... }: {
-  home.sessionVariables.TERM = "alacritty";
+{ pkgs, lib, config, ... }: {
+  home.sessionVariables.TERMINAL = "${config.programs.alacritty.package}/bin/alacritty";
   home.packages = with pkgs; [ fira-code-nerdfont ];
 
   programs.alacritty = {
@@ -19,6 +19,8 @@
         };
         decorations = lib.mkIf (!pkgs.stdenv.isDarwin) "None";
         dynamic_padding = true;
+        opacity = 0.8;
+        blur = true;
       };
       scrolling = {
         history = 10000;

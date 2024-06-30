@@ -1,5 +1,11 @@
 { pkgs, repos, ... }: {
-  imports = [ ./git.nix ./zsh.nix ./direnv.nix ./neovim.nix ./neofetch.nix ];
+  imports = [
+    ./git.nix
+    ./zsh.nix
+    ./direnv.nix
+    ./neovim.nix
+    ./fastfetch.nix
+  ];
 
   home.packages = with pkgs // repos.usrDrv; [
     lf

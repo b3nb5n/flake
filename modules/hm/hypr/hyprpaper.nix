@@ -1,4 +1,8 @@
 { config, ... }: {
+  wayland.windowManager.hyprland.settings.exec-once = [
+    "${config.services.hyprpaper.package}/bin/hyprpaper"
+  ];
+
   services.hyprpaper = {
     enable = true;
     settings =

@@ -147,8 +147,11 @@
     settings = {
       style = "night";
       styles.keywords.italic = false;
+      transparent = true;
     };
   };
+
+  extraPlugins = with pkgs.vimPlugins; [ yuck-vim ];
 
   plugins = {
     alpha = {
@@ -216,57 +219,60 @@
       ];
     };
 
-    treesitter-textobjects = let
-      keymaps = selector: key: {
-        move = {
-          gotoNextStart = {
-            "<leader>n${key}" = "@${selector}.outer";
-            "<leader>n${key}o" = "@${selector}.outer";
-            "<leader>n${key}i" = "@${selector}.inner";
+    treesitter-textobjects =
+      let
+        keymaps = selector: key: {
+          move = {
+            gotoNextStart = {
+              "<leader>n${key}" = "@${selector}.outer";
+              "<leader>n${key}o" = "@${selector}.outer";
+              "<leader>n${key}i" = "@${selector}.inner";
+            };
+            gotoPreviousStart = {
+              "<leader>p${key}" = "@${selector}.outer";
+              "<leader>p${key}o" = "@${selector}.outer";
+              "<leader>p${key}i" = "@${selector}.inner";
+            };
+            gotoNextEnd."<leader>n${key}e" = "@${selector}.outer";
+            gotoNextEnd."<leader>p${key}e" = "@${selector}.outer";
           };
-          gotoPreviousStart = {
-            "<leader>p${key}" = "@${selector}.outer";
-            "<leader>p${key}o" = "@${selector}.outer";
-            "<leader>p${key}i" = "@${selector}.inner";
+          select.keymaps = {
+            "<leader>a${key}" = "@${selector}.outer";
+            "<leader>i${key}" = "@${selector}.inner";
           };
-          gotoNextEnd."<leader>n${key}e" = "@${selector}.outer";
-          gotoNextEnd."<leader>p${key}e" = "@${selector}.outer";
         };
-        select.keymaps = {
-          "<leader>a${key}" = "@${selector}.outer";
-          "<leader>i${key}" = "@${selector}.inner";
-        };
-      };
-    in usrLib.mergeRec [
-      {
-        enable = true;
-        move.enable = true;
-        select.enable = true;
-        swap.enable = true;
-      }
-      (usrLib.mergeRec [
-        (keymaps "assignment" "a")
-        # (bindings "attribute" "a")
-        (keymaps "block" "s") # scope
-        (keymaps "call" "i") # invocation
-        (keymaps "class" "c")
-        (keymaps "comment" "d") # documentation
-        (keymaps "conditional" "b") # branch
-        (keymaps "function" "f")
-        (keymaps "loop" "l")
-        (keymaps "parameter" "p")
-        (keymaps "return" "r")
-      ])
-    ];
+      in
+      usrLib.mergeRec [
+        {
+          enable = true;
+          move.enable = true;
+          select.enable = true;
+          swap.enable = true;
+        }
+        (usrLib.mergeRec [
+          (keymaps "assignment" "a")
+          # (bindings "attribute" "a")
+          (keymaps "block" "s") # scope
+          (keymaps "call" "i") # invocation
+          (keymaps "class" "c")
+          (keymaps "comment" "d") # documentation
+          (keymaps "conditional" "b") # branch
+          (keymaps "function" "f")
+          (keymaps "loop" "l")
+          (keymaps "parameter" "p")
+          (keymaps "return" "r")
+        ])
+      ];
 
     lsp = {
       enable = true;
+	  inlayHints = true;
       servers = {
         bashls.enable = true;
         gopls.enable = true;
         html.enable = true;
         lua-ls.enable = true;
-        nil_ls.enable = true;
+        nil-ls.enable = true;
         tsserver.enable = true;
         taplo.enable = true;
         # rust-analyzer.enable = true; # installed by rustaceanvim

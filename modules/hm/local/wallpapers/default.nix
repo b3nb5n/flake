@@ -1,6 +1,6 @@
 { ... }: {
   home.file.wallpaper = {
-    source = ./waterfall_village_night.png;
+    source = ./mt-fuji.png;
     target = ".local/wallpaper.png";
   };
 }

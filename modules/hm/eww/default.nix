@@ -1,83 +1,92 @@
-{ pkgs, repos, usrLib, config, ... }: {
-  # programs.eww = {
-  #   enable = true;
-  #   configDir = ./config;
-  # };
+{ pkgs, lib, ... }: {
+  home.packages = with pkgs; [
+    eww
+    jq
+    bc
+  ];
 
-  home.packages = with pkgs; [ eww ];
-  imports = [ ./assets.nix ];
-
-  xdg.configFile."eww/widgets.yuck".source = ./widgets.yuck;
-  xdg.configFile."eww/eww.yuck".text = ''
-    (include "./widgets.yuck")
-    (deflisten workspaces "${repos.usrDrv.hyprland-workspaces}/bin/hyprland-workspaces _")
-    (defwindow status-bar
-      :monitor 0
-      :stacking "fg"
-      :exclusive true
-      :focusable false
-      :geometry (geometry
-        :x "0%"
-        :y "8px"
-        :width "100%"
-        :height "36px"
-        :anchor "top center"
-      )
-      (status-bar :workspaces workspaces)
+  xdg.configFile = {
+    "eww/eww.yuck".text = builtins.readFile ./eww.yuck;
+    "eww/eww.scss".text = builtins.readFile ./eww.scss;
+    "eww/components".source = ./components;
+    "eww/scripts".source = ./scripts;
+  } //
+  (builtins.listToAttrs
+    (builtins.concatMap
+      (path:
+        let
+          baseName = "eww/icons/workspace/${lib.removeSuffix ".svg" (baseNameOf path)}";
+        in
+        [
+          {
+            name = "${baseName}-active.svg";
+            value.text = builtins.replaceStrings
+              [ "#000000" ]
+              [ "#1f2335" ]
+              (builtins.readFile path);
+          }
+          {
+            name = "${baseName}-inactive.svg";
+            value.text = builtins.replaceStrings
+              [ "#000000" ]
+              [ "#c0caf5" ]
+              (builtins.readFile path);
+          }
+        ])
+      (lib.filesystem.listFilesRecursive ./icons/workspace)
     )
-  '';
-
-  # ${lib.concatStrings
-  # (lib.lists.imap0 (i: m: "\n") config.hardwareInfo.monitors)}
-
-  xdg.configFile."eww/eww.scss".text =
-    with config.theme.color // usrLib.color; ''
-      .widget-group {
-        padding: 4px 12px;
-        border-radius: 4px;
-        background: ${hex (builtins.elemAt bg 1)};
-        color: ${hex (builtins.elemAt fg 0)};
-      }
-
-      .home-icon {
-        padding: 0px 8px;
-      }
-
-      .workspace-button {
-        all: unset;
-        padding: 0px 12px;
-        background: ${hex (builtins.elemAt bg 1)};
-        color: ${hex (builtins.elemAt fg 0)};
-
-        &:hover {
-          background: ${hex (builtins.elemAt bg 2)}
+  ) //
+  (builtins.listToAttrs
+    (builtins.concatMap
+      (path:
+        let
+          baseName = "eww/icons/status/${lib.removeSuffix ".svg" (baseNameOf path)}";
+        in
+        [
+          {
+            name = "${baseName}-active.svg";
+            value.text = builtins.replaceStrings
+              [ "#000000" "#FF0000" ]
+              [ "#c0caf5" "#1f2335" ]
+              (builtins.readFile path);
+          }
+          {
+            name = "${baseName}-inactive.svg";
+            value.text = builtins.replaceStrings
+              [ "#000000" ]
+              [ "#c0caf5" ]
+              (builtins.readFile path);
+          }
+          {
+            name = "${baseName}-disabled.svg";
+            value.text = builtins.replaceStrings
+              [ "#000000" ]
+              [ "#1f2335" ]
+              (builtins.readFile path);
+          }
+        ]
+      )
+      (lib.filesystem.listFilesRecursive ./icons/status)
+    )
+  ) //
+  (builtins.listToAttrs
+    (builtins.concatMap
+      (path: [
+        {
+          name = "eww/icons/action/${baseNameOf path}";
+          value.text = builtins.replaceStrings
+            [ "#000000" ]
+            [ "#c0caf5" ]
+            (builtins.readFile path);
         }
+      ])
+      (lib.filesystem.listFilesRecursive ./icons/action)
+    )
+  );
 
-        &.active {
-          background: ${hex accent.default};
-          color: ${hex (builtins.elemAt bg 0)};
-        }
-      }
-
-      .workspace-group button:first-child {
-        border-top-left-radius: 4px;
-        border-bottom-left-radius: 4px;
-      }
-
-      .workspace-group button:last-child {
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
-      }
-
-      window {
-        background: transparent;
-      }
-
-      .status-bar {
-        margin: 0px 8px;
-        padding: 6px;
-        background: ${hex (builtins.elemAt bg 0)};
-        border-radius: 8px;
-      }
-    '';
+  wayland.windowManager.hyprland.settings.exec-once =
+    let ewwBin = "${pkgs.eww}/bin/eww";
+    in [
+      "${ewwBin} daemon && ${ewwBin} open status-bar"
+    ];
 }

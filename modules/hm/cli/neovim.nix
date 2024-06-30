@@ -1,18 +1,22 @@
-{ repos, ... }: {
+{ repos, ... }:
+let
+  nvimPath = "${repos.usrDrv.neovim}/bin/nvim";
+in
+{
   programs.bash.shellAliases = {
-    vim = "nvim";
-    vi = "nvim";
+    vim = nvimPath;
+    vi = nvimPath;
   };
 
   programs.zsh.shellAliases = {
-    vim = "nvim";
-    vi = "nvim";
+    vim = nvimPath;
+    vi = nvimPath;
   };
 
   home.sessionVariables = {
-    EDITOR = "nvim";
-    SPAWNEDITOR = "nvim";
-    VISUAL = "nvim";
+    EDITOR = nvimPath;
+    SPAWNEDITOR = nvimPath;
+    VISUAL = nvimPath;
   };
 
   home.packages = [ repos.usrDrv.neovim ];
