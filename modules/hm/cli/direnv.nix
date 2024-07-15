@@ -18,7 +18,7 @@
   xdg.configFile."direnv/direnvrc".text = ''
     if [ -f "flake.nix" ] &&
       nix flake show --json 2> /dev/null |
-        jq -e ".\"devShells\"" > /dev/null 2>&1;
+        ${pkgs.jq}/bin/jq -e ".\"devShells\"" > /dev/null 2>&1;
     then
       use flake
     fi

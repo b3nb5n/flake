@@ -1,5 +1,3 @@
-(include "./components/menu-system.yuck")
-
 (defwindow status-bar
   :monitor 0
   :stacking "fg"
@@ -95,11 +93,6 @@
   )
 )
 
-(deflisten workspaces
-  :initial "[]"
-  "hyprland-workspaces ALL"
-)
-
 (defwidget status-workspaces [orientation]
   (status-group
     :orientation orientation
@@ -108,7 +101,10 @@
       :orientation orientation
       :spacing status-el-gap
 
-      (for workspace in {jq(workspaces, 'map(select(.name | test("^[a-z]+$"))) | sort_by(.id)')}
+      (for workspace in {jq(
+        listener-workspaces,
+        'map(select(.name | test("^[a-z]+$"))) | sort_by(.id)'
+      )}
         (status-workspace
           :name {workspace.name}
           :active {workspace.active}
@@ -126,9 +122,15 @@
     (box
       :orientation orientation
       :spacing status-el-gap
-      :visible {jq(workspaces, 'first(.[] | select(.name | test("^[0-9]$"))) != null') == "true"}
+      :visible {jq(
+        listener-workspaces,
+        'first(.[] | select(.name | test("^[0-9]$"))) != null == "true"'
+      )}
 
-      (for workspace in {jq(workspaces, 'map(select(.name | test("^[0-9]$")))')}
+      (for workspace in {jq(
+        listener-workspaces,
+        'map(select(.name | test("^[0-9]$")))'
+      )}
         (status-workspace
           :name {workspace.name}
           :active {workspace.active}
@@ -139,7 +141,7 @@
 
     (button
       :class "status-el"
-      :onclick "${EWW_CONFIG_DIR}/scripts/action/create-workspace.sh"
+      :onclick create-workspace
 
       (status-icon
         :type "action"
@@ -152,7 +154,7 @@
 (defwidget status-workspace [name active tmp]
   (button
     :class "status-el${active ? " focused": ""}"
-    :onclick "hyprctl dispatch workspace name:${name}"
+    :onclick "${set-workspace}${name}"
 
     (box
       (status-icon
@@ -231,11 +233,6 @@
   )
 )
 
-(deflisten wifi-status
-  :initial "{\"powered\":false,\"connected\":false}"
-  `~/.config/eww/scripts/listener/wifi.sh`
-)
-
 (defwidget status-wifi []
   (box
     :class "status-el"
@@ -243,20 +240,15 @@
     (status-icon
       :type "status"
       :name "wifi-2-inactive"
-      :visible {wifi-status.powered && wifi-status.connected}
+      :visible {listener-wifi.powered && listener-wifi.connected}
     )
 
     (status-icon
       :type "status"
       :name "wifi-off-inactive"
-      :visible {!wifi-status.powered}
+      :visible {!listener-wifi.powered}
     )
   )
-)
-
-(deflisten bluetooth-status
-  :initial "{\"powered\":false,\"connected\":false}"
-  `~/.config/eww/scripts/listener/bluetooth.sh`
 )
 
 (defwidget status-bluetooth []
@@ -266,13 +258,13 @@
     (status-icon
       :type "status"
       :name "bluetooth-on-inactive" 
-      :visible {bluetooth-status.powered}
+      :visible {listener-bluetooth.powered}
     )
 
     (status-icon
       :type "status"
       :name "bluetooth-off-inactve" 
-      :visible {!bluetooth-status.powered}
+      :visible {!listener-bluetooth.powered}
     )
   )
 )

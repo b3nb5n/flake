@@ -26,6 +26,7 @@
       lmms
       scarab
       kicad
+	  prismlauncher
     ];
   };
 }

@@ -2,14 +2,8 @@
   all: unset;
 }
 
-$bg: #1f2335;
-$fg: #c0caf5;
-$interactive: #292e42;
-$hover: #414868;
-$active: #7dcfff;
-
 .status-bar {
-  padding: 12px;
+  padding: 8px;
   padding-right: 0;
   font-size: 14px;
   font-weight: bold;

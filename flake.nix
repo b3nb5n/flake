@@ -35,6 +35,8 @@
       url = "github:bandithedoge/nixpkgs-firefox-darwin";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    nix-minecraft.url = "github:12Boti/nix-minecraft";
   };
 
   outputs =

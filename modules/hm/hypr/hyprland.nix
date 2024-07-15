@@ -1,7 +1,7 @@
 { pkgs, config, ... }: {
   programs = rec {
-    bash.initExtra = zsh.initExtra;
-    zsh.initExtra = ''
+    # bash.loginExtra = zsh.loginExtra;
+    zsh.loginExtra = /* sh */ ''
       if [ -z "''${WAYLAND_DISPLAY}" ] && [[ "$(tty)" == "/dev/tty1" ]]; then
       	exec dbus-run-session ${config.wayland.windowManager.hyprland.package}/bin/Hyprland
       fi
@@ -33,8 +33,8 @@
       };
 
       general = {
-        gaps_in = 6;
-        gaps_out = 12;
+        gaps_in = 4;
+        gaps_out = 8;
         border_size = 2;
         resize_on_border = true;
         "col.active_border" = "rgb(c0caf5)";
@@ -85,7 +85,7 @@
           ++ (builtins.genList (i: { name = toString (i + 1); }) 9))
         )
         ++ [
-          "$wmKey, Escape, exit"
+          # "$wmKey, Escape, exit"
           "$wmKey, Q, killactive"
           "$wmKey, F, fullscreen"
           "$wmKey, A, togglefloating"

@@ -6,10 +6,59 @@
   ];
 
   xdg.configFile = {
-    "eww/eww.yuck".text = builtins.readFile ./eww.yuck;
-    "eww/eww.scss".text = builtins.readFile ./eww.scss;
-    "eww/components".source = ./components;
-    "eww/scripts".source = ./scripts;
+    "eww/eww.scss".text = lib.strings.concatLines [
+      ''
+        $bg: #1f2335;
+        $fg: #c0caf5;
+        $interactive: #292e42;
+        $hover: #414868;
+        $active: #7dcfff;
+      ''
+      (builtins.readFile ./eww.scss)
+    ];
+    "eww/eww.yuck".text = lib.strings.concatLines (
+      (builtins.map
+        (path:
+          if (lib.strings.hasSuffix ".yuck" path)
+          then ''
+            (include "${path}")''
+          else ""
+        )
+        (lib.filesystem.listFilesRecursive ./widgets)
+      ) ++ [
+        # yuck
+        ''
+          (deflisten listener-workspaces
+            :initial "[]"
+            "${pkgs.hyprland-workspaces}/bin/hyprland-workspaces ALL"
+          )
+
+          (deflisten listener-wifi
+            :initial "{\"powered\":false,\"connected\":false}"
+            "${./scripts/listener/wifi.sh}"
+          )
+
+          (deflisten listener-bluetooth
+            :initial "{\"powered\":false,\"connected\":false}"
+            "${./scripts/listener/bluetooth.sh}" 
+          )
+
+          (defpoll uptime
+            :interval "30s"
+            :initial "0s"
+            "${./scripts/getter/uptime.sh}"
+          )
+
+          (defvar set-workspace
+            "${pkgs.hyprland}/bin/hyprctl dispatch workspace name:"
+          )
+
+          (defvar create-workspace
+            "${./scripts/action/create-workspace.sh}"
+          )
+        ''
+      ]
+    );
   } //
   (builtins.listToAttrs
     (builtins.concatMap
@@ -86,7 +135,5 @@
 
   wayland.windowManager.hyprland.settings.exec-once =
     let ewwBin = "${pkgs.eww}/bin/eww";
-    in [
-      "${ewwBin} daemon && ${ewwBin} open status-bar"
-    ];
+    in [ "${ewwBin} daemon && ${ewwBin} open status-bar" ];
 }

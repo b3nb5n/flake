@@ -9,10 +9,12 @@
 
   home.packages = with pkgs // repos.usrDrv; [
     lf
+    lsof
     ttyper
     sic
     lazygit
     lazysql
     wuzz
+    vitetris
   ];
 }

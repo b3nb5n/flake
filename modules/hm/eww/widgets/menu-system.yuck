@@ -6,17 +6,11 @@
     :anchor "top left"
     :x "12px"
     :y "12px"
-    :height "512px" ;; todo: change to 100
+    :height "512px"
     :width "360px"
   )
 
   (menu-system)
-)
-
-(defpoll uptime
-  :interval "30s"
-  :initial "0s"
-  "~/.config/eww/scripts/getter/uptime.sh"
 )
 
 (defwidget menu-system []
