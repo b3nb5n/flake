@@ -13,7 +13,7 @@ _set_prompt() {
         return
     fi
 
-	local exit_code=$?
+	local -i exit_code=$?
 	local exit_status="%F{white}%f"
 	if (( $exit_code )); then
 		exit_status="%F{red}%f%F{black}%K{red} $exit_code %f$exit_status%k"

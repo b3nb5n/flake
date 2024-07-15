@@ -3,7 +3,7 @@
     "ben@fadedrya" = flakeInputs.home-manager.lib.homeManagerConfiguration {
       inherit pkgs;
       extraSpecialArgs = args;
-      modules = [ ./home.nix ];
+      modules = [ ./shared.nix ../common/home.nix ./home.nix ];
     };
   };
 }

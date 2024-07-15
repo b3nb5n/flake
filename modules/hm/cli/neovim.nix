@@ -1,16 +1,12 @@
 { repos, ... }:
-let
-  nvimPath = "${repos.usrDrv.neovim}/bin/nvim";
-in
-{
-  programs.bash.shellAliases = {
-    vim = nvimPath;
-    vi = nvimPath;
-  };
-
-  programs.zsh.shellAliases = {
-    vim = nvimPath;
-    vi = nvimPath;
+let nvimPath = "${repos.usrDrv.neovim}/bin/nvim";
+in {
+  programs = rec {
+    bash.shellAliases = zsh.shellAliases;
+    zsh.shellAliases = {
+      vim = nvimPath;
+      vi = nvimPath;
+    };
   };
 
   home.sessionVariables = {

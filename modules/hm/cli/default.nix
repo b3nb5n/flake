@@ -1,20 +1,14 @@
-{ pkgs, repos, ... }: {
-  imports = [
-    ./git.nix
-    ./zsh.nix
-    ./direnv.nix
-    ./neovim.nix
-    ./fastfetch.nix
-  ];
+{ pkgs, ... }: {
+  imports = [ ./git.nix ./zsh.nix ./direnv.nix ./neovim.nix ./fastfetch.nix ];
 
-  home.packages = with pkgs // repos.usrDrv; [
+  home.packages = with pkgs; [
     lf
     lsof
     ttyper
-    sic
     lazygit
     lazysql
     wuzz
     vitetris
+    gotop
   ];
 }

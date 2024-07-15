@@ -7,7 +7,7 @@
   hardwareInfo.monitors = [
     {
       id = "0";
-      name = "DP-1";
+      name = "DP-2";
       x = 0;
       y = 0;
       width = 3840;

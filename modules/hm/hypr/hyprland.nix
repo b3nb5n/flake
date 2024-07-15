@@ -1,5 +1,5 @@
 { pkgs, config, ... }: {
-  programs = rec {
+  programs = {
     # bash.loginExtra = zsh.loginExtra;
     zsh.loginExtra = /* sh */ ''
       if [ -z "''${WAYLAND_DISPLAY}" ] && [[ "$(tty)" == "/dev/tty1" ]]; then

@@ -7,5 +7,9 @@
     # ./vscode.nix
   ];
 
-  home.packages = with pkgs; [ spotify webcord ];
+  home.packages = with pkgs; [
+    spotify
+    webcord
+    helvum
+  ];
 }

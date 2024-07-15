@@ -1,6 +1,4 @@
 { pkgs, ... }: {
-  imports = [ ./shared.nix ];
-
   nix = {
     useDaemon = true;
     configureBuildUsers = true;
@@ -36,13 +34,13 @@
       AppleShowAllExtensions = true;
       AppleShowAllFiles = true;
       NSAutomaticCapitalizationEnabled = false;
-	  NSAutomaticDashSubstitutionEnabled = false;
+      NSAutomaticDashSubstitutionEnabled = false;
       NSAutomaticPeriodSubstitutionEnabled = false;
       NSAutomaticQuoteSubstitutionEnabled = false;
       NSAutomaticWindowAnimationsEnabled = false;
       NSDisableAutomaticTermination = true;
       NSDocumentSaveNewDocumentsToCloud = false;
-	  # "com.apple.swipescrolldirection" = false;
+      # "com.apple.swipescrolldirection" = false;
     };
     dock = {
       autohide = true;

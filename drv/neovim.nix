@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, repos, usrLib, ... }:
+{ flakeInputs, pkgs, usrLib, ... }:
 (flakeInputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
   extraConfigLua = builtins.readFile ./neovim.lua;
 
@@ -53,7 +53,7 @@
     }
     {
       key = "<leader>os";
-      action = "<cmd>terminal ${repos.usrDrv.lazysql}/bin/lazysql<cr>";
+      action = "<cmd>terminal ${pkgs.lazysql}/bin/lazysql<cr>";
     }
     {
       key = "<leader>ff";
@@ -219,54 +219,52 @@
       ];
     };
 
-    treesitter-textobjects =
-      let
-        keymaps = selector: key: {
-          move = {
-            gotoNextStart = {
-              "<leader>n${key}" = "@${selector}.outer";
-              "<leader>n${key}o" = "@${selector}.outer";
-              "<leader>n${key}i" = "@${selector}.inner";
-            };
-            gotoPreviousStart = {
-              "<leader>p${key}" = "@${selector}.outer";
-              "<leader>p${key}o" = "@${selector}.outer";
-              "<leader>p${key}i" = "@${selector}.inner";
-            };
-            gotoNextEnd."<leader>n${key}e" = "@${selector}.outer";
-            gotoNextEnd."<leader>p${key}e" = "@${selector}.outer";
+    treesitter-textobjects = let
+      keymaps = selector: key: {
+        move = {
+          gotoNextStart = {
+            "<leader>n${key}" = "@${selector}.outer";
+            "<leader>n${key}o" = "@${selector}.outer";
+            "<leader>n${key}i" = "@${selector}.inner";
           };
-          select.keymaps = {
-            "<leader>a${key}" = "@${selector}.outer";
-            "<leader>i${key}" = "@${selector}.inner";
+          gotoPreviousStart = {
+            "<leader>p${key}" = "@${selector}.outer";
+            "<leader>p${key}o" = "@${selector}.outer";
+            "<leader>p${key}i" = "@${selector}.inner";
           };
+          gotoNextEnd."<leader>n${key}e" = "@${selector}.outer";
+          gotoNextEnd."<leader>p${key}e" = "@${selector}.outer";
         };
-      in
-      usrLib.mergeRec [
-        {
-          enable = true;
-          move.enable = true;
-          select.enable = true;
-          swap.enable = true;
-        }
-        (usrLib.mergeRec [
-          (keymaps "assignment" "a")
-          # (bindings "attribute" "a")
-          (keymaps "block" "s") # scope
-          (keymaps "call" "i") # invocation
-          (keymaps "class" "c")
-          (keymaps "comment" "d") # documentation
-          (keymaps "conditional" "b") # branch
-          (keymaps "function" "f")
-          (keymaps "loop" "l")
-          (keymaps "parameter" "p")
-          (keymaps "return" "r")
-        ])
-      ];
+        select.keymaps = {
+          "<leader>a${key}" = "@${selector}.outer";
+          "<leader>i${key}" = "@${selector}.inner";
+        };
+      };
+    in usrLib.mergeRec [
+      {
+        enable = true;
+        move.enable = true;
+        select.enable = true;
+        swap.enable = true;
+      }
+      (usrLib.mergeRec [
+        (keymaps "assignment" "a")
+        # (bindings "attribute" "a")
+        (keymaps "block" "s") # scope
+        (keymaps "call" "i") # invocation
+        (keymaps "class" "c")
+        (keymaps "comment" "d") # documentation
+        (keymaps "conditional" "b") # branch
+        (keymaps "function" "f")
+        (keymaps "loop" "l")
+        (keymaps "parameter" "p")
+        (keymaps "return" "r")
+      ])
+    ];
 
     lsp = {
       enable = true;
-	  inlayHints = true;
+      inlayHints = true;
       servers = {
         bashls.enable = true;
         gopls.enable = true;
@@ -275,6 +273,7 @@
         nil-ls.enable = true;
         tsserver.enable = true;
         taplo.enable = true;
+        nixd.enable = true;
         # rust-analyzer.enable = true; # installed by rustaceanvim
       };
       keymaps = {
@@ -300,7 +299,7 @@
       sources.formatting = {
         gofmt.enable = true;
         goimports.enable = true;
-        nixpkgs_fmt.enable = true;
+        nixfmt.enable = true;
         prettier = {
           enable = true;
           disableTsServerFormatter = true;

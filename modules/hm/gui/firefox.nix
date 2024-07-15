@@ -1,5 +1,6 @@
 { pkgs, repos, config, lib, ... }: {
-  home.sessionVariables.BROWSER = "${config.programs.firefox.package}/bin/firefox";
+  home.sessionVariables.BROWSER =
+    "${config.programs.firefox.package}/bin/firefox";
   home.file.".mozilla/native-messaging-hosts/com.github.browserpass.native.json".source =
     "${pkgs.browserpass}/lib/mozilla/native-messaging-hosts/com.github.browserpass.native.json";
 
@@ -156,7 +157,6 @@
         };
       };
       extensions = with repos.nurpkgs.repos.rycee.firefox-addons; [
-        ublock-origin
         sponsorblock
         react-devtools
         darkreader

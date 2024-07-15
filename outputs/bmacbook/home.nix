@@ -1,5 +1,5 @@
 { pkgs, lib, config, ... }: {
-  imports = [ ./shared.nix ../../modules/hm/gui ../../modules/hm/cli ];
+  imports = [  ../../modules/hm/gui ../../modules/hm/cli ];
 
   programs.home-manager.enable = true;
   home = rec {
