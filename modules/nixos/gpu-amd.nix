@@ -4,7 +4,7 @@
 
   hardware.graphics = {
     enable = true;
-    extraPackages = [ pkgs.amdvlk ];
+    extraPackages = with pkgs; [ amdvlk ];
   };
 
   environment = {

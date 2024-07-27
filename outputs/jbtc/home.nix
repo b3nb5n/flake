@@ -1,5 +1,8 @@
 { pkgs, ... }: {
   imports = [
+    ./shared.nix
+    ../common/home.nix
+
     ../../modules/hm/eww
     ../../modules/hm/hypr
     ../../modules/hm/gtk

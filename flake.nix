@@ -16,7 +16,6 @@
 
     nixos-hardware.url = "github:NixOS/nixos-hardware";
     flake-utils.url = "github:numtide/flake-utils";
-    devshell.url = "github:numtide/devshell";
 
     nixvim = {
       url = "github:nix-community/nixvim";
@@ -35,48 +34,38 @@
       url = "github:bandithedoge/nixpkgs-firefox-darwin";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
-
-    nix-minecraft.url = "github:12Boti/nix-minecraft";
   };
 
-  outputs =
-    { nixpkgs-stable
-    , nixpkgs-unstable
-    , nur
-    , home-manager
-    , flake-utils
-    , devshell
-    , rust-overlay
-    , ...
-    }@inputs:
+  outputs = { nixpkgs-stable, nixpkgs-unstable, nur, home-manager, flake-utils
+    , rust-overlay, ... }@flakeInputs:
     (flake-utils.lib.eachDefaultSystem (system:
-    let
-      pkgsArgs = {
-        inherit system;
-        config = {
-          allowUnfree = true;
-          allowUnfreePredicate = _: true;
+      let
+        pkgsArgs = {
+          inherit system;
+          config = {
+            allowUnfree = true;
+            allowUnfreePredicate = _: true;
+            nvidia.accptLicense = true;
+          };
+          # overlays = (import ./overlays inputs)
+          #   ++ [ (import rust-overlay) devshell.overlays.default ];
         };
-        overlays = (import ./overlays inputs)
-          ++ [ (import rust-overlay) devshell.overlays.default ];
-      };
 
-      nixpkgsStable = import nixpkgs-stable pkgsArgs;
-      nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
-      nurpkgs = import nur {
-        pkgs = nixpkgsUnstable;
-        nurpkgs = nixpkgsUnstable;
-      };
-
-      args = {
-        flakeInputs = inputs;
-        pkgs = nixpkgsUnstable;
-        usrLib = import ./lib args;
-        repos = {
-          inherit nixpkgsStable nixpkgsUnstable nurpkgs;
-          usrDrv = import ./drv args;
+        nixpkgsStable = import nixpkgs-stable pkgsArgs;
+        nixpkgsUnstable = import nixpkgs-unstable pkgsArgs;
+        nurpkgs = import nur {
+          pkgs = nixpkgsUnstable;
+          nurpkgs = nixpkgsUnstable;
         };
-      };
-    in
-    (import ./outputs args)));
+
+        args = {
+          inherit flakeInputs system;
+          pkgs = nixpkgsUnstable;
+          usrLib = import ./lib args;
+          repos = {
+            inherit nixpkgsStable nixpkgsUnstable nurpkgs;
+            usrDrv = import ./drv args;
+          };
+        };
+      in (import ./outputs args)));
 }

@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   imports = [
     ./hardware.nix
-    ../../modules/nixos/amd-gpu.nix
+    ../../modules/nixos/gpu-amd.nix
     ../../modules/nixos/bluetooth.nix
     ../../modules/nixos/efi-boot.nix
     ../../modules/nixos/firewall.nix

@@ -1,10 +1,6 @@
 { pkgs, lib, ... }: {
   imports = [ ./status-bar.nix ./menu-stystem.nix ./menu-player.nix ];
 
-  options.usrWidgets = lib.mkOpt {
-
-  };
-
   home.packages = with pkgs; [ eww jq bc ];
 
   xdg.configFile = {
