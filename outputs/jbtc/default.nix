@@ -1,16 +1,14 @@
-{ flakeInputs, pkgs, ... }@args: {
-  nixosConfigurations.jbtc = flakeInputs.nixpkgs-unstable.lib.nixosSystem {
-    # inherit pkgs;
-    inherit (pkgs) system;
-    specialArgs = pkgs.lib.filterAttrs (k: _: k != "pkgs") args;
-    modules = [ ./system.nix ];
+flakeInputs: {
+  nixosConfigurations.jbtc = flakeInputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [ ../base/system.nix ./system.nix ];
+    specialArgs = { inherit flakeInputs; };
   };
 
-  homeConfigurations = {
-    "jb@jbtc" = flakeInputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = args;
-      modules = [ ./home.nix ];
+  homeConfigurations."jb@jbtc" =
+    flakeInputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = import flakeInputs.nixpkgs { system = "x86_64-linux"; };
+      modules = [ ../base/home.nix ./home.nix ];
+      extraSpecialArgs = { inherit flakeInputs; };
     };
-  };
 }

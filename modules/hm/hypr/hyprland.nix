@@ -14,11 +14,12 @@
     enable = true;
     xwayland.enable = true;
     settings = {
-      monitor = map (m:
-        "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${
-          toString m.y
-        }, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
-        config.hardwareInfo.monitors;
+      # monitor = map (m:
+      #   "${m.name}, ${toString m.width}x${toString m.height}, ${toString m.x}x${
+      #     toString m.y
+      #   }, ${toString m.scale}, transform, ${toString (m.rotation / 90)}")
+      #   config.hardwareInfo.monitors;
+      monitor = [ ", preferred, auto, 1" ];
 
       workspace =
         # (map (m: "${m.id}, monitor:${m.name}, default:true, persistent:true")

@@ -1,8 +1,6 @@
 { pkgs, config, ... }: {
   imports = [
-    ./shared.nix
     ./hardware.nix
-    ../common/system.nix
 
     ../../modules/nixos/gpu-nvidia.nix
     ../../modules/nixos/bluetooth.nix

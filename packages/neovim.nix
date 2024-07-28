@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, usrLib, ... }:
+{ flakeInputs, pkgs, ... }:
 (flakeInputs.nixvim.legacyPackages.${pkgs.system}.makeNixvim {
   extraConfigLua = builtins.readFile ./neovim.lua;
 
@@ -240,26 +240,24 @@
           "<leader>i${key}" = "@${selector}.inner";
         };
       };
-    in usrLib.mergeRec [
+    in flakeInputs.self.lib.mergeRec [
       {
         enable = true;
         move.enable = true;
         select.enable = true;
         swap.enable = true;
       }
-      (usrLib.mergeRec [
-        (keymaps "assignment" "a")
-        # (bindings "attribute" "a")
-        (keymaps "block" "s") # scope
-        (keymaps "call" "i") # invocation
-        (keymaps "class" "c")
-        (keymaps "comment" "d") # documentation
-        (keymaps "conditional" "b") # branch
-        (keymaps "function" "f")
-        (keymaps "loop" "l")
-        (keymaps "parameter" "p")
-        (keymaps "return" "r")
-      ])
+      (keymaps "assignment" "a")
+      # (bindings "attribute" "a")
+      (keymaps "block" "s") # scope
+      (keymaps "call" "i") # invocation
+      (keymaps "class" "c")
+      (keymaps "comment" "d") # documentation
+      (keymaps "conditional" "b") # branch
+      (keymaps "function" "f")
+      (keymaps "loop" "l")
+      (keymaps "parameter" "p")
+      (keymaps "return" "r")
     ];
 
     lsp = {

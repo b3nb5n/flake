@@ -1,16 +1,14 @@
-{ flakeInputs, pkgs, ... }@args: {
-  nixosConfigurations.bnixdsk = flakeInputs.nixpkgs-unstable.lib.nixosSystem {
-    inherit pkgs;
-    inherit (pkgs) system;
-    specialArgs = args;
-    modules = [ ./shared.nix ../common/system.nix ./system.nix ];
+flakeInputs: {
+  nixosConfigurations.bnixdsk = flakeInputs.nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    modules = [ ../base/system.nix ./system.nix ];
+    specialArgs = { inherit flakeInputs; };
   };
 
-  homeConfigurations = {
-    "ben@bnixdsk" = flakeInputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = args;
-      modules = [ ./shared.nix ../common/home.nix ./home.nix ];
+  homeConfigurations."ben@bnixdsk" =
+    flakeInputs.home-manager.lib.homeManagerConfiguration {
+      pkgs = import flakeInputs.nixpkgs { system = "x86_64-linux"; };
+      modules = [ ../base/home.nix ./home.nix ];
+      extraSpecialArgs = { inherit flakeInputs; };
     };
-  };
 }

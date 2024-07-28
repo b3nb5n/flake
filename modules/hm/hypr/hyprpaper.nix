@@ -1,17 +1,13 @@
 { config, ... }: {
-  wayland.windowManager.hyprland.settings.exec-once = [
-    "${config.services.hyprpaper.package}/bin/hyprpaper"
-  ];
+  wayland.windowManager.hyprland.settings.exec-once =
+    [ "${config.services.hyprpaper.package}/bin/hyprpaper" ];
 
-  services.hyprpaper = {
-    enable = true;
-    settings =
-      let wallpaperPath = "~/${config.home.file.wallpaper.target}";
-      in {
-        preload = [ wallpaperPath ];
-        wallpaper = map
-          (m: "${m.name}, ${wallpaperPath}")
-          config.hardwareInfo.monitors;
-      };
-  };
+  # services.hyprpaper = {
+  #   enable = true;
+  #   settings = let wallpaperPath = "~/${config.home.file.wallpaper.target}";
+  #   in {
+  #     preload = [ wallpaperPath ];
+  #     wallpaper = ", ${wallpaperPath}";
+  #   };
+  # };
 }

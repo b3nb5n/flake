@@ -1,17 +1,11 @@
-{ pkgs, ... }:
+flakeInputs: values:
 let
-  recursiveMerge = attrList:
-    with pkgs.lib;
-    let
-      f = attrPath:
-        zipAttrsWith (n: values:
-          if tail values == [ ] then
-            head values
-          else if all isList values then
-            unique (concatLists values)
-          else if all isAttrs values then
-            f (attrPath ++ [ n ]) values
-          else
-            last values);
-    in f [ ] attrList;
-in recursiveMerge
+  merge = a: b:
+    if builtins.isAttrs a && builtins.isAttrs b then
+      a // (builtins.mapAttrs (k: v:
+        if builtins.hasAttr k a then merge (builtins.getAttr k a) v else v) b)
+    else if builtins.isList a && builtins.isList b then
+      a ++ b
+    else
+      b;
+in builtins.foldl' merge { } values

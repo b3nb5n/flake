@@ -1,4 +1,4 @@
-{ pkgs, repos, config, lib, ... }: {
+{ pkgs, config, ... }: {
   home.sessionVariables.BROWSER =
     "${config.programs.firefox.package}/bin/firefox";
   home.file.".mozilla/native-messaging-hosts/com.github.browserpass.native.json".source =
@@ -156,7 +156,7 @@
           };
         };
       };
-      extensions = with repos.nurpkgs.repos.rycee.firefox-addons; [
+      extensions = with pkgs.nur.repos.rycee.firefox-addons; [
         sponsorblock
         react-devtools
         darkreader
@@ -169,7 +169,7 @@
           url =
             "https://addons.mozilla.org/firefox/downloads/file/3785565/tokyonight_vim-1.4.xpi";
           sha256 = "uvnU67mWuPWmGxe8EayxrCxu38QJv2oCfr8OprAtjkc=";
-          meta = with lib; {
+          meta = with pkgs.lib; {
             license = licenses.mpl20;
             mozPermissions = [ "theme" ];
             platforms = platforms.all;

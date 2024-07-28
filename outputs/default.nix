@@ -1,9 +1,6 @@
-{ usrLib, repos, ... }@args: {
-  legacyPackages = usrLib.mergeRec [
-    (import ./bmacbook args)
-    (import ./bnixdsk args)
-    (import ./fadedrya args)
-    (import ./jbtc args)
-    { pkgs = repos.usrDrv; }
-  ];
-}
+flakeInputs: [
+  (import ./bmacbook flakeInputs)
+  (import ./bnixdsk flakeInputs)
+  (import ./fadedrya flakeInputs)
+  (import ./jbtc flakeInputs)
+]

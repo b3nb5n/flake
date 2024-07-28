@@ -4,8 +4,12 @@
     motherboard = "amd";
   };
 
-  # systemd.services.openrgb.postStart =
-  #   "${config.services.hardware.openrgb.package}/bin/openrgb -m static -c FF00FF -b 100";
+  systemd.services.openrgb =
+    let openrgb = "${config.services.hardware.openrgb.package}/bin/openrgb";
+    in {
+      # postStart = "${openrgb} -m direct -c 0000FF";
+      preStop = "${openrgb} -m direct -c 000000";
+    };
 
   boot.kernelParams = [ "acpi_enforce_resources=lax" ];
 }

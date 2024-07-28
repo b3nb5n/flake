@@ -1,4 +1,4 @@
-{ pkgs, repos, ... }: {
+{ pkgs, ... }: {
   imports = [
     ../../modules/hm/eww
     ../../modules/hm/hypr
@@ -11,12 +11,6 @@
   home = {
     stateVersion = "23.05";
     username = "ben";
-    packages = with pkgs // repos.usrDrv; [
-      inkscape
-      lmms
-      scarab
-      kicad
-      prismlauncher
-    ];
+    packages = with pkgs; [ inkscape lmms scarab kicad prismlauncher ];
   };
 }
