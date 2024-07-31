@@ -1,4 +1,4 @@
-{ config, ... }: {
+{ pkgs, config, ... }: {
   boot = {
     initrd.kernelModules = [ "nvidia" ];
     kernelParams = [ "nvidia-drm.modset=1" "nvidia-drm.fbdev=1" ];
@@ -17,4 +17,6 @@
       forceFullCompositionPipeline = true;
     };
   };
+
+  environment.systemPackages = with pkgs; [ nvtopPackages.nvidia ];
 }

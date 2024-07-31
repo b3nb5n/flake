@@ -1,5 +1,5 @@
-{ pkgs, lib, config, ... }: {
-  imports = [  ../../modules/hm/gui ../../modules/hm/cli ];
+{ flakeInputs, pkgs, lib, config, ... }: {
+  imports = with flakeInputs.self.homeModules; [ gui cli ];
 
   programs.home-manager.enable = true;
   home = rec {
@@ -9,26 +9,24 @@
     packages = with pkgs; [ rectangle spotify thunderbird-bin ];
 
     activation = {
-      copyApplications =
-        let
-          apps = pkgs.buildEnv {
-            name = "home-manager-applications";
-            paths = config.home.packages;
-            pathsToLink = "/Applications";
-          };
-        in
-        lib.hm.dag.entryAfter [ "writeBoundary" ] ''
-          baseDir="$HOME/Applications"
-          if [ -d "$baseDir" ]; then
-            rm -rf "$baseDir"
-          fi
-          mkdir -p "$baseDir"
-          for appFile in ${apps}/Applications/*; do
-            target="$baseDir/$(basename "$appFile")"
-            $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
-            $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
-          done
-        '';
+      copyApplications = let
+        apps = pkgs.buildEnv {
+          name = "home-manager-applications";
+          paths = config.home.packages;
+          pathsToLink = "/Applications";
+        };
+      in lib.hm.dag.entryAfter [ "writeBoundary" ] ''
+        baseDir="$HOME/Applications"
+        if [ -d "$baseDir" ]; then
+          rm -rf "$baseDir"
+        fi
+        mkdir -p "$baseDir"
+        for appFile in ${apps}/Applications/*; do
+          target="$baseDir/$(basename "$appFile")"
+          $DRY_RUN_CMD cp ''${VERBOSE_ARG:+-v} -fHRL "$appFile" "$baseDir"
+          $DRY_RUN_CMD chmod ''${VERBOSE_ARG:+-v} -R +w "$target"
+        done
+      '';
     };
   };
 }

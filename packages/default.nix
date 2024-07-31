@@ -1,6 +1,9 @@
-{ nixpkgs, flake-utils, ... }@flakeInputs:
+{ nixpkgs, flake-utils, self, ... }@flakeInputs:
 flake-utils.lib.eachDefaultSystem (system:
-  let
-    pkgs = import nixpkgs { inherit system; };
-    args = { inherit flakeInputs pkgs; };
-  in { neovim = import ./neovim.nix args; })
+  builtins.listToAttrs (builtins.map (path: {
+    name = self.lib.path.name path;
+    value = import path {
+      inherit flakeInputs;
+      pkgs = import nixpkgs { inherit system; };
+    };
+  }) (self.lib.dirIndex ./.)))

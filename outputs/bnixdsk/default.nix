@@ -7,7 +7,7 @@ flakeInputs: {
 
   homeConfigurations."ben@bnixdsk" =
     flakeInputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = import flakeInputs.nixpkgs { system = "x86_64-linux"; };
+      inherit (flakeInputs.self.nixosConfigurations.bnixdsk) pkgs;
       modules = [ ../base/home.nix ./home.nix ];
       extraSpecialArgs = { inherit flakeInputs; };
     };

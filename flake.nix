@@ -43,5 +43,7 @@
       inherit lib;
       overlays = import ./overlays inputs;
       packages = import ./packages inputs;
+      nixosModules = import ./modules/nixos inputs;
+      homeModules = import ./modules/hm inputs;
     }] ++ (import ./outputs inputs));
 }

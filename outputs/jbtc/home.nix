@@ -1,12 +1,5 @@
-{ pkgs, ... }: {
-  imports = [
-    ../../modules/hm/eww
-    ../../modules/hm/hypr
-    ../../modules/hm/gtk
-    ../../modules/hm/local
-    ../../modules/hm/gui
-    ../../modules/hm/cli
-  ];
+{ flakeInputs, pkgs, ... }: {
+  imports = with flakeInputs.self.homeModules; [ eww hypr gtk local gui cli ];
 
   home = {
     stateVersion = "24.05";
