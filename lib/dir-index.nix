@@ -4,11 +4,14 @@ let
     flakeInputs.self.lib.path.ext path == "nix"
     && (builtins.baseNameOf path != "default.nix");
 
-  dirIsNix = path: builtins.pathExists "${path}/default.nix";
+  dirIsNix = path: builtins.pathExists (path + "/default.nix");
 
-  dir = builtins.filterSource (path: type:
+  dir = builtins.readDir (builtins.filterSource (path: type:
     (type == "regular" && pathIsNix path)
-    || (type == "directory" && dirIsNix path)) dirPath;
+    || (type == "directory" && dirIsNix path)) dirPath);
 
-in builtins.map (src: dirPath + "/${src}")
-(builtins.attrNames (builtins.readDir dir))
+  srcs = builtins.listToAttrs (builtins.map (path: {
+    name = flakeInputs.self.lib.path.name path;
+    value = dirPath + "/${path}";
+  }) (builtins.attrNames dir));
+in srcs

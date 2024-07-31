@@ -37,13 +37,14 @@
     };
   };
 
-  outputs = inputs:
-    let lib = import ./lib inputs;
-    in lib.mergeRec ([{
-      inherit lib;
-      overlays = import ./overlays inputs;
-      packages = import ./packages inputs;
-      nixosModules = import ./modules/nixos inputs;
-      homeModules = import ./modules/hm inputs;
-    }] ++ (import ./outputs inputs));
+  outputs = inputs: {
+    lib = import ./lib inputs;
+    overlays = import ./overlays inputs;
+    packages = import ./packages inputs;
+    nixosModules = import ./modules/nixos inputs;
+    homeModules = import ./modules/home inputs;
+
+    inherit (import ./configs inputs)
+      nixosConfigurations darwinConfigurations homeConfigurations;
+  };
 }
