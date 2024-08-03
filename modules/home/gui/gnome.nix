@@ -1,6 +1,6 @@
 { pkgs, ... }: {
   home = {
-    packages = with pkgs // pkgs.gnome; [
+    packages = with pkgs.gnome // pkgs; [
       nautilus
       gnome-calculator
       gnome-calendar

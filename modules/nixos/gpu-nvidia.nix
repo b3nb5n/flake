@@ -5,8 +5,6 @@
     extraModulePackages = [ config.hardware.nvidia.package ];
   };
 
-  services.xserver.videoDrivers = [ "nvidia" ];
-
   hardware = {
     graphics.enable = true;
     nvidia = {
@@ -18,5 +16,7 @@
     };
   };
 
+  nixpkgs.config.nvidia.acceptLicense = true;
+  services.xserver.videoDrivers = [ "nvidia" ];
   environment.systemPackages = with pkgs; [ nvtopPackages.nvidia ];
 }

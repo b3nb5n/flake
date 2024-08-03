@@ -268,6 +268,8 @@
         "devtools.command-button-screenshot.enabled" = true;
         "devtools.debugger.remote-enabled" = true;
         "devtools.chrome.enabled" = true;
+        "devtools.netmonitor.persistlog" = true;
+        "devtools.webconsole.persistlog" = true;
         "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
       };
     };

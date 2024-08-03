@@ -18,4 +18,13 @@
     gtk4.extraConfig = gtk3.extraConfig;
     gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
   };
+
+  xdg.configFile = (builtins.listToAttrs (builtins.map (version: rec {
+    name = "gtk-${toString version}.0";
+    value = {
+      recursive = true;
+      source =
+        "${config.gtk.theme.package}/share/themes/Tokyonight-Dark/${name}";
+    };
+  }) [ 2 3 4 ]));
 }

@@ -1,3 +1,3 @@
 flakeInputs:
-builtins.mapAttrs (path: import path flakeInputs)
+builtins.mapAttrs (name: path: import path flakeInputs)
 (flakeInputs.self.lib.dirIndex ./.)

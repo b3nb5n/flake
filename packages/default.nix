@@ -1,7 +1,10 @@
-{ nixpkgs, flake-utils, self, ... }@flakeInputs:
-flake-utils.lib.eachDefaultSystem (system:
-  builtins.mapAttrs (path:
+{ nixpkgs, self, ... }@flakeInputs:
+let dir = self.lib.dirIndex ./.;
+in builtins.listToAttrs (builtins.map (system: {
+  name = system;
+  value = builtins.mapAttrs (name: path:
     import path {
       inherit flakeInputs;
       pkgs = import nixpkgs { inherit system; };
-    }) (self.lib.dirIndex ./.))
+    }) dir;
+}) nixpkgs.lib.systems.flakeExposed)

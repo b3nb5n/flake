@@ -4,6 +4,8 @@
     nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
     nixpkgs = nixpkgs-unstable;
 
+    nur.url = "github:nix-community/NUR";
+
     nix-darwin = {
       url = "github:LnL7/nix-darwin";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -14,21 +16,12 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
-    nur.url = "github:nix-community/NUR";
-    nixos-hardware.url = "github:NixOS/nixos-hardware";
-    flake-utils.url = "github:numtide/flake-utils";
-
     nixvim = {
       url = "github:nix-community/nixvim";
       inputs = {
         nixpkgs.follows = "nixpkgs";
         home-manager.follows = "home-manager";
       };
-    };
-
-    rust-overlay = {
-      url = "github:oxalica/rust-overlay";
-      inputs.nixpkgs.follows = "nixpkgs";
     };
 
     firefox-darwin = {

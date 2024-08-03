@@ -76,6 +76,7 @@ _draw_line_editor() {
 		$precmd
 	done
 
+	# TODO: preserve exit code
     zle .reset-prompt
     unset _history_prompt
 
