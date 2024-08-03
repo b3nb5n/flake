@@ -1,3 +1,3 @@
 flakeInputs: final: prev:
-builtins.mapAttrs (k: v: builtins.getAttr final.system v)
-flakeInputs.self.packages
+# TODO: figure out why the package names need to be set explicitly here
+{ inherit (flakeInputs.self.packages.${final.system}) neovim; }

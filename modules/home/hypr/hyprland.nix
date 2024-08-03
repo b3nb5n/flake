@@ -113,14 +113,19 @@
         "$wmKey $modKeyA, right, swapwindow, r"
         "$wmKey $modKeyA, up, swapwindow, u"
         "$wmKey $modKeyA, down, swapwindow, d"
+      ];
 
-        # https://gitlab.freedesktop.org/pipewire/pipewire/-/wikis/Migrate-PulseAudio#sinksource-port-volumemuteport-latency
-        # ",XF86AudioRaiseVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ +5%"
-        # ",XF86AudioLowerVolume, exec, pactl set-sink-volume @DEFAULT_SINK@ -5%"
-        # ",XF86AudioMute, exec, amixer ssset 'Master' toggle"
-        ",XF86AudioPlay, exec, ${pkgs.playerctl}/bin/playerctl --player=spotify,firefox play-pause"
-        ",XF86AudioNext, exec, ${pkgs.playerctl}/bin/playerctl --player=spotify,firefox next"
-        ",XF86AudioPrev, exec, ${pkgs.playerctl}/bin/playerctl --player=spotify,firefox previous"
+      bindl = let
+        wpctl = "${pkgs.wireplumber}/bin/wpctl";
+        playerctl = "${pkgs.playerctl}/bin/playerctl";
+      in [
+        ", XF86AudioRaiseVolume, exec, ${wpctl} set-volume -l 1.5 @DEFAULT_AUDIO_SINK@ 10%+"
+        ", XF86AudioLowerVolume, exec, ${wpctl} set-volume @DEFAULT_AUDIO_SINK@ 10%-"
+        ", XF86AudioMute, exec, ${wpctl} set-mute @DEFAULT_AUDIO_SINK@ toggle"
+
+        ", XF86AudioPlay, exec, ${playerctl} --player=spotify,firefox play-pause"
+        ", XF86AudioNext, exec, ${playerctl} --player=spotify,firefox next"
+        ", XF86AudioPrev, exec, ${playerctl} --player=spotify,firefox previous"
       ];
 
       binde = [
@@ -140,12 +145,12 @@
 
       blurls = [ "menu-system" ];
 
-      exec-once = [
-        "[workspace name:terminal silent] $TERMINAL"
-        "[workspace name:browser silent] $BROWSER"
-        "[workspace name:media silent] spotify"
-        "[workspace name:messaging silent] webcord"
-      ];
+      # exec-once = [
+      #   "[workspace name:terminal silent] $TERMINAL"
+      #   "[workspace name:browser silent] $BROWSER"
+      #   "[workspace name:media silent] spotify"
+      #   "[workspace name:messaging silent] webcord"
+      # ];
     };
   };
 }

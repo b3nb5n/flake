@@ -1,15 +1,5 @@
 { pkgs, ... }: {
-  imports = [
-    ./gnome.nix
-    ./wofi.nix
-    ./firefox.nix
-    ./alacritty.nix
-    # ./vscode.nix
-  ];
+  imports = [ ./gnome.nix ./wofi.nix ./firefox.nix ./alacritty.nix ];
 
-  home.packages = with pkgs; [
-    spotify
-    webcord
-    helvum
-  ];
+  home.packages = with pkgs; [ spotify webcord helvum ];
 }
