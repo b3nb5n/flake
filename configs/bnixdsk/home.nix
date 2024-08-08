@@ -1,10 +1,18 @@
 { flakeInputs, pkgs, ... }: {
-  imports = with flakeInputs.self.homeModules; [ eww hypr gtk local gui cli ];
+  imports = with flakeInputs.self.homeModules; [
+    eww
+    hypr
+    gtk
+    local
+    gui
+    cli
+    games
+  ];
 
   home = {
     stateVersion = "23.05";
     username = "ben";
-    packages = with pkgs; [ inkscape lmms scarab prismlauncher ];
+    packages = with pkgs; [ inkscape lmms lumafly kicad-unstable gimp ];
   };
 
   wayland.windowManager.hyprland.settings.monitor =

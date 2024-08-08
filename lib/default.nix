@@ -1,5 +1,3 @@
-flakeInputs: {
-  dirIndex = import ./dir-index.nix flakeInputs;
-  mergeRec = import ./merge-recursive.nix flakeInputs;
-  path = import ./path.nix flakeInputs;
-}
+flakeInputs:
+let fs = import ./fs.nix flakeInputs;
+in builtins.mapAttrs (name: path: (import path flakeInputs)) (fs.dirIndex ./.)

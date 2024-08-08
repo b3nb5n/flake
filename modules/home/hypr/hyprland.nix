@@ -137,8 +137,10 @@
 
       bindm = [ "$wmKey, mouse:272, movewindow" ];
 
-      windowrule = [
-        # "opacity 0.8, Alacritty"
+      windowrulev2 = [
+        "float, class:^(firefox)$, title:^(Picture-in-Picture)$"
+        "pin,   class:^(firefox)$, title:^(Picture-in-Picture)$"
+        "size 800 450, class:^(firefox)$, title:^(Picture-in-Picture)$"
       ];
 
       layerrule = [ "blur, menu-system" "ignorezero, menu-system" ];

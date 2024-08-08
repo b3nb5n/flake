@@ -1,10 +1,8 @@
 { nixpkgs, self, ... }@flakeInputs:
-let dir = self.lib.dirIndex ./.;
+let dir = self.lib.fs.dirIndex ./.;
 in builtins.listToAttrs (builtins.map (system: {
   name = system;
-  value = builtins.mapAttrs (name: path:
-    import path {
-      inherit flakeInputs;
-      pkgs = import nixpkgs { inherit system; };
-    }) dir;
+  value = let pkgs = import nixpkgs { inherit system; };
+  in builtins.mapAttrs
+  (name: path: pkgs.callPackage path { inherit flakeInputs; }) dir;
 }) nixpkgs.lib.systems.flakeExposed)

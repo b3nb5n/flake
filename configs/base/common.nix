@@ -2,6 +2,10 @@
   nix = {
     enable = true;
     package = pkgs.nixFlakes;
+    nixPath = [
+      "nixpkgs=${flakeInputs.nixpkgs-stable}"
+      "unstable=${flakeInputs.nixpkgs-unstable}"
+    ];
     gc.automatic = true;
     settings.experimental-features = [ "nix-command" "flakes" ];
   };

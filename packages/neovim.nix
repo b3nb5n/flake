@@ -151,7 +151,7 @@
     };
   };
 
-  extraPlugins = with pkgs.vimPlugins; [ yuck-vim ];
+  extraPlugins = with pkgs.vimPlugins; [ yuck-vim pest-vim ];
 
   plugins = {
     alpha = {
@@ -240,7 +240,7 @@
           "<leader>i${key}" = "@${selector}.inner";
         };
       };
-    in flakeInputs.self.lib.mergeRec [
+    in pkgs.lib.mkMerge [
       {
         enable = true;
         move.enable = true;
@@ -343,6 +343,7 @@
         "<leader>fk" = "keymaps";
         "<leader>fh" = "help_tags";
         "<leader>fo" = "vim_options";
+        "<leader>fr" = "resume";
         "<leader>sr" = "lsp_references";
         "<leader>sd" = "lsp_definitions";
         "<leader>st" = "lsp_type_definitions";

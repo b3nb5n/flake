@@ -157,10 +157,11 @@
         };
       };
       extensions = with pkgs.nur.repos.rycee.firefox-addons; [
-        sponsorblock
-        react-devtools
+        ublock-origin
         darkreader
         dearrow
+        sponsorblock
+        react-devtools
         copy-selection-as-markdown
         (buildFirefoxXpiAddon {
           pname = "Tokyonight";
@@ -199,12 +200,11 @@
           placements = {
             widget-overflow-fixed-list = [ ];
             unified-extensions-area = [
-              "dearrow_ajay_app-browser-action"
-              "youtubeskipad_010pixel_com-browser-action"
+              "ublock0_raymondhill_net-browser-action"
               "addon_darkreader_org-browser-action"
-              "adguardadblocker_adguard_com-browser-action"
-              "password_generator_kolya_ca-browser-action"
+              "dearrow_ajay_app-browser-action"
               "sponsorblocker_ajay_app-browser-action"
+              "_react-devtools-browser-action"
             ];
             nav-bar = [
               "back-button"
