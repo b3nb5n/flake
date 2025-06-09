@@ -1,14 +1,8 @@
-flakeInputs: {
-  nixosConfigurations.bnixdsk = flakeInputs.nixpkgs.lib.nixosSystem {
-    system = "x86_64-linux";
-    modules = [ ../base/system.nix ./system.nix ];
-    specialArgs = { inherit flakeInputs; };
-  };
+flakeInputs: flakeInputs.self.lib."x86_64-linux".mkSystem {
+  name = "bnixdsk";
 
-  homeConfigurations."ben@bnixdsk" =
-    flakeInputs.home-manager.lib.homeManagerConfiguration {
-      inherit (flakeInputs.self.nixosConfigurations.bnixdsk) pkgs;
-      modules = [ ../base/home.nix ./home.nix ];
-      extraSpecialArgs = { inherit flakeInputs; };
-    };
+  users = {
+    root = [ ./root.nix ];
+    ben = [ ./ben.nix ];
+  };
 }

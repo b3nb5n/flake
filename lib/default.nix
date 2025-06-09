@@ -1,3 +1,8 @@
 flakeInputs:
-let fs = import ./fs.nix flakeInputs;
-in builtins.mapAttrs (name: path: (import path flakeInputs)) (fs.dirIndex ./.)
+
+let
+  isolated = import ./isolated;
+  systems = import ./system flakeInputs;
+in
+
+systems // { inherit isolated; }

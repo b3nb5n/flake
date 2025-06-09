@@ -1,1 +1,1 @@
-flakeInputs: (flakeInputs.self.lib.fs.dirIndex ./.)
+flakeInputs: flakeInputs.self.lib.isolated.dirIndex ./.

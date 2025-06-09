@@ -1,0 +1,9 @@
+[user]
+	name = "Ben Baldwin"
+	email = "benbaldwin000@gmail.com"
+
+[advice]
+	detachedHead = false
+
+[pull]
+	rebase = true
