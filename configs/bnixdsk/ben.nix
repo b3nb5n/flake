@@ -1,11 +1,10 @@
 { pkgs, ... }: {
   home = {
     stateVersion = "25.05";
-    packages = with pkgs; [ browsh systemctl-tui nixos-icons ];
+    packages = with pkgs; [ systemctl-tui wiki-tui ];
   };
 
   modules = {
-    hyprpaper.enable = true;
     autostart.enable = true;
     alacritty.enable = true;
     direnv.enable = true;
@@ -16,10 +15,11 @@
     gtk.enable = true;
     hyprland.enable = true;
     neovim.enable = true;
+    osteo.enable = true;
     spotify.enable = true;
+    wbg.enable = true;
     wofi.enable = true;
     yazi.enable = true;
-    zsh.enable = true;
   };
 
   wayland.windowManager.hyprland.settings.monitor =

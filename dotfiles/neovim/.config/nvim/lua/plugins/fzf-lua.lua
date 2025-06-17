@@ -6,6 +6,17 @@ return {
 		local utils = require("fzf-lua.utils")
 
 		fzf.setup({
+			winopts = {
+				title_flags = false,
+				treesitter = true,
+				preview = {
+					winopts = {
+						number = false,
+						cursorline = false,
+						scrolloff = 8,
+					},
+				},
+			},
 			fd_opts = [[--color=never --type f --hidden --follow --exclude .git/ .direnv/ node_modules/ target/ ]],
 		})
 

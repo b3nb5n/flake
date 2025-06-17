@@ -3,6 +3,7 @@
 
   hardware = {
     cpu.amd.updateMicrocode = true;
+    steam-hardware.enable = true;
   };
 
   boot = {
@@ -10,8 +11,9 @@
     extraModulePackages = [ ];
 
     initrd = {
-      availableKernelModules = [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
       kernelModules = [ ];
+      availableKernelModules =
+        [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
     };
 
     loader = {
@@ -38,7 +40,6 @@
 
   # age.secrets.password-ben.file =
   #   pkgs.usrLib.flakeRoot "secrets/users/ben/password.age";
-
 
   # age.secrets.rootPassword.file =
   #   pkgs.usrLib.flakeRoot
@@ -70,8 +71,11 @@
     openrgb.enable = true;
     pipewire.enable = true;
     ssh.enable = true;
+    zsh.enable = true;
   };
 
-  hardware.steam-hardware.enable = true;
-  programs.steam.enable = true;
+  programs = {
+    hyprland.enable = true;
+    steam.enable = true;
+  };
 }

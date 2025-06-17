@@ -34,8 +34,8 @@ for server, config in pairs(server_configs) do
 	vim.lsp.enable(server)
 end
 
-vim.opt.spell = true
-vim.opt.spelllang = "en_us"
+-- vim.opt.spell = true
+-- vim.opt.spelllang = "en_us"
 
 vim.diagnostic.config({
 	update_in_insert = true,

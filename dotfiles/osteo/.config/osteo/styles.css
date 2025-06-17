@@ -1,0 +1,46 @@
+.barRoot {
+  color: #a9b1d6;
+  padding: 8px;
+}
+
+.barLayout {
+  padding-right: 0px;
+}
+
+.barMenuLayout {
+  padding-left: 8px;
+}
+
+.barGroup {
+  padding: 6px 0px;
+  background: #1a1b26;
+  border: 2px solid #15161e;
+  border-radius: 100px;
+}
+
+.barSegment {
+  padding: 4px 12px;
+}
+
+.barMenu {
+  padding: 16px;
+  background: #16161e;
+  border: 2px solid #15161e;
+  border-radius: 12px;
+}
+
+.mediaCoverArt {
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+.launcherRoot {
+  padding: 8px;
+  border-radius: 24px;
+  background: #16161e;
+}
+
+.debug {
+  background: #00FFFF;
+}

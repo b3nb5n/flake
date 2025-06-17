@@ -3,7 +3,9 @@ return {
 	enabled = false,
 	event = "InsertEnter",
 	after = function()
-		require("autoclose").setup({
+		local autoclose = require("autoclose")
+
+		autoclose.setup({
 			options = {
 				pair_spaces = true,
 				disable_command_mode = true,

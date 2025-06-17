@@ -1,7 +1,9 @@
 return {
 	"alpha-nvim",
 	after = function()
-		require("alpha").setup({
+		local alpha = require("alpha")
+
+		alpha.setup({
 			layout = {
 				{
 					type = "padding",

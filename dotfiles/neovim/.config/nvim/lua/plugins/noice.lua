@@ -8,6 +8,12 @@ return {
 	after = function()
 		local noice = require("noice")
 
-		noice.setup({})
+		noice.setup({
+			lsp = {
+				progress = { enabled = false },
+				hover = { enabled = false },
+				signature = { enabled = false },
+			},
+		})
 	end,
 }

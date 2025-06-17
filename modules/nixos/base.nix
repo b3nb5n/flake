@@ -1,14 +1,4 @@
 { flakeInputs, pkgs, ... }: {
-  hardware.enableAllFirmware = true;
-
-  time.timeZone = "America/Phoenix";
-  i18n.defaultLocale = "en_US.UTF-8";
-
-  users = {
-    mutableUsers = false;
-    defaultUserShell = pkgs.zsh;
-  };
-
   nixpkgs = {
     overlays = builtins.attrValues flakeInputs.self.overlays;
     config = {
@@ -16,6 +6,21 @@
       allowUnfreePredicate = (_: true);
     };
   };
+
+  hardware.enableAllFirmware = true;
+
+  time.timeZone = "America/Phoenix";
+  i18n.defaultLocale = "en_US.UTF-8";
+
+  users.mutableUsers = false;
+
+  networking = {
+    firewall.enable = true;
+    networkmanager.enable = true;
+  };
+
+  services.fstrim.enable = true;
+  programs.dconf.enable = true;
 
   nix = {
     enable = true;
@@ -26,22 +31,6 @@
       "nixpkgs=${flakeInputs.nixpkgs-stable}"
       "unstable=${flakeInputs.nixpkgs-unstable}"
     ];
-    settings = {
-      experimental-features = [ "nix-command" "flakes" ];
-    };
-  };
-
-  networking = {
-    firewall.enable = true;
-    networkmanager.enable = true;
-  };
-
-  services = {
-    fstrim.enable = true;
-  };
-
-  programs = {
-    zsh.enable = true;
-    dconf.enable = true;
+    settings.experimental-features = [ "nix-command" "flakes" ];
   };
 }

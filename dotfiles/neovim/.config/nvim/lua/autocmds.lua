@@ -1,3 +1,14 @@
+vim.api.nvim_create_autocmd("BufLeave", {
+	callback = function(args)
+		local bo = vim.bo[args.buf]
+		if bo.buftype or bo.readonly then
+			return
+		end
+
+		vim.api.nvim_buf_call(args.buf, vim.cmd.write)
+	end,
+})
+
 local jump_recenter_thresh = 0
 
 vim.api.nvim_create_autocmd({ "WinResized", "BufEnter" }, {

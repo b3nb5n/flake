@@ -2,8 +2,9 @@ return {
 	"lualine-nvim",
 	event = "UIEnter",
 	before = function()
-		vim.cmd.packadd("tokyonight-nvim")
-		vim.cmd.packadd("lsp-status-nvim")
+		local lzn = require("lz.n")
+		lzn.trigger_load("tokyonight-nvim")
+		lzn.trigger_load("lsp-status-nvim")
 	end,
 	after = function()
 		local lualine = require("lualine")
@@ -45,7 +46,7 @@ return {
 					{ "mode", separator = section_caps },
 				},
 
-				lualine_b = { "branch", "diff" },
+				lualine_b = { { "branch", icon = "" }, "diff" },
 				lualine_c = { "filename", macro_status },
 
 				lualine_x = { lsp_status, "diagnostics" },

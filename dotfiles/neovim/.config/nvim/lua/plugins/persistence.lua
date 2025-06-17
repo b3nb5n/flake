@@ -1,5 +1,6 @@
 return {
 	"persistence-nvim",
+	enabled = false,
 	event = "UIEnter",
 	after = function()
 		local persistence = require("persistence")

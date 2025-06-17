@@ -40,9 +40,6 @@
 [submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-treesitter-context"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-treesitter-context
 	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/vim-css-color"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/vim-css-color
-	url = https://github.com/ap/vim-css-color.git
 [submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/lsp-status-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/lsp-status-nvim
 	url = https://github.com/nvim-lua/lsp-status.nvim.git
@@ -106,3 +103,18 @@
 [submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-notify"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-notify
 	url = https://github.com/rcarriga/nvim-notify.git
+[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-syntax-highlighting"]
+	path = dotfiles/zsh/.config/zsh/plugins/zsh-syntax-highlighting
+	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
+[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-history-substring-search"]
+	path = dotfiles/zsh/.config/zsh/plugins/zsh-history-substring-search
+	url = https://github.com/zsh-users/zsh-history-substring-search.git
+[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-autosuggestions"]
+	path = dotfiles/zsh/.config/zsh/plugins/zsh-autosuggestions
+	url = https://github.com/zsh-users/zsh-autosuggestions.git
+[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-completions"]
+	path = dotfiles/zsh/.config/zsh/plugins/zsh-completions
+	url = https://github.com/zsh-users/zsh-completions.git
+[submodule "dotfiles/zsh/.config/zsh/plugins/fzf-tab"]
+	path = dotfiles/zsh/.config/zsh/plugins/fzf-tab
+	url = https://github.com/Aloxaf/fzf-tab.git
