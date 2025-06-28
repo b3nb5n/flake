@@ -1,21 +1,23 @@
+bindkey -v
+export KEYTIMEOUT=1
+
+local beam='\e[5 q'
+local block='\e[2 q'
+
 function zle-keymap-select {
 	if [[ ${KEYMAP} == 'vicmd' || $1 = 'block' ]]; then
-		echo -ne '\e[1 q'
-	elif [[ 
-		${KEYMAP} == 'main' ||
-		${KEYMAP} == 'viins' ||
-		${KEYMAP} == '' ||
-		$1 = 'beam' ]] \
-		; then
-		echo -ne '\e[5 q'
+		echo -ne $block
+	elif [[ ${KEYMAP} == 'main' || ${KEYMAP} == 'viins' || ${KEYMAP} == '' || $1 = 'beam' ]]; then
+		echo -ne $beam
 	fi
 }
 
-zle -N zle-keymap-select
+_reset_cursor() {
+	echo -ne $beam
+}
 
-bindkey -v        # enable vi mode
-echo -ne '\e[5 q' # beam shaped cursor
-export KEYTIMEOUT=1
+zle -N zle-keymap-select
+precmd_functions+=(_reset_cursor)
 
 bindkey -M menuselect 'h' vi-backward-char
 bindkey -M menuselect 'j' vi-down-line-or-history

@@ -1,120 +1,126 @@
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/tokyonight-nvim"]
+[submodule "tokyonight-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/tokyonight-nvim
 	url = https://github.com/folke/tokyonight.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/lz.n"]
+[submodule "lz.n"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/lz.n
 	url = https://github.com/nvim-neorocks/lz.n.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-lspconfig"]
+[submodule "nvim-lspconfig"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/fzf-lua"]
+[submodule "fzf-lua"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/fzf-lua
 	url = https://github.com/ibhagwan/fzf-lua.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/blink-cmp"]
+[submodule "blink-cmp"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/blink-cmp
 	url = https://github.com/Saghen/blink.cmp
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-treesitter"]
+[submodule "nvim-treesitter"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/lualine-nvim"]
+[submodule "lualine-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/lualine-nvim
 	url = https://github.com/nvim-lualine/lualine.nvim
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/plenary-nvim"]
+[submodule "plenary-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/plenary-nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/gitsigns-nvim"]
+[submodule "gitsigns-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/gitsigns-nvim
 	url = https://github.com/lewis6991/gitsigns.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/lspkind-nvim"]
+[submodule "lspkind-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/lspkind-nvim
 	url = https://github.com/onsails/lspkind.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-surround"]
+[submodule "nvim-surround"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-surround
 	url = https://github.com/kylechui/nvim-surround.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-ts-autotag"]
+[submodule "nvim-ts-autotag"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-ts-autotag
 	url = https://github.com/windwp/nvim-ts-autotag.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/alpha-nvim"]
+[submodule "alpha-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/alpha-nvim
 	url = https://github.com/goolord/alpha-nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-treesitter-context"]
+[submodule "nvim-treesitter-context"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-treesitter-context
 	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/lsp-status-nvim"]
+[submodule "lsp-status-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/lsp-status-nvim
 	url = https://github.com/nvim-lua/lsp-status.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/autoclose-nvim"]
+[submodule "autoclose-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/autoclose-nvim
 	url = https://github.com/m4xshen/autoclose.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/markview-nvim"]
+[submodule "markview-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/markview-nvim
 	url = https://github.com/OXY2DEV/markview.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/schemastore-nvim"]
+[submodule "schemastore-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/schemastore-nvim
 	url = https://github.com/b0o/SchemaStore.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/persistence-nvim"]
+[submodule "persistence-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/persistence-nvim
 	url = https://github.com/folke/persistence.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/yazi-nvim"]
+[submodule "yazi-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/yazi-nvim
 	url = https://github.com/mikavilpas/yazi.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-treesitter-textobjects"]
+[submodule "nvim-treesitter-textobjects"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-treesitter-textobjects
 	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/toggleterm-nvim"]
+[submodule "toggleterm-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/toggleterm-nvim
 	url = https://github.com/akinsho/toggleterm.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/conform-nvim"]
+[submodule "conform-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/conform-nvim
 	url = https://github.com/stevearc/conform.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/rustaceanvim"]
+[submodule "rustaceanvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/rustaceanvim
 	url = https://github.com/mrcjkb/rustaceanvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/ts-comments-nvim"]
+[submodule "ts-comments-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/ts-comments-nvim
 	url = https://github.com/folke/ts-comments.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/hex-nvim"]
+[submodule "hex-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/hex-nvim
 	url = https://github.com/RaafatTurki/hex.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/smear-cursor-nvim"]
+[submodule "smear-cursor-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/smear-cursor-nvim
 	url = https://github.com/sphamba/smear-cursor.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/typescript-tools-nvim"]
+[submodule "typescript-tools-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/typescript-tools-nvim
 	url = https://github.com/pmizio/typescript-tools.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/guess-indent"]
+[submodule "guess-indent"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/guess-indent
 	url = https://github.com/NMAC427/guess-indent.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/helpview-nvim"]
+[submodule "helpview-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/helpview-nvim
 	url = https://github.com/OXY2DEV/helpview.nvim
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/csv-view-nvim"]
+[submodule "csv-view-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/csv-view-nvim
 	url = https://github.com/hat0uma/csvview.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/ccc-nvim"]
+[submodule "ccc-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/ccc-nvim
 	url = https://github.com/uga-rosa/ccc.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/noice-nvim"]
+[submodule "noice-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/noice-nvim
 	url = https://github.com/folke/noice.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nui-nvim"]
+[submodule "nui-nvim"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nui-nvim
 	url = https://github.com/MunifTanjim/nui.nvim.git
-[submodule "dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-notify"]
+[submodule "nvim-notify"]
 	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-notify
 	url = https://github.com/rcarriga/nvim-notify.git
-[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-syntax-highlighting"]
+[submodule "zsh-syntax-highlighting"]
 	path = dotfiles/zsh/.config/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
-[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-history-substring-search"]
+[submodule "zsh-history-substring-search"]
 	path = dotfiles/zsh/.config/zsh/plugins/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
-[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-autosuggestions"]
+[submodule "zsh-autosuggestions"]
 	path = dotfiles/zsh/.config/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
-[submodule "dotfiles/zsh/.config/zsh/plugins/zsh-completions"]
+[submodule "zsh-completions"]
 	path = dotfiles/zsh/.config/zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
-[submodule "dotfiles/zsh/.config/zsh/plugins/fzf-tab"]
+[submodule "fzf-tab"]
 	path = dotfiles/zsh/.config/zsh/plugins/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab.git
+[submodule "nvim-dap"]
+	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-dap
+	url = https://codeberg.org/mfussenegger/nvim-dap.git
+[submodule "nvim-dap-ui"]
+	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-dap-ui
+	url = https://github.com/rcarriga/nvim-dap-ui.git

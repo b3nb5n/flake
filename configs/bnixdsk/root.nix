@@ -1,4 +1,4 @@
-{ ... }: {
+{ flakeInputs, config, ... }: {
   system.stateVersion = "25.05";
 
   hardware = {
@@ -35,36 +35,17 @@
     };
   };
 
-  # swapDevices =
-  #   [{ device = "/dev/disk/by-uuid/bf92fa69-ac46-414d-afc5-b97ea57c088b"; }];
-
-  # age.secrets.password-ben.file =
-  #   pkgs.usrLib.flakeRoot "secrets/users/ben/password.age";
-
-  # age.secrets.rootPassword.file =
-  #   pkgs.usrLib.flakeRoot
-  #     "/secrets/hosts/${config.networking.hostName}/root_password.age";
-
-  # users.root.hashedPasswordFile =
-  #   config.age.secrets.rootPassword.path;
-
   users.users = {
-    root.password = "password";
+    root.hashedPasswordFile = config.age.secrets.password.path;
     ben = {
       extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
-      password = "password";
-      # hashedPasswordFile = config.age.secrets.password-ben.path;
-      # openssh.authorizedKeys.keys =
-      #   let keys = import (pkgs.usrLib.flakeRoot "secrets/keys.nix");
-      #   in [
-      #     keys.users.ben
-      #     # keys.users.e85064
-      #   ];
+      hashedPasswordFile = config.age.secrets."ben.password".path;
+      # openssh.authorizedKeys.keys = with flakeInputs.self.secrets.keys; [ ];
     };
   };
 
   modules = {
-    age.enable = true;
+    agenix.enable = true;
     bluetooth.enable = true;
     gpu-amd.enable = true;
     ly.enable = true;

@@ -32,7 +32,7 @@ in symlinkJoin {
 
         gotools
         rustfmt
-        nixfmt
+        nixfmt-classic
         shfmt
         gofumpt
         stylua

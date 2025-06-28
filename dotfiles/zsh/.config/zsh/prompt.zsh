@@ -3,6 +3,8 @@
 # https://vincent.bernat.ch/en/blog/2021-zsh-transient-prompt
 # https://stackoverflow.com/questions/61075356/zle-reset-prompt-not-cleaning-the-prompt
 
+setopt promptsubst
+
 _previous_exit_code=0
 _preserve_exit_code() {
 	_previous_exit_code=$?
@@ -29,10 +31,44 @@ _close_prompt_segment() {
 	_previous_segment_bg=""
 }
 
+autoload -Uz vcs_info
+zstyle ':vcs_info:*' enable git
+zstyle ':vcs_info:git:*' formats "%b%c%u %m"
+zstyle ':vcs_info:git:*' check-for-changes true
+zstyle ':vcs_info:git:*' stagedstr "*"
+zstyle ':vcs_info:git:*' unstagedstr "+"
+zstyle ':vcs_info:git+set-message:*' hooks \
+	git-is-worktree \
+	git-ahead-behind
+
+function +vi-git-is-worktree() {
+	if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) != 'true' ]]; then
+		# hook functions after this will not be called if not 0 is returned.
+		return 1
+	fi
+
+	return 0
+}
+
+function +vi-git-ahead-behind() {
+	local behind=$(git rev-list --count HEAD..@{u} 2>/dev/null)
+	local ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null)
+
+	if [[ $behind -gt 0 ]]; then
+		hook_com[misc]+="↓$behind"
+	fi
+
+	if [[ $ahead -gt 0 ]]; then
+		hook_com[misc]+="↑$ahead"
+	fi
+}
+
 _set_prompt() {
 	local host_bg_color="#7aa2f7"
 	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-		host_bg_color="#bb9af7"
+		host_bg_color="#1abc9c"
+	elif [[ "$USER" == "root" ]]; then
+		host_bg_color="#9d7cd8"
 	fi
 
 	if (($_history_prompt)); then
@@ -52,7 +88,7 @@ _set_prompt() {
 	_add_prompt_segment "$os_icon" "#c0caf5"
 
 	if (($_previous_exit_code)); then
-		_add_prompt_segment "$_previous_exit_code" "red"
+		_add_prompt_segment "$_previous_exit_code" "#f7768e"
 	fi
 
 	_add_prompt_segment "%n@%m" $host_bg_color
@@ -125,40 +161,8 @@ function zle-line-init {
 	return ret
 }
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats "%b%c%u %m"
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "*"
-zstyle ':vcs_info:git:*' unstagedstr "+"
-zstyle ':vcs_info:git+set-message:*' hooks \
-	git-is-worktree \
-	git-ahead-behind
-
-function +vi-git-is-worktree() {
-	if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) != 'true' ]]; then
-		# hook functions after this will not be called if not 0 is returned.
-		return 1
-	fi
-
-	return 0
-}
-
-function +vi-git-ahead-behind() {
-	local behind=$(git rev-list --count HEAD..@{u} 2>/dev/null)
-	local ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null)
-
-	if [[ $behind -gt 0 ]]; then
-		hook_com[misc]+="↓$behind"
-	fi
-
-	if [[ $ahead -gt 0 ]]; then
-		hook_com[misc]+="↑$ahead"
-	fi
-}
-
-setopt promptsubst
 precmd_functions+=(_preserve_exit_code)
 precmd_functions+=(_set_prompt)
+
 zle -N zle-line-init
 

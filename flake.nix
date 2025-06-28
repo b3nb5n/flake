@@ -28,6 +28,11 @@
       };
     };
 
+    rgit = {
+      url = "github:w4/rgit";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     astal = {
       url = "github:aylur/astal";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -37,6 +42,7 @@
   outputs = inputs: {
     lib = import ./lib inputs;
     overlays = import ./overlays inputs;
+    secrets = import ./secrets inputs;
     dotfiles = import ./dotfiles inputs;
     packages = import ./packages inputs;
     apps = import ./apps inputs;

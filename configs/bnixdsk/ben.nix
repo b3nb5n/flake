@@ -5,6 +5,7 @@
   };
 
   modules = {
+    agenix.enable = true;
     autostart.enable = true;
     alacritty.enable = true;
     direnv.enable = true;
