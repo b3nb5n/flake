@@ -1,5 +1,12 @@
 return {
 	"smear-cursor-nvim",
+	enabled = function()
+		if vim.env.SSH_CLIENT then
+			return false
+		end
+
+		return true
+	end,
 	event = "DeferredUIEnter",
 	after = function()
 		local smear = require("smear_cursor")
