@@ -9,15 +9,16 @@ let
   userEntry = host: name: {
     inherit name;
     value = let
-      userDir = ./${host}/${name};
-      keyFiles = lib.fs.filesWithExt ".pub" userDir;
-      keyEntries = builtins.map (keyEntry userDir) keyFiles;
+      keysDir = ./${host}/${name}/keys;
+      keyFiles = lib.fs.filesWithExt ".pub" keysDir;
+      keyEntries = builtins.map (keyEntry keysDir) keyFiles;
+      keys = builtins.listToAttrs keyEntries;
 
-      entries = keyEntries ++ [{
-        name = "all";
-        value = builtins.map (builtins.getAttr "value") keyEntries;
-      }];
-    in builtins.listToAttrs entries;
+      explicitKeys = [ "unsafe" ];
+      defaultKeys = builtins.attrValues
+        (builtins.removeAttrs keys explicitKeys);
+
+    in keys // { all = defaultKeys; };
   };
 
   hostEntry = name: {

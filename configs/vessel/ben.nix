@@ -1,7 +1,7 @@
 { pkgs, ... }: {
   home = {
     stateVersion = "25.05";
-    packages = with pkgs; [ systemctl-tui wiki-tui ];
+    packages = with pkgs; [ systemctl-tui wiki-tui helvum ];
   };
 
   modules = {
@@ -21,6 +21,11 @@
     wbg.enable = true;
     wofi.enable = true;
     yazi.enable = true;
+
+    ssh = {
+      enable = true;
+      matchFlakeHosts.wyrm.port = 999;
+    };
   };
 
   wayland.windowManager.hyprland.settings.monitor =

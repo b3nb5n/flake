@@ -3,8 +3,27 @@ if [ $# -lt 1 ]; then
 fi
 
 secret="$1"
+shift
+
 host="$(uname -n)"
 user="$USER"
+
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+    -h | --host)
+        host="$2"
+        shift 2
+        ;;
+    -u | --user)
+        user="$2"
+        shift 2
+        ;;
+    *)
+        break
+        ;;
+    esac
+done
+
 secrets_dir="./secrets"
 file_name="$secret.age"
 source_path="$(realpath -m "$secrets_dir/$host/$user/$file_name")" || exit 1

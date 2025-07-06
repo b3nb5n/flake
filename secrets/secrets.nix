@@ -5,7 +5,10 @@ let
 
   extraSecretRecipients = with keys; {
     vessel.ben.password = vessel.root.all;
-    wyrm.ben.password = wyrm.root.all;
+    wyrm = {
+      root.public-ip = [ vessel.ben.unsafe ];
+      ben.password = wyrm.root.all;
+    };
   };
 
   secret = host: user: file:

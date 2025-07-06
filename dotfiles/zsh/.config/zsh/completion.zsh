@@ -13,25 +13,13 @@ zstyle ':completion::complete:*' cache-path "${XDG_CACHE_HOME}/zsh/completions"
 zstyle ':completion:*:descriptions' format [%d]
 zstyle ':completion:*:manuals' separate-sections true
 
-# Enable cached completions, if present
-if [[ -d "${XDG_CACHE_HOME}/zsh/fpath" ]]; then
-    fpath=("${XDG_CACHE_HOME}/zsh/fpath" ${fpath})
-fi
-
-# Additional completions
-fpath=("${ZSH_PLUGIN_DIR}/zsh-completions/src" ${fpath})
-
 zmodload zsh/complist
 autoload -U compinit && compinit
 autoload -U bashcompinit && bashcompinit
 
-# Automatic completions
-source "${ZSH_PLUGIN_DIR}/zsh-autosuggestions/zsh-autosuggestions.zsh"
-
 ZSH_AUTOSUGGEST_MANUAL_REBIND=1
+ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste) # Clear suggestions after paste
+ZSH_AUTOSUGGEST_STRATEGY=(history completion)    # Enable additional suggestion strategies
 
-# Clear suggestions after paste
-ZSH_AUTOSUGGEST_CLEAR_WIDGETS+=(bracketed-paste)
-
-# Enable additional suggestion strategies
-ZSH_AUTOSUGGEST_STRATEGY=(history completion)
+source "${ZSH_PLUGIN_DIR}/zsh-autosuggestions/zsh-autosuggestions.zsh"
+source "${ZSH_PLUGIN_DIR}/fzf-tab/fzf-tab.zsh"
