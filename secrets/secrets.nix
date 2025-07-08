@@ -8,6 +8,7 @@ let
     wyrm = {
       root.public-ip = [ vessel.ben.unsafe ];
       ben.password = wyrm.root.all;
+      nathan.password = wyrm.root.all;
     };
   };
 

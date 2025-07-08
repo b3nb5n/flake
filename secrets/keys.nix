@@ -1,6 +1,15 @@
 let
   lib = import ../lib/isolated;
 
+  extraKeys = {
+    external = {
+      nathan = rec {
+        all = [ ed25519 ];
+        ed25519 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwRPEyd8Q/441EK2z5emZZ231EnxgGeblm6T4ae3m1h nathan@nathan-desktop";
+      };
+    };
+  };
+
   keyEntry = dir: name: {
     name = lib.fs.pathName name;
     value = builtins.readFile /${dir}/${name};
@@ -31,4 +40,5 @@ let
 
   hostNames = lib.fs.subDirs ./.;
   hostEntries = builtins.map hostEntry hostNames;
-in builtins.listToAttrs hostEntries
+  hostKeys = builtins.listToAttrs hostEntries;
+in hostKeys // extraKeys
