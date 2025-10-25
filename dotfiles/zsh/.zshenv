@@ -1,16 +1,10 @@
-local term_path="$(command -v $TERM)"
-local alacritty_path="$(command -v alacritty)"
-if [ -n $term_path ]; then
-	export TERMINAL=${term_path:-$alacritty_path}
-fi
+export XDG_CONFIG_HOME="${XDG_CONFIG_HOME:-"$HOME/.config"}"
+export XDG_DATA_HOME="${XDG_DATA_HOME:-"$HOME/.local/share"}"
+export XDG_STATE_HOME="${XDG_STATE_HOME:-"$HOME/.local/state"}"
+export XDG_CACHE_HOME="${XDG_CACHE_HOME:-"$HOME/.cache"}"
 
-local browser_path="$(command -v firefox)"
-if [ -n $browser_path ]; then
-	export BROWSER=$browser_path
-fi
+export ZSH_CONFIG_DIR="$XDG_CONFIG_HOME/zsh"
+export ZSH_PLUGIN_DIR="$ZSH_CONFIG_DIR/plugins"
 
-local editor_path="$(command -v nvim)"
-if [ -n $editor_path ]; then
-	export EDITOR=$editor_path
-	export VISUAL=$editor_path
-fi
+export ZSH_STATE_DIR="$XDG_STATE_HOME/zsh"
+mkdir -p "$ZSH_STATE_DIR"

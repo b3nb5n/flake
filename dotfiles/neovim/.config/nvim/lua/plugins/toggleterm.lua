@@ -13,13 +13,15 @@ return {
 		vim.keymap.set("n", "<leader>ot", "<cmd>ToggleTerm<cr>")
 		vim.keymap.set("n", "<leader>ft", "<cmd>TermSelect<cr>")
 
-		local lazygit = terminal.Terminal:new({
-			cmd = "lazygit",
-		})
+		if vim.fn.executable("lazygit") then
+			local lazygit = terminal.Terminal:new({
+				cmd = "lazygit",
+			})
 
-		vim.keymap.set("n", "<leader>og", function()
-			lazygit:open()
-		end)
+			vim.keymap.set("n", "<leader>og", function()
+				lazygit:open()
+			end)
+		end
 
 		-- local select_terminal = function(callback)
 		-- 	local terminals = terminal.get_all()

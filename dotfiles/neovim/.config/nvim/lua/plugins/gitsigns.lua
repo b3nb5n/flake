@@ -1,6 +1,6 @@
 return {
 	"gitsigns-nvim",
-	event = "DeferredUIEnter",
+	event = "UIEnter",
 	after = function()
 		local gitsigns = require("gitsigns")
 		gitsigns.setup()

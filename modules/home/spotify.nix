@@ -3,19 +3,13 @@ let cfg = config.modules.spotify;
 in {
   options.modules.spotify = {
     enable = lib.mkEnableOption "spotify";
+    
+    package = lib.mkPackageOption pkgs [ "spotify" ] {};
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ spotify ];
-
-    xdg.autostart.desktopItems = [
-      (pkgs.makeDesktopItem {
-        name = "spotify";
-        desktopName = "Spotify";
-        type = "Application";
-        exec = "${pkgs.spotify}/bin/spotify";
-      })
-    ];
+    home.packages = [ cfg.package ];
+    xdg.autostart.entries = [ "${cfg.package}/share/applications/spotify.desktop" ];
 
     programs.spotify-player = {
       enable = true;

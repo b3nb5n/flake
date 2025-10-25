@@ -1,4 +1,6 @@
-local fastfetch="$(command -v fastfetch)"
-if [[ -n $fastfetch ]] && [[ "$TERMINAL" == *"$TERM" ]]; then
-	$fastfetch
+[ -x "$(command -v fastfetch)" ] || return
+
+if [[ "$TERMINAL" == *"$TERM" ]]; then
+	fastfetch
+	echo
 fi

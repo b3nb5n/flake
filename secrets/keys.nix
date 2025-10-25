@@ -7,6 +7,11 @@ let
         all = [ ed25519 ];
         ed25519 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIFwRPEyd8Q/441EK2z5emZZ231EnxgGeblm6T4ae3m1h nathan@nathan-desktop";
       };
+
+      e85064 = rec {
+        all = [ ed25519 ];
+        ed25519 = "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIAVUV1EadnsG1LWB+j3gumtzhrinnGkEISWZoWjm5KLQ E85064@ML-MW702C9C9R";
+      };
     };
   };
 

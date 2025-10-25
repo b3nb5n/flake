@@ -27,7 +27,7 @@ return {
 			},
 		})
 
-		vim.g.format_on_save = true
+		vim.g.format_on_save = false
 		local function format_on_save_is_enabled(bufnr)
 			local enabled_locally = vim.b[bufnr].format_on_save
 			if enabled_locally ~= nil then

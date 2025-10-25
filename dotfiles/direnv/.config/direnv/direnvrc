@@ -1,0 +1,42 @@
+[ -x "$(command -v uname)" ] || return
+[ -x "$(command -v nix)" ] || return
+[ -x "$(command -v jq)" ] || return
+
+_direnv_load_plugins() {
+	local config_dir="$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")"
+	local plugin_dir="$config_dir/plugins"
+
+	nix_direnv="$plugin_dir/nix-direnv/direnvrc"
+	[ -f "$nix_direnv" ] && source "$nix_direnv"
+}
+
+_flake_platform=""
+_get_direnv_platform() {
+	if [ -z "$_flake_platform" ]; then
+		_flake_platform="$(uname -m)-$(uname -s)"
+		_flake_platform="$(echo "$_flake_platform" | tr '[:upper:]' '[:lower:]')"
+	fi
+
+	echo "$_flake_platform"
+}
+
+_direnv_load_flake() {
+	local dir_path="$1"
+	local flake_path="$dir_path/flake.nix"
+	[ -f "$flake_path" ] || return
+
+	local flake_specifier="path:$dir_path"
+	local shell_path=".\"devShells\".\"$(_get_direnv_platform)\""
+
+	if nix flake show "$flake_specifier" --json 2>/dev/null |
+		jq -e "$shell_path" >/dev/null 2>&1; 
+	then
+		use flake "$flake_specifier"
+		exit
+	fi
+}
+
+_direnv_load_plugins
+
+_direnv_load_flake ".flake"
+_direnv_load_flake "."

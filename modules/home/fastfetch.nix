@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ flakeInputs, pkgs, lib, config, ... }:
 let cfg = config.modules.fastfetch;
 in {
   options.modules.fastfetch = {
@@ -6,18 +6,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    programs = rec {
-      bash.initExtra = zsh.initExtra;
-      zsh.initContent = /* sh */ ''
-        if [[ "$TERMINAL" == *"$TERM" ]]; then
-        	${config.programs.fastfetch.package}/bin/fastfetch
-        fi
-      '';
+    home.packages = with pkgs; [ fastfetch ];
 
-      fastfetch = {
-        enable = true;
-        package = pkgs.self.fastfetch;
-      };
-    };
+    xdg.configFile.fastfetch.source =
+      "${flakeInputs.self.dotfiles.fastfetch}/.config/fastfetch";
   };
 }

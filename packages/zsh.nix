@@ -8,7 +8,6 @@ symlinkJoin {
 
   postBuild = ''
     wrapProgram $out/bin/zsh \
-      --add-flags "--no-globalrcs" \
       --set ZDOTDIR "${flakeInputs.self.dotfiles.zsh}"
   '';
 }

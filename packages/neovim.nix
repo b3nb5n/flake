@@ -20,18 +20,20 @@ in symlinkJoin {
         git
         gcc
 
+        nodePackages.typescript-language-server
+        nodePackages.typescript
         vscode-langservers-extracted
-        typescript-language-server
         lua-language-server
         bash-language-server
         yaml-language-server
-        rust-analyzer
+        stable.rust-analyzer
+        gotools
         nixd
         sqls
         taplo
 
-        gotools
         rustfmt
+        nodePackages.prettier
         nixfmt-classic
         shfmt
         gofumpt

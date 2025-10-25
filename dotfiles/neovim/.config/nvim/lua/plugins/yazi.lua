@@ -1,6 +1,9 @@
 return {
 	"yazi-nvim",
 	event = "DeferredUIEnter",
+	enabled = function ()
+		return vim.fn.executable("yazi") == 1
+	end,
 	after = function()
 		local yazi = require("yazi")
 

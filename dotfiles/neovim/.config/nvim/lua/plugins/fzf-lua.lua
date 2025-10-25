@@ -1,6 +1,9 @@
 return {
 	"fzf-lua",
 	event = "DeferredUIEnter",
+	enabled = function()
+		return vim.fn.executable("fzf") == 1
+	end,
 	after = function()
 		local fzf = require("fzf-lua")
 		local utils = require("fzf-lua.utils")
@@ -29,6 +32,7 @@ return {
 		vim.keymap.set("n", "<leader>fh", fzf.helptags)
 		vim.keymap.set("n", "<leader>fo", fzf.nvim_options)
 		vim.keymap.set("n", "<leader>fw", fzf.spell_suggest)
+		vim.keymap.set("n", "<leader>fm", fzf.man_pages)
 
 		vim.keymap.set("n", "<leader>fg", fzf.live_grep)
 		vim.keymap.set("n", "<leader>fG", fzf.live_grep)

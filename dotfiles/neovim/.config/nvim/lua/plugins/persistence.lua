@@ -1,13 +1,27 @@
 return {
 	"persistence-nvim",
-	enabled = false,
 	event = "UIEnter",
 	after = function()
 		local persistence = require("persistence")
 
-		vim.opt.sessionoptions = { "buffers", "curdir", "options", "help" }
+		persistence.setup({
+			dir = vim.fn.stdpath("state") .. "/sessions/",
+			branch = true,
+		})
 
-		persistence.setup()
-		persistence.load()
+
+		local load_session = true
+		for _, bufnr in ipairs(vim.api.nvim_list_bufs()) do
+			if vim.api.nvim_buf_get_name(bufnr) ~= "" then
+				load_session = false
+				break
+			end
+		end
+
+		if load_session then
+			persistence.load()
+		else
+			persistence.stop()
+		end
 	end,
 }

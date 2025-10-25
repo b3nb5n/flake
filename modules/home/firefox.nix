@@ -1,9 +1,7 @@
 { pkgs, lib, config, ... }:
 let cfg = config.modules.firefox;
 in {
-  options.modules.firefox = {
-    enable = lib.mkEnableOption "firefox";
-  };
+  options.modules.firefox = { enable = lib.mkEnableOption "firefox"; };
 
   config = lib.mkIf cfg.enable {
     home.sessionVariables.BROWSER =
@@ -12,13 +10,11 @@ in {
     home.file.".mozilla/native-messaging-hosts/com.github.browserpass.native.json".source =
       "${pkgs.browserpass}/lib/mozilla/native-messaging-hosts/com.github.browserpass.native.json";
 
-    xdg.autostart.packages = [
-      config.programs.firefox.package
-    ];
+    xdg.autostart.entries = 
+      [ "${config.programs.firefox.package}/share/applications/firefox.desktop" ];
 
     programs.firefox = {
       enable = true;
-      # package = pkgs.rosetta.firefox-bin;
       profiles.${config.home.username} = {
         search = {
           force = true;
@@ -177,6 +173,11 @@ in {
           user-agent-string-switcher
           react-devtools
           copy-selection-as-markdown
+
+          # get addonId from about:debugging#/runtime/this-firefox
+          # get url from add to firefox button
+          # get mozPermissions from projects manifest file
+
           (buildFirefoxXpiAddon {
             pname = "Tokyonight";
             version = "1.4";
@@ -187,6 +188,20 @@ in {
             meta = with pkgs.lib; {
               license = licenses.mpl20;
               mozPermissions = [ "theme" ];
+              platforms = platforms.all;
+            };
+          })
+
+          (buildFirefoxXpiAddon {
+            pname = "Hide Youtube Shorts";
+            version = "1.8.5";
+            addonId = "{88ebde3a-4581-4c6b-8019-2a05a9e3e938}";
+            url =
+              "https://addons.mozilla.org/firefox/downloads/file/4563088/hide_youtube_shorts-1.8.5.xpi";
+            sha256 = "2TdWDSFCy1P3rYPBHXdiCQZ8AyLRFORqc/rbSyU8NKc=";
+            meta = with pkgs.lib; {
+              license = licenses.gpl3Only;
+              mozPermissions = [ "storage" ];
               platforms = platforms.all;
             };
           })
@@ -272,8 +287,7 @@ in {
           "experiments.enabled" = false;
           "experiments.supported" = false;
           "network.allow-experiments" = false;
-          "browser.newtabpage.activity-stream.section.highlights.includePocket" =
-            false;
+          "browser.newtabpage.activity-stream.section.highlights.includePocket" = false;
           "extensions.pocket.enabled" = false;
           "devtools.screenshot.audio.enabled" = false;
           "devtools.command-button-frames.enabled" = false;
@@ -285,6 +299,7 @@ in {
           "devtools.netmonitor.persistlog" = true;
           "devtools.webconsole.persistlog" = true;
           "toolkit.legacyUserProfileCustomizations.stylesheets" = true;
+          "widget.use-xdg-desktop-portal.file-picker" = true;
         };
       };
     };

@@ -3,10 +3,13 @@ local server_configs = {
 	jsonls = {},
 	yamlls = {},
 
-	bashls = {},
 	nixd = {},
 	cssls = {},
 	sqlls = {},
+
+	bashls = {
+		filetypes = { "sh", "bash", "zsh" },
+	},
 
 	lua_ls = {
 		settings = {
@@ -42,6 +45,16 @@ vim.diagnostic.config({
 	virtual_text = true,
 	severity_sort = true,
 })
+
+vim.keymap.set("n", "<leader>lr", function()
+	local clients = vim.lsp.get_clients()
+	vim.lsp.stop_client(clients)
+end)
+
+vim.keymap.set("n", "<leader>lR", function()
+	local clients = vim.lsp.get_clients()
+	vim.lsp.stop_client(clients, true)
+end)
 
 vim.keymap.set("n", "<leader>sh", vim.lsp.buf.hover)
 vim.keymap.set("n", "<leader>sn", vim.lsp.buf.rename)

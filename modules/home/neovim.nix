@@ -1,29 +1,41 @@
-{ pkgs, lib, config, ... }:
-let
-  cfg = config.modules.neovim;
-  nvimPath = "${cfg.package}/bin/nvim";
+{ flakeInputs, pkgs, lib, config, ... }:
+let cfg = config.modules.neovim;
 in {
   options.modules.neovim = {
     enable = lib.mkEnableOption "neovim";
-    package = lib.mkPackageOption pkgs [ "self" "neovim" ] { };
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      packages = [ cfg.package ];
-      sessionVariables = {
-        EDITOR = nvimPath;
-        SPAWNEDITOR = nvimPath;
-        VISUAL = nvimPath;
-      };
-    };
+    home.packages = with pkgs; [
+      neovim
 
-    programs = rec {
-      bash.shellAliases = zsh.shellAliases;
-      zsh.shellAliases = {
-        vi = nvimPath;
-        vim = nvimPath;
-      };
-    };
+      wl-clipboard
+      ripgrep
+      fd
+      gcc
+
+      nodePackages.typescript-language-server
+      nodePackages.typescript
+      vscode-langservers-extracted
+      lua-language-server
+      bash-language-server
+      yaml-language-server
+      rust-analyzer
+      gotools
+      nixd
+      sqls
+      taplo
+
+      rustfmt
+      nodePackages.prettier
+      nixfmt-classic
+      shfmt
+      gofumpt
+      stylua
+      yamlfmt
+    ];
+
+    xdg.configFile.nvim.source =
+      "${flakeInputs.self.dotfiles.neovim}/.config/nvim";
   };
 }

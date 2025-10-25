@@ -25,22 +25,35 @@ in {
   config = lib.mkIf cfg.enable {
     programs.ssh = {
       enable = true;
-      hashKnownHosts = true;
-      matchBlocks = 
-        let 
-          flakeHostEntry = hostCfg: {
-            inherit (hostCfg) name;
-            value = {
-              inherit (hostCfg) port;
-              hostname = pkgs.self.lib.ageDecryptUnsafe
-                { host = hostName; user = config.home.username; }
-                { host = hostCfg.name; user = "root"; name = "public-ip"; };
-            };
-          };
+      enableDefaultConfig = false;
 
-          flakeHostConfigs = builtins.attrValues cfg.matchFlakeHosts;
-          entries = builtins.map flakeHostEntry flakeHostConfigs;
-        in builtins.listToAttrs entries;
+      matchBlocks = let 
+        flakeHostEntry = hostCfg: {
+          inherit (hostCfg) name;
+          value = {
+            inherit (hostCfg) port;
+            hostname = pkgs.self.lib.ageDecryptUnsafe
+              { host = hostName; user = config.home.username; }
+              { host = hostCfg.name; user = "root"; name = "public-ip"; };
+          };
+        };
+
+        flakeHostConfigs = builtins.attrValues cfg.matchFlakeHosts;
+        flakeHosts = builtins.listToAttrs (builtins.map flakeHostEntry flakeHostConfigs);
+      in flakeHosts // {
+        "*" = {
+          forwardAgent = false;
+          addKeysToAgent = "no";
+          compression = false;
+          serverAliveInterval = 0;
+          serverAliveCountMax = 3;
+          hashKnownHosts = false;
+          userKnownHostsFile = "~/.ssh/known_hosts";
+          controlMaster = "no";
+          controlPath = "~/.ssh/master-%r@%n:%p";
+          controlPersist = "no";
+        };
+      };
     };
   };
 }

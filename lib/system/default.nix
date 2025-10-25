@@ -1,4 +1,4 @@
-{ nixpkgs, ... } @ flakeInputs:
+{ self, nixpkgs, ... } @ flakeInputs:
 
 let
   dirIndex = import ../isolated/dirIndex.nix;
@@ -7,7 +7,11 @@ let
   mkSysLibEntry = system: {
     name = system;
     value =
-      let pkgs = import nixpkgs { inherit system; };
+      let 
+        pkgs = import nixpkgs {
+          inherit system; 
+          overlays = builtins.attrValues self.overlays;
+        };
       in builtins.mapAttrs
         (name: path: pkgs.callPackage path { inherit flakeInputs; })
         dir;

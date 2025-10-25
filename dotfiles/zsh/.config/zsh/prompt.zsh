@@ -1,168 +1,149 @@
 # https://zsh.sourceforge.io/Doc/Release/Prompt-Expansion.html
-# https://zsh.sourceforge.io/Doc/Release/User-Contributions.html#Version-Control-Information
-# https://vincent.bernat.ch/en/blog/2021-zsh-transient-prompt
-# https://stackoverflow.com/questions/61075356/zle-reset-prompt-not-cleaning-the-prompt
 
-setopt promptsubst
+local L_CAP=""
+local R_CAP=""
+local SEPARATOR=" | "
 
-_previous_exit_code=0
-_preserve_exit_code() {
-	_previous_exit_code=$?
-}
+local COLOR_ACCENT="#7aa2f7"
+if [[ "$USER" == "root" ]]; then
+	COLOR_ACCENT="#9d7cd8"
+elif [ -n "$SSH_CLIENT" ]; then
+	COLOR_ACCENT="#1abc9c"
+fi
 
-_previous_segment_bg=""
-_add_prompt_segment() {
-	if [[ -z $_previous_segment_bg ]]; then
-		PROMPT+="%F{$2}%f"
-	else
-		PROMPT+="%F{$_previous_segment_bg}%K{$2}%f%k"
-	fi
+local COLOR_FG="#c0caf5"
+local COLOR_BG="#414868"
+local COLOR_ERROR="#f7768e"
 
-	PROMPT+="%F{black}%K{$2} $1 %f%k"
-	_previous_segment_bg=$2
-}
+function _prompt_get_linux_os_icon() {
+	local default_icon=''
 
-_close_prompt_segment() {
-	if [[ -z $_previous_segment_bg ]]; then
+	local grep="$(command -v grep)"
+	if [[ ! -f /etc/os-release ]] || [[	-z "$grep" ]]; then
+		echo "$default_icon"
 		return
 	fi
 
-	PROMPT+="%F{$_previous_segment_bg}%K{default}%f%k"
-	_previous_segment_bg=""
+	local os_id=$(grep '^ID=' /etc/os-release)
+	case "$os_id" in
+		*nixos) echo '' ;;
+		*) echo "$default_icon" ;;
+	esac
 }
 
-autoload -Uz vcs_info
-zstyle ':vcs_info:*' enable git
-zstyle ':vcs_info:git:*' formats "%b%c%u %m"
-zstyle ':vcs_info:git:*' check-for-changes true
-zstyle ':vcs_info:git:*' stagedstr "*"
-zstyle ':vcs_info:git:*' unstagedstr "+"
-zstyle ':vcs_info:git+set-message:*' hooks \
-	git-is-worktree \
-	git-ahead-behind
-
-function +vi-git-is-worktree() {
-	if [[ $(command git rev-parse --is-inside-work-tree 2>/dev/null) != 'true' ]]; then
-		# hook functions after this will not be called if not 0 is returned.
-		return 1
-	fi
-
-	return 0
-}
-
-function +vi-git-ahead-behind() {
-	local behind=$(git rev-list --count HEAD..@{u} 2>/dev/null)
-	local ahead=$(git rev-list --count @{u}..HEAD 2>/dev/null)
-
-	if [[ $behind -gt 0 ]]; then
-		hook_com[misc]+="↓$behind"
-	fi
-
-	if [[ $ahead -gt 0 ]]; then
-		hook_com[misc]+="↑$ahead"
-	fi
-}
-
-_set_prompt() {
-	local host_bg_color="#7aa2f7"
-	if [ -n "$SSH_CLIENT" ] || [ -n "$SSH_TTY" ]; then
-		host_bg_color="#1abc9c"
-	elif [[ "$USER" == "root" ]]; then
-		host_bg_color="#9d7cd8"
-	fi
-
-	if (($_history_prompt)); then
-		PROMPT="%F{$host_bg_color}%B~ ❱%f%b "
+local os_icon=''
+function _prompt_get_os_icon() {
+	if [[ -n "$os_icon" ]]; then
+		echo "$os_icon"
 		return
 	fi
 
-	PROMPT="╭─"
+  case "$OSTYPE" in
+		linux*) os_icon="$(_prompt_get_linux_os_icon)" ;;
+		darwin*) os_icon='' ;;
+    *) os_icon='' ;;
+  esac
 
-	local os_icon=""
-	if [[ $OSTYPE == darwin* ]]; then
-		os_icon=""
-	elif [[ $OSTYPE == "linux-gnu" && $NIX_PATH != "" ]]; then
-		os_icon=""
-	fi
+	echo "$os_icon"
+}
 
-	_add_prompt_segment "$os_icon" "#c0caf5"
+function _prompt_get_shell_level() {
+	[[ $SHLVL -gt 1 ]] || return 
+	echo " $SHLVL"
+}
 
-	if (($_previous_exit_code)); then
-		_add_prompt_segment "$_previous_exit_code" "#f7768e"
-	fi
+function _prompt_get_vcs_info() {
+	[[ -n "$vcs_info_msg_0_" ]] || return
+	echo " $vcs_info_msg_0_"
+}
 
-	_add_prompt_segment "%n@%m" $host_bg_color
+function _prompt_get_status_info() {
+	local info_fns=(_prompt_get_shell_level _prompt_get_vcs_info)
+	local status_info=""
 
-	local status_content=""
+	for fn in "${info_fns[@]}"; do
+		local info="$("$fn")"
+		info="$(echo $info | xargs)"
 
-	if [[ $SHLVL -gt 1 ]]; then
-		status_content+=" $SHLVL"
-	fi
-
-	vcs_info
-	if [ $vcs_info_msg_0_ ]; then
-		if [[ -n $status_content ]]; then
-			status_content+=" | "
+		[[ -z $info ]] && continue
+		if [[ -n "$status_info" ]]; then
+			status_info+="$SEPARATOR"
 		fi
 
-		local content="$(echo "${vcs_info_msg_0_}" | sed "s/\(^ *\| *\$\)//g")"
-		status_content+=" $content"
-	fi
-
-	if [[ -n $status_content ]]; then
-		_add_prompt_segment "%F{$host_bg_color}$status_content%f" "#414868"
-	fi
-
-	_close_prompt_segment
-	PROMPT+=" %F{#c0caf5}%~%f"
-
-	local CR=$'\n'
-	PROMPT+="$CR╰ %F{$host_bg_color}%B❱%f%b "
-}
-
-function zle-line-init {
-	[[ $CONTEXT == start ]] || return 0
-
-	# init vi keymap and cursor
-	zle -K viins
-	echo -ne '\e[5 q'
-
-	# # Start regular line editor
-	(( ${+zle_bracketed_paste} )) && print -r -n - $zle_bracketed_paste[1]
-	zle .recursive-edit
-	local -i ret=$?
-	(( ${+zle_bracketed_paste} )) && print -r -n - $zle_bracketed_paste[2]
-
-	# If we received EOT, we exit the shell
-	if [[ $ret == 0 && $KEYS == $'\4' ]]; then
-		_history_prompt=1
-		zle .reset-prompt
-		exit
-	fi
-
-	# Line edition is over. Shorten the current prompt.
-	_history_prompt=1
-	local precmd
-	for precmd in $precmd_functions; do
-		$precmd
+		status_info+="$info"
 	done
 
-	zle .reset-prompt
-	unset _history_prompt
-
-	if ((ret)); then
-		# Ctrl-C
-		zle .send-break
-	else
-		# Enter
-		zle .accept-line
-	fi
-
-	return ret
+	echo "$status_info"
 }
 
-precmd_functions+=(_preserve_exit_code)
+local first_prompt=true
+function _prompt_unset_first() {
+	first_prompt=false
+}
+
+local exit_code="0"
+function _prompt_preserve_exit_code() {
+	exit_code="$?"
+}
+
+function _set_prompt() {
+	local prev_segment_bg
+
+	close_segment() {
+		local background="${1:-default}"
+
+		PROMPT+="%F{$prev_segment_bg}%K{$background}$R_CAP%f%k"
+		prev_segment_bg=''
+	}
+
+	add_segment() {
+		local content="$1"
+		local background="$2"
+		local foreground="$3"
+
+		if [[ -z $prev_segment_bg ]]; then
+			PROMPT+="%F{$background}$L_CAP%f"
+		else
+			close_segment "$background"
+		fi
+
+		PROMPT+="%K{$background}%F{$foreground} $content %k%f"
+		prev_segment_bg=$background
+	}
+
+	PROMPT=""
+	local CR=$'\n'
+
+	if [[ "$first_prompt" == "false" ]]; then PROMPT+="$CR"; fi
+	PROMPT+="%F{$COLOR_FG}╭─%f"
+
+	add_segment "$(_prompt_get_os_icon)" "$COLOR_FG" "$COLOR_BG"
+	add_segment "$USER@$HOST" "$COLOR_ACCENT" "$COLOR_BG"
+
+	local status_info="$(_prompt_get_status_info)"
+	if [[ -n $status_info ]]; then
+		add_segment "$status_info" "$COLOR_BG" "$COLOR_ACCENT"
+	fi
+
+	if [[ "$exit_code" -ne "0" ]]; then
+		add_segment "$exit_code" "$COLOR_ERROR" "$COLOR_BG"
+	fi
+
+	close_segment
+
+	PROMPT+="%F{$COLOR_FG} %~%f$CR"
+	PROMPT+="%F{$COLOR_FG}╰%f %F{$COLOR_ACCENT}%B❱%f%b "
+	TRANSIENT_PROMPT_PROMPT=$PROMPT
+}
+
+precmd_functions+=(_prompt_preserve_exit_code)
 precmd_functions+=(_set_prompt)
 
-zle -N zle-line-init
+_set_prompt
 
+TRANSIENT_PROMPT_TRANSIENT_PROMPT="%F{$COLOR_ACCENT}~ ❱%f "
+function TRANSIENT_PROMPT_PRETRANSIENT() {
+	_prompt_unset_first
+}
+
+source "$ZSH_PLUGIN_DIR/zsh-transient-prompt/transient-prompt.zsh-theme"

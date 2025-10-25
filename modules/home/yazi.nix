@@ -1,4 +1,4 @@
-{ pkgs, lib, config, ... }:
+{ flakeInputs, pkgs, lib, config, ... }:
 let cfg = config.modules.yazi;
 in {
   options.modules.yazi = {
@@ -6,16 +6,9 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    programs.yazi = {
-      enable = true;
-      settings = {
-        mgr = {
-          show_hidden = true;
-        };
-      };
-    };
+    home.packages = with pkgs; [ yazi ];
 
-    # xdg.configFile."yazi/theme.toml".source =
-    #   "${pkgs.self.tokyonight}/extras/yazi/tokyonight_night.toml";
+    xdg.configFile.yazi.source =
+      "${flakeInputs.self.dotfiles.yazi}/.config/yazi";
   };
 }

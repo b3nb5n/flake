@@ -1,6 +1,5 @@
 return {
 	"nvim-treesitter-context",
-	enabled = false,
 	event = "DeferredUIEnter",
 	after = function()
 		local ts_context = require("treesitter-context")

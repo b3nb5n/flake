@@ -1,0 +1,1 @@
+blacklist = ["^meshlab$", "^autostart$", "^ibus-setup-mozc-jp$", "^MarvinSketch$", "^LicenseManager$", "^MarvinView$", "^polkit-gnome-authentication-agent-1$", "^openra-mod$"]

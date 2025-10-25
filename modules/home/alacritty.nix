@@ -1,24 +1,19 @@
-{ pkgs, lib, config, ... }:
+{ flakeInputs, pkgs, lib, config, ... }:
 let cfg = config.modules.alacritty;
 in {
-  options.modules.alacritty = {
-    enable = lib.mkEnableOption "alacritty";
-    package = lib.mkPackageOption pkgs [ "self" "alacritty" ] { };
+  options.modules.alacritty = { 
+    enable = lib.mkEnableOption "alacritty"; 
+
+    package = lib.mkPackageOption pkgs [ "alacritty" ] {};
   };
 
   config = lib.mkIf cfg.enable {
-    home = {
-      sessionVariables.TERMINAL = "${cfg.package}/bin/alacritty";
-      packages = [ cfg.package ];
-    };
+    home.packages = [ cfg.package pkgs.nerd-fonts.atkynson-mono ];
 
-    xdg.autostart.desktopItems = [
-      (pkgs.makeDesktopItem {
-        name = "alacritty";
-        desktopName = "Alacritty";
-        type = "Application";
-        exec = "${cfg.package}/bin/alacritty";
-      })
-    ];
+    xdg = {
+      autostart.entries = [ "${cfg.package}/share/applications/Alacritty.desktop" ];
+      configFile.alacritty.source =
+        "${flakeInputs.self.dotfiles.alacritty}/.config/alacritty";
+    };
   };
 }

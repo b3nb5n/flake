@@ -8,8 +8,6 @@ in {
   config = lib.mkIf cfg.enable {
     home = {
       packages = with pkgs; [
-        dejavu_fonts
-        noto-fonts-emoji
         gtk-engine-murrine
         gnome-themes-extra
         sassc
@@ -27,31 +25,21 @@ in {
       };
     };
 
-    gtk = rec {
+    gtk = {
       enable = true;
+
       theme = {
         package = pkgs.tokyonight-gtk-theme;
         name = "Tokyonight-Dark-BL";
       };
-      iconTheme = {
-        package = pkgs.tokyonight-gtk-theme;
-        name = "Tokyonight-Dark";
-      };
 
-      gtk4.extraConfig = gtk3.extraConfig;
       gtk3.extraConfig.gtk-application-prefer-dark-theme = true;
+      gtk4.extraConfig.gtk-interface-color-scheme = 2;
     };
 
-    fonts.fontconfig.enable = true;
+    dconf.settings."org/gnome/desktop/interface".color-scheme = "prefer-dark";
 
-    xdg.configFile = (builtins.listToAttrs (builtins.map
-      (version: rec {
-        name = "gtk-${toString version}.0";
-        value = {
-          recursive = true;
-          source =
-            "${config.gtk.theme.package}/share/themes/Tokyonight-Dark/${name}";
-        };
-      }) [ 2 3 4 ]));
+    xdg.dataFile."themes/Tokyonight-Dark-BL".source =
+      "${config.gtk.theme.package}/share/themes/Tokyonight-Dark";
   };
 }

@@ -10,15 +10,15 @@
     kernelModules = [ "kvm-amd" ];
     extraModulePackages = [ ];
 
+    loader = {
+      systemd-boot.enable = true;
+      efi.canTouchEfiVariables = true;
+    };
+
     initrd = {
       kernelModules = [ ];
       availableKernelModules =
         [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
-    };
-
-    loader = {
-      systemd-boot.enable = true;
-      efi.canTouchEfiVariables = true;
     };
   };
 
@@ -35,12 +35,17 @@
     };
   };
 
-  users.users = {
-    root.hashedPasswordFile = config.age.secrets.password.path;
-    ben = {
-      extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
-      hashedPasswordFile = config.age.secrets."ben.password".path;
-      # openssh.authorizedKeys.keys = with flakeInputs.self.secrets.keys; [ ];
+  users = {
+    defaultUserShell = config.programs.zsh.package;
+
+    users = {
+      root.hashedPasswordFile = config.age.secrets.password.path;
+      ben = {
+        extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
+        hashedPasswordFile = config.age.secrets."ben.password".path;
+        openssh.authorizedKeys.keys = with flakeInputs.self.secrets.keys;
+          external.e85064.all;
+      };
     };
   };
 
@@ -52,11 +57,12 @@
     openrgb.enable = true;
     pipewire.enable = true;
     ssh.enable = true;
-    zsh.enable = true;
   };
 
   programs = {
+    zsh.enable = true;
     hyprland.enable = true;
+    niri.enable = true;
     steam.enable = true;
   };
 }

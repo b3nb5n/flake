@@ -1,4 +1,3 @@
-local direnv="$(command -v direnv)"
-if [[ -n $direnv ]]; then
-	eval "$($direnv hook zsh)"
-fi
+[ -x "$(command -v direnv)" ] || return
+
+eval "$(direnv hook zsh)"

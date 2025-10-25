@@ -1,6 +1,3 @@
-vim.opt.termguicolors = true
-vim.opt.clipboard = "unnamedplus"
-
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.signcolumn = "yes"
@@ -13,8 +10,20 @@ vim.opt.expandtab = false
 vim.opt.smartindent = true
 vim.opt.shiftround = true
 
+vim.opt.clipboard = "unnamedplus"
 vim.opt.swapfile = false
 vim.opt.backup = false
+vim.opt.undofile = true
+vim.opt.sessionoptions = {
+	"curdir",
+	"buffers",
+	"folds",
+	"options",
+	"localoptions",
+	"help",
+}
 
-vim.opt.conceallevel = 0
+vim.opt.termguicolors = true
+vim.opt.wrap = false
 vim.opt.fillchars = { eob = " " }
+vim.opt.conceallevel = 0

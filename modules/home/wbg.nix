@@ -29,7 +29,7 @@ in {
 
       Service = {
         ExecStart =
-          ''${pkgs.wbg}/bin/wbg "${cfg.wallpapersDir}/${cfg.wallpaper}"'';
+          ''${pkgs.wbg}/bin/wbg --stretch "${cfg.wallpapersDir}/${cfg.wallpaper}"'';
         Restart = "always";
         RestartSec = "10";
       };

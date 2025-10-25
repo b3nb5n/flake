@@ -13,16 +13,25 @@ return {
 					},
 				},
 				menu = {
-					draw = { treesitter = { "lsp" } },
+					draw = {
+						treesitter = { "lsp" },
+						columns = {
+							{ "label", "label_description", gap = 1 },
+							{ "kind_icon", "kind", gap = 1 },
+						},
+					},
 				},
 				ghost_text = {
 					enabled = true,
 				},
 				documentation = {
 					auto_show = true,
+					treesitter_highlighting = true,
 				},
 				accept = {
-					auto_brackets = { enabled = false },
+					auto_brackets = {
+						enabled = false,
+					},
 				},
 			},
 			signature = {

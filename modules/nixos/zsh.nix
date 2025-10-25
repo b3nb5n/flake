@@ -3,15 +3,11 @@ let cfg = config.modules.zsh;
 in {
   options.modules.zsh = {
     enable = lib.mkEnableOption "zsh";
-    package = lib.mkPackageOption pkgs [ "self" "zsh" ] { };
   };
 
   config = lib.mkIf cfg.enable {
-    users.defaultUserShell = cfg.package;
+    users.defaultUserShell = pkgs.zsh;
+    programs.zsh.enable = true;
 
-    environment = {
-      systemPackages = [ cfg.package ];
-      shells = [ "${cfg.package}/bin/zsh" ];
-    };
   };
 }
