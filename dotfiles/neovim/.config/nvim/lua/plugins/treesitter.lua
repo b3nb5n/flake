@@ -5,12 +5,16 @@ return {
 		local parser_dir = vim.fs.joinpath(vim.fn.stdpath("data"), "parsers")
 		vim.opt.rtp:prepend(parser_dir)
 
-		local keymaps = function(key, selector)
+		local keymaps = function(key, selector, mode)
 			return {
 				select = {
 					keymaps = {
 						["<leader>a" .. key] = selector .. ".outer",
 						["<leader>i" .. key] = selector .. ".inner",
+					},
+					selection_modes = {
+						[selector .. ".outer"] = mode or "v",
+						[selector .. ".inner"] = mode or "v",
 					},
 				},
 				move = {
@@ -43,6 +47,7 @@ return {
 			}
 		end
 
+		---@diagnostic disable-next-line: missing-fields
 		require("nvim-treesitter.configs").setup({
 			sync_install = false,
 			auto_install = false,
@@ -95,11 +100,11 @@ return {
 				keymaps("a", "@attribute"),
 				keymaps("s", "@block"),
 				keymaps("i", "@call"),
-				keymaps("c", "@class"),
+				keymaps("c", "@class", "V"),
 				keymaps("d", "@comment"),
 				keymaps("b", "@conditional"),
-				keymaps("f", "@function"),
-				keymaps("l", "@loop"),
+				keymaps("f", "@function", "V"),
+				keymaps("l", "@loop", "V"),
 				keymaps("p", "@parameter"),
 				keymaps("r", "@return")
 			),

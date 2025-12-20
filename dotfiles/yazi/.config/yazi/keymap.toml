@@ -1,0 +1,7 @@
+[mgr]
+append_keymap =	[
+	{ on = "M", run = "plugin mount" },
+	{ on = "C", run = "plugin ouch" },
+	{ on = [ "c", "m" ], run = "plugin chmod" },
+	{ on = [ "c", "z" ], run = "plugin ffmpeg" },
+]

@@ -10,5 +10,6 @@ return {
 		})
 
 		vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { bg = "none" })
+		vim.keymap.set("n", "<leader>tw", ts_context.toggle)
 	end,
 }

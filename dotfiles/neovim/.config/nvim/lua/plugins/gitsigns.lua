@@ -3,7 +3,11 @@ return {
 	event = "UIEnter",
 	after = function()
 		local gitsigns = require("gitsigns")
-		gitsigns.setup()
+		gitsigns.setup({
+			preview_config = {
+				border = vim.o.winborder,
+			},
+		})
 
 		vim.keymap.set("n", "<leader>vr", gitsigns.refresh)
 		vim.keymap.set("n", "<leader>vh", gitsigns.preview_hunk)

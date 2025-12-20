@@ -20,6 +20,12 @@ return {
 				autoload_configurations = true,
 				auto_generate_source_map = true,
 				load_rust_types = true,
+
+				adapter = {
+					type = "executable";
+					name = "codelldb",
+					command = "codelldb",
+				},
 			},
 		}
 	end,

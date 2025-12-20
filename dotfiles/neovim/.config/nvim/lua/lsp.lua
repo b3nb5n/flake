@@ -49,11 +49,13 @@ vim.diagnostic.config({
 vim.keymap.set("n", "<leader>lr", function()
 	local clients = vim.lsp.get_clients()
 	vim.lsp.stop_client(clients)
+	vim.cmd.edit()
 end)
 
 vim.keymap.set("n", "<leader>lR", function()
 	local clients = vim.lsp.get_clients()
 	vim.lsp.stop_client(clients, true)
+	vim.cmd.edit()
 end)
 
 vim.keymap.set("n", "<leader>sh", vim.lsp.buf.hover)

@@ -6,7 +6,7 @@ in {
   };
 
   config = lib.mkIf cfg.enable {
-    home.packages = with pkgs; [ yazi ];
+    home.packages = with pkgs; [ yazi ouch mediainfo ];
 
     xdg.configFile.yazi.source =
       "${flakeInputs.self.dotfiles.yazi}/.config/yazi";

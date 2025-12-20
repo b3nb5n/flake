@@ -33,6 +33,8 @@ in {
       gofumpt
       stylua
       yamlfmt
+
+      vscode-extensions.vadimcn.vscode-lldb.adapter
     ];
 
     xdg.configFile.nvim.source =

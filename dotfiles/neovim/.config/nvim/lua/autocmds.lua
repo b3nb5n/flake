@@ -1,3 +1,8 @@
+vim.api.nvim_create_autocmd(
+	{ "FocusGained", "BufEnter", "VimResume" },
+	{ command = "checktime" }
+)
+
 vim.api.nvim_create_autocmd("BufLeave", {
 	callback = function(args)
 		local bo = vim.bo[args.buf]
@@ -14,7 +19,7 @@ local jump_recenter_thresh = 0
 vim.api.nvim_create_autocmd({ "WinResized", "BufEnter" }, {
 	callback = function()
 		local height = vim.api.nvim_win_get_height(0)
-		jump_recenter_thresh = math.floor(height / 2)
+		jump_recenter_thresh = math.floor(height * 0.3)
 	end,
 })
 

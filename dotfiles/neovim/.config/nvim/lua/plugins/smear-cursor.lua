@@ -16,10 +16,10 @@ return {
 			scroll_buffer_space = false,
 		})
 
-		-- vim.keymap.set("n", "<leader>tc", function()
-		-- 	smear.toggle()
-		-- 	local enabled = smear.enabled and "enabled" or "disabled"
-		-- 	vim.notify("Cursor smearing is now " .. enabled .. ".")
-		-- end)
+		vim.keymap.set("n", "<leader>ta", function()
+			smear.toggle()
+			local enabled = smear.enabled and "enabled" or "disabled"
+			vim.notify("Cursor smearing is now " .. enabled .. ".")
+		end)
 	end,
 }

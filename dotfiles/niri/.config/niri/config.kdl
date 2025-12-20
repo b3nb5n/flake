@@ -10,7 +10,7 @@ cursor {
 }
 
 layout {
-    gaps 16
+    gaps 12
     center-focused-column "never"
     background-color "#16161e"
 
@@ -80,6 +80,10 @@ binds {
     Mod+Q repeat=false { close-window; }
     Mod+Shift+Q { quit; }
 
+    Mod+F repeat=false { fullscreen-window; }
+    Mod+C repeat=false { center-column; }
+    Mod+A repeat=false { toggle-window-floating; }
+
     Mod+Left { focus-column-left; }
     Mod+H { focus-column-left; }
     Mod+Right { focus-column-right; }
@@ -117,7 +121,6 @@ binds {
     Mod+KP_Subtract repeat=false { switch-preset-column-width-back; }
     Mod+KP_Multiply repeat=false { switch-preset-window-height; }
     Mod+KP_Divide repeat=false { switch-preset-window-height-back; }
-    Mod+KP_Decimal repeat=false { center-column; }
 
     Mod+Space { spawn "walker" "--provider" "desktopapplications"; }
     Mod+Escape allow-inhibiting=false { toggle-keyboard-shortcuts-inhibit; }

@@ -58,9 +58,11 @@ return {
 			fzf.lgrep_curbuf({ rg_glob = true })
 		end)
 
-		vim.keymap.set("n", "<leader>sr", fzf.lsp_references)
 		vim.keymap.set("n", "<leader>sd", fzf.lsp_definitions)
 		vim.keymap.set("n", "<leader>st", fzf.lsp_typedefs)
+		vim.keymap.set("n", "<leader>sr", fzf.lsp_references)
+		vim.keymap.set("n", "<leader>si", fzf.lsp_implementations)
+		vim.keymap.set("n", "<leader>sc", fzf.lsp_incoming_calls)
 
 		vim.keymap.set("n", "<leader>fvc", fzf.git_commits)
 		vim.keymap.set("n", "<leader>fvb", fzf.git_branches)
