@@ -44,7 +44,6 @@
     mako.enable = true;
     neovim.enable = true;
     niri.enable = true;
-    osteo.enable = true;
     walker.enable = true;
     yazi.enable = true;
     zsh.enable = true;

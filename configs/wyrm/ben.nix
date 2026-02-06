@@ -14,7 +14,6 @@
     gtk.enable = true;
     hyprland.enable = true;
     neovim.enable = true;
-    osteo.enable = true;
     spotify.enable = true;
     wbg.enable = true;
     wofi.enable = true;
