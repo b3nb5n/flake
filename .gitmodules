@@ -1,188 +1,188 @@
 # zsh
 [submodule "zsh-syntax-highlighting"]
-	path = dotfiles/zsh/.config/zsh/plugins/zsh-syntax-highlighting
+	path = dotfiles/zsh/.local/share/zsh/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 	shallow = true
 [submodule "zsh-history-substring-search"]
-	path = dotfiles/zsh/.config/zsh/plugins/zsh-history-substring-search
+	path = dotfiles/zsh/.local/share/zsh/plugins/zsh-history-substring-search
 	url = https://github.com/zsh-users/zsh-history-substring-search.git
 	shallow = true
 [submodule "zsh-autosuggestions"]
-	path = dotfiles/zsh/.config/zsh/plugins/zsh-autosuggestions
+	path = dotfiles/zsh/.local/share/zsh/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions.git
 	shallow = true
 [submodule "zsh-completions"]
-	path = dotfiles/zsh/.config/zsh/plugins/zsh-completions
+	path = dotfiles/zsh/.local/share/zsh/plugins/zsh-completions
 	url = https://github.com/zsh-users/zsh-completions.git
 	shallow = true
 [submodule "fzf-tab"]
-	path = dotfiles/zsh/.config/zsh/plugins/fzf-tab
+	path = dotfiles/zsh/.local/share/zsh/plugins/fzf-tab
 	url = https://github.com/Aloxaf/fzf-tab.git
 	shallow = true
 [submodule "zsh-transient-prompt"]
-	path = dotfiles/zsh/.config/zsh/plugins/zsh-transient-prompt
+	path = dotfiles/zsh/.local/share/zsh/plugins/zsh-transient-prompt
 	url = https://github.com/olets/zsh-transient-prompt.git
 	shallow = true
 
 # neovim
 [submodule "lz.n"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/lz.n
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/lz.n
 	url = https://github.com/nvim-neorocks/lz.n.git
 	shallow = true
 [submodule "tokyonight.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/tokyonight-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/tokyonight-nvim
 	url = https://github.com/folke/tokyonight.nvim.git
 	shallow = true
 [submodule "nvim-lspconfig"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-lspconfig
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/nvim-lspconfig
 	url = https://github.com/neovim/nvim-lspconfig.git
 	shallow = true
 [submodule "fzf-lua"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/fzf-lua
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/fzf-lua
 	url = https://github.com/ibhagwan/fzf-lua.git
 	shallow = true
 [submodule "blink.cmp"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/blink-cmp
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/blink-cmp
 	url = https://github.com/Saghen/blink.cmp
 	shallow = true
 [submodule "nvim-treesitter"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-treesitter
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/nvim-treesitter
 	url = https://github.com/nvim-treesitter/nvim-treesitter.git
 	shallow = true
 [submodule "lualine.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/lualine-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/lualine-nvim
 	url = https://github.com/nvim-lualine/lualine.nvim
 	shallow = true
 [submodule "plenary.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/plenary-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/plenary-nvim
 	url = https://github.com/nvim-lua/plenary.nvim.git
 	shallow = true
 [submodule "gitsigns.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/gitsigns-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/gitsigns-nvim
 	url = https://github.com/lewis6991/gitsigns.nvim.git
 	shallow = true
 [submodule "lspkind.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/lspkind-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/lspkind-nvim
 	url = https://github.com/onsails/lspkind.nvim.git
 	shallow = true
 [submodule "nvim-surround"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-surround
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-surround
 	url = https://github.com/kylechui/nvim-surround.git
 	shallow = true
 [submodule "nvim-ts-autotag"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-ts-autotag
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-ts-autotag
 	url = https://github.com/windwp/nvim-ts-autotag.git
 	shallow = true
 [submodule "alpha-nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/alpha-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/alpha-nvim
 	url = https://github.com/goolord/alpha-nvim.git
 	shallow = true
 [submodule "nvim-treesitter-context"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-treesitter-context
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-treesitter-context
 	url = https://github.com/nvim-treesitter/nvim-treesitter-context.git
 	shallow = true
 [submodule "lsp-status.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/lsp-status-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/lsp-status-nvim
 	url = https://github.com/nvim-lua/lsp-status.nvim.git
 	shallow = true
 [submodule "autoclose.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/autoclose-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/autoclose-nvim
 	url = https://github.com/m4xshen/autoclose.nvim.git
 	shallow = true
 [submodule "markview.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/markview-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/markview-nvim
 	url = https://github.com/OXY2DEV/markview.nvim.git
 	shallow = true
 [submodule "schemastore.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/schemastore-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/schemastore-nvim
 	url = https://github.com/b0o/SchemaStore.nvim.git
 	shallow = true
 [submodule "persistence.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/persistence-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/persistence-nvim
 	url = https://github.com/folke/persistence.nvim.git
 	shallow = true
 [submodule "yazi.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/yazi-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/yazi-nvim
 	url = https://github.com/mikavilpas/yazi.nvim.git
 	shallow = true
 [submodule "nvim-treesitter-textobjects"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/start/nvim-treesitter-textobjects
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/start/nvim-treesitter-textobjects
 	url = https://github.com/nvim-treesitter/nvim-treesitter-textobjects.git
 	shallow = true
 [submodule "toggleterm.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/toggleterm-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/toggleterm-nvim
 	url = https://github.com/akinsho/toggleterm.nvim.git
 	shallow = true
 [submodule "conform.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/conform-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/conform-nvim
 	url = https://github.com/stevearc/conform.nvim.git
 	shallow = true
 [submodule "rustaceanvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/rustaceanvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/rustaceanvim
 	url = https://github.com/mrcjkb/rustaceanvim.git
 	shallow = true
 [submodule "ts-comments.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/ts-comments-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/ts-comments-nvim
 	url = https://github.com/folke/ts-comments.nvim.git
 	shallow = true
 [submodule "hex.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/hex-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/hex-nvim
 	url = https://github.com/RaafatTurki/hex.nvim.git
 	shallow = true
 [submodule "smear-cursor.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/smear-cursor-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/smear-cursor-nvim
 	url = https://github.com/sphamba/smear-cursor.nvim.git
 	shallow = true
 [submodule "typescript-tools.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/typescript-tools-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/typescript-tools-nvim
 	url = https://github.com/pmizio/typescript-tools.nvim.git
 	shallow = true
 [submodule "guess-indent.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/guess-indent
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/guess-indent
 	url = https://github.com/NMAC427/guess-indent.nvim.git
 	shallow = true
 [submodule "helpview.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/helpview-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/helpview-nvim
 	url = https://github.com/OXY2DEV/helpview.nvim
 	shallow = true
 [submodule "csvview.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/csv-view-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/csv-view-nvim
 	url = https://github.com/hat0uma/csvview.nvim.git
 	shallow = true
 [submodule "ccc.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/ccc-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/ccc-nvim
 	url = https://github.com/uga-rosa/ccc.nvim.git
 	shallow = true
 [submodule "noice.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/noice-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/noice-nvim
 	url = https://github.com/folke/noice.nvim.git
 	shallow = true
 [submodule "nui-nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nui-nvim
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nui-nvim
 	url = https://github.com/MunifTanjim/nui.nvim.git
 	shallow = true
 [submodule "nvim-notify"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-notify
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-notify
 	url = https://github.com/rcarriga/nvim-notify.git
 	shallow = true
 [submodule "nvim-dap"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-dap
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-dap
 	url = https://codeberg.org/mfussenegger/nvim-dap.git
 	shallow = true
 [submodule "nvim-dap-ui"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-dap-ui
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-dap-ui
 	url = https://github.com/rcarriga/nvim-dap-ui.git
 	shallow = true
 [submodule "aerial.nvim"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/aerial
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/aerial
 	url = https://github.com/stevearc/aerial.nvim.git
 	shallow = true
 [submodule "nvim-nio"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-nio
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-nio
 	url = https://github.com/nvim-neotest/nvim-nio.git
 	shallow = true
 [submodule "nvim-dap-virtual-text"]
-	path = dotfiles/neovim/.config/nvim/pack/vendor/opt/nvim-dap-virtual-text
+	path = dotfiles/neovim/.local/share/nvim/site/pack/vendor/opt/nvim-dap-virtual-text
 	url = https://github.com/theHamsta/nvim-dap-virtual-text.git
 	shallow = true
 

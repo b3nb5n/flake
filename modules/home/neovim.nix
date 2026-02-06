@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.modules.neovim;
 in {
   options.modules.neovim = {
@@ -37,7 +37,15 @@ in {
       vscode-extensions.vadimcn.vscode-lldb.adapter
     ];
 
-    xdg.configFile.nvim.source =
-      "${flakeInputs.self.dotfiles.neovim}/.config/nvim";
+    xdg = {
+      configFile.nvim.source = config.lib.file.mkOutOfStoreSymlink
+        "${config.dotfiles.path}/neovim/.config/nvim";
+
+      dataFile.nvim-pack = {
+        target = "nvim/site/pack/vendor";
+        source = config.lib.file.mkOutOfStoreSymlink
+          "${config.dotfiles.path}/neovim/.local/share/nvim/site/pack/vendor";
+      };
+    };
   };
 }
