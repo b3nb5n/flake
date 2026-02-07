@@ -16,14 +16,7 @@ vim.opt.autowriteall = true
 vim.opt.swapfile = false
 vim.opt.backup = false
 vim.opt.undofile = true
-vim.opt.sessionoptions = {
-	"curdir",
-	"buffers",
-	"folds",
-	"options",
-	"localoptions",
-	"help",
-}
+vim.opt.sessionoptions = { "curdir", "buffers", "folds", "help" }
 
 vim.opt.termguicolors = true
 vim.opt.wrap = false

@@ -1,4 +1,4 @@
-{ flakeInputs, config, ... }: {
+{ flakeInputs, pkgs, config, ... }: {
   system.stateVersion = "25.05";
 
   hardware = {
@@ -36,7 +36,7 @@
   };
 
   users = {
-    defaultUserShell = config.programs.zsh.package;
+    defaultUserShell = pkgs.zsh;
 
     users = {
       root.hashedPasswordFile = config.age.secrets.password.path;
@@ -44,9 +44,13 @@
         extraGroups = [ "wheel" "video" "audio" "networkmanager" ];
         hashedPasswordFile = config.age.secrets."ben.password".path;
         openssh.authorizedKeys.keys = with flakeInputs.self.secrets.keys;
-          external.e85064.all;
+          external.shade.all ++ external.nail.all ++ external.e85064.all;
       };
     };
+  };
+
+  networking = {
+    firewall.allowedTCPPorts = [ 8081 ];
   };
 
   modules = {
@@ -57,6 +61,11 @@
     openrgb.enable = true;
     pipewire.enable = true;
     ssh.enable = true;
+  };
+
+  services = {
+    mullvad-vpn.enable = true;
+    udisks2.enable = true;
   };
 
   programs = {

@@ -4,6 +4,8 @@ in {
   options.modules.niri.enable = lib.mkEnableOption "niri";
 
   config = lib.mkIf cfg.enable {
+    home.packages = with pkgs; [ playerctl ];
+
     xdg = {
       autostart.enable = true;
 
@@ -12,6 +14,7 @@ in {
 
       portal = {
         enable = true;
+        config.common.default = "gtk";
         xdgOpenUsePortal = true;
         extraPortals = with pkgs; [
           xdg-desktop-portal-gtk

@@ -13,19 +13,27 @@
       unzip
       stable.termscp
       systemctl-tui 
+      hyperfine
       wiki-tui 
       ttyper
+      tokei
+      wiremix
+      ffmpeg
 
       gnome-calculator
       gnome-calendar
       gnome-maps
       gnome-weather
-      spotify
       helvum 
       blueberry
       inkscape
       blender
       discord
+      nicotine-plus
+      mullvad-vpn
+      picard
+      vlc
+      obsidian
 
       olympus
       prismlauncher
@@ -44,6 +52,9 @@
     mako.enable = true;
     neovim.enable = true;
     niri.enable = true;
+    spotify.enable = true;
+    swayidle.enable = true;
+    udiskie.enable = true;
     walker.enable = true;
     yazi.enable = true;
     zsh.enable = true;

@@ -1,3 +1,7 @@
+output "DP-2" {
+    mode "3840x2160@120.000"
+}
+
 input {
     keyboard { numlock; }
     focus-follows-mouse
@@ -10,23 +14,19 @@ cursor {
 }
 
 layout {
-    gaps 12
+    gaps 8
     center-focused-column "never"
     background-color "#16161e"
 
-    focus-ring {
-        off
+    border {
         width 2
-        active-color "#c0caf5"
-        inactive-color "#3b4261"
+        active-color "#3b4261"
+        inactive-color "#16161e"
         urgent-color "#27a1b9"
     }
 
-    border {
-        width 2
-        active-color "#c0caf5"
-        inactive-color "#16161e"
-        urgent-color "#27a1b9"
+    focus-ring {
+        off
     }
 
     shadow {
@@ -65,8 +65,11 @@ window-rule {
 }
 
 window-rule {
-    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    match title="^Picture-in-Picture$"
     open-floating true
+    open-focused false
+    default-column-width { fixed 640; }
+    default-window-height { fixed 360; }
     default-floating-position x=24 y=24 relative-to="bottom-right"
 }
 

@@ -1,17 +1,20 @@
 { pkgs, lib, config, ... }:
 let cfg = config.modules.firefox;
 in {
-  options.modules.firefox = { enable = lib.mkEnableOption "firefox"; };
+  options.modules.firefox = {
+    enable = lib.mkEnableOption "firefox";
+    package = lib.mkPackageOption pkgs [ "stable" "firefox-bin" ] { };
+
+    autostart = lib.mkOption {
+      type = lib.types.bool;
+      default = false;
+    };
+  };
 
   config = lib.mkIf cfg.enable {
-    home.sessionVariables.BROWSER =
-      "${config.programs.firefox.package}/bin/firefox";
-
-    home.file.".mozilla/native-messaging-hosts/com.github.browserpass.native.json".source =
-      "${pkgs.browserpass}/lib/mozilla/native-messaging-hosts/com.github.browserpass.native.json";
-
-    xdg.autostart.entries = 
-      [ "${config.programs.firefox.package}/share/applications/firefox.desktop" ];
+    xdg.autostart.entries = lib.mkIf cfg.autostart [
+      "${cfg.package}/share/applications/firefox.desktop"
+    ];
 
     programs.firefox = {
       enable = true;

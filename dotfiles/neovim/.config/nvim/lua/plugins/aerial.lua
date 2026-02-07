@@ -5,10 +5,9 @@ return {
 		local aerial = require("aerial")
 
 		aerial.setup({
-			layout =	{
+			nav = {
 				win_opts = {
-					-- winhighlight = "Normal:NormalFloat",
-					winblend = 0
+					winblend = 0,
 				},
 			},
 		})

@@ -20,7 +20,15 @@ return {
 					},
 				},
 			},
-			fd_opts = [[--color=never --type f --hidden --follow --exclude .git/ .direnv/ node_modules/ target/ ]],
+			grep = {
+				hidden = true,
+			},
+			keymap = {
+				fzf = {
+					["ctrl-a"] = "select-all",
+					["ctrl-f"] = "accept",
+				},
+			}
 		})
 
 		fzf.register_ui_select()
@@ -35,27 +43,15 @@ return {
 		vim.keymap.set("n", "<leader>fm", fzf.man_pages)
 
 		vim.keymap.set("n", "<leader>fg", fzf.live_grep)
-		vim.keymap.set("n", "<leader>fG", fzf.live_grep)
-
 		vim.keymap.set("v", "<leader>fg", function()
 			local search = utils.get_visual_selection()
 			fzf.grep({ search = search })
 		end)
 
-		vim.keymap.set("n", "<leader>fgp", function()
-			fzf.live_grep({ rg_glob = true })
-		end)
-
 		vim.keymap.set("n", "<leader>fl", fzf.lgrep_curbuf)
-		vim.keymap.set("n", "<leader>fL", fzf.lgrep_curbuf)
-
 		vim.keymap.set("v", "<leader>fl", function()
 			local search = utils.get_visual_selection()
 			fzf.lgrep_curbuf({ search = search })
-		end)
-
-		vim.keymap.set("n", "<leader>flp", function()
-			fzf.lgrep_curbuf({ rg_glob = true })
 		end)
 
 		vim.keymap.set("n", "<leader>sd", fzf.lsp_definitions)
@@ -71,20 +67,6 @@ return {
 		vim.keymap.set("n", "<leader>fe", fzf.diagnostics_workspace)
 		vim.keymap.set("n", "<leader>fE", function()
 			fzf.diagnostics_workspace({
-				severity_only = vim.diagnostic.severity.ERROR,
-			})
-		end)
-
-		vim.keymap.set("n", "<leader>fge", fzf.diagnostics_workspace)
-		vim.keymap.set("n", "<leader>fgE", function()
-			fzf.diagnostics_workspace({
-				severity_only = vim.diagnostic.severity.ERROR,
-			})
-		end)
-
-		vim.keymap.set("n", "<leader>fle", fzf.diagnostics_document)
-		vim.keymap.set("n", "<leader>flE", function()
-			fzf.diagnostics_document({
 				severity_only = vim.diagnostic.severity.ERROR,
 			})
 		end)

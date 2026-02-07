@@ -6,7 +6,7 @@ _direnv_load_plugins() {
 	local config_dir="$(dirname -- "$(readlink -f -- "${BASH_SOURCE[0]}")")"
 	local plugin_dir="$config_dir/plugins"
 
-	nix_direnv="$plugin_dir/nix-direnv/direnvrc"
+	local nix_direnv="$plugin_dir/nix-direnv/direnvrc"
 	[ -f "$nix_direnv" ] && source "$nix_direnv"
 }
 
@@ -22,8 +22,8 @@ _get_direnv_platform() {
 
 _direnv_load_flake() {
 	local dir_path="$1"
-	local flake_path="$dir_path/flake.nix"
-	[ -f "$flake_path" ] || return
+	# local flake_path="$dir_path/flake.nix"
+	# [[ -f "$flake_path" ]] || return
 
 	local flake_specifier="path:$dir_path"
 	local shell_path=".\"devShells\".\"$(_get_direnv_platform)\""

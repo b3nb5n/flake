@@ -1,21 +1,16 @@
 {
   inputs = rec {
-    nixpkgs-stable.url = "nixpkgs/release-25.05";
-    nixpkgs-unstable.url = "nixpkgs/nixos-unstable";
-    nixpkgs = nixpkgs-unstable;
+    nixpkgs-stable.url = "nixpkgs/release-25.11";
+    nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
+    nixpkgs = nixpkgs-stable;
+
+    home-manager = {
+      url = "github:nix-community/home-manager/release-25.11";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
 
     nur = {
       url = "github:nix-community/NUR";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    nix-darwin = {
-      url = "github:LnL7/nix-darwin";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-
-    home-manager = {
-      url = "github:nix-community/home-manager";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -23,7 +18,6 @@
       url = "github:ryantm/agenix";
       inputs = {
         nixpkgs.follows = "nixpkgs";
-        darwin.follows = "nix-darwin";
         home-manager.follows = "home-manager";
       };
     };

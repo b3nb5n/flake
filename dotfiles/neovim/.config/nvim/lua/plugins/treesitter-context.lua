@@ -5,8 +5,9 @@ return {
 		local ts_context = require("treesitter-context")
 
 		ts_context.setup({
-			multiline_threshold = 8,
 			separator = "─",
+			multiline_threshold = 8,
+			max_lines = "10%",
 		})
 
 		vim.api.nvim_set_hl(0, "TreesitterContextSeparator", { bg = "none" })

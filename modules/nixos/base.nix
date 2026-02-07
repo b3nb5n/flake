@@ -1,10 +1,15 @@
 { flakeInputs, pkgs, ... }: {
+  nix = {
+    enable = true;
+    package = pkgs.nixVersions.stable;
+    optimise.automatic = true;
+    gc.automatic = true;
+    settings.experimental-features = [ "nix-command" "flakes" ];
+  };
+
   nixpkgs = {
     overlays = builtins.attrValues flakeInputs.self.overlays;
-    config = {
-      allowUnfree = true;
-      allowUnfreePredicate = (_: true);
-    };
+    config.allowUnfree = true;
   };
 
   hardware.enableAllFirmware = true;
@@ -21,16 +26,4 @@
 
   services.fstrim.enable = true;
   programs.dconf.enable = true;
-
-  nix = {
-    enable = true;
-    package = pkgs.nixVersions.stable;
-    optimise.automatic = true;
-    gc.automatic = true;
-    nixPath = [
-      "nixpkgs=${flakeInputs.nixpkgs-stable}"
-      "unstable=${flakeInputs.nixpkgs-unstable}"
-    ];
-    settings.experimental-features = [ "nix-command" "flakes" ];
-  };
 }

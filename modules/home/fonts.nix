@@ -9,7 +9,7 @@ in {
     home.packages = with pkgs; [
       dejavu_fonts
       nerd-fonts.atkynson-mono
-      noto-fonts-emoji
+      noto-fonts-color-emoji
     ];
 
     fonts.fontconfig = {
