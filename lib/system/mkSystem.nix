@@ -2,7 +2,7 @@
 
 path:
 let
-  lib = flakeInputs.self.lib.isolated // flakeInputs.self.lib.${pkgs.system};
+  lib = flakeInputs.self.lib.isolated // flakeInputs.self.lib.${pkgs.stdenv.hostPlatform.system};
 
   hostName = lib.fs.pathName path;
   dir = lib.dirIndex path;

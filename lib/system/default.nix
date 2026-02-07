@@ -4,7 +4,7 @@ let
   dirIndex = import ../isolated/dirIndex.nix;
   dir = dirIndex ./.;
 
-  mkSysLibEntry = system: {
+  mkSystemLibEntry = system: {
     name = system;
     value =
       let 
@@ -20,5 +20,5 @@ in
 
 builtins.listToAttrs
   (builtins.map
-    mkSysLibEntry
+    mkSystemLibEntry
     nixpkgs.lib.systems.flakeExposed)

@@ -1,7 +1,5 @@
 { flakeInputs, pkgs, ... }:
-
 { name, modules, homeModules }:
-
 let
   flakeModules = builtins.attrValues flakeInputs.self.nixosModules;
 
@@ -13,7 +11,7 @@ let
   };
 
 in flakeInputs.nixpkgs.lib.nixosSystem {
-  inherit (pkgs) system;
+  inherit (pkgs.stdenv.hostPlatform) system;
   specialArgs = { inherit flakeInputs; };
   modules = [ baseModule ] ++ modules ++ flakeModules;
 }

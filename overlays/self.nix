@@ -1,6 +1,8 @@
-flakeInputs: final: prev: {
-  self = flakeInputs.self.packages.${final.system} // {
+flakeInputs: final: prev: let 
+  system = final.stdenv.hostPlatform.system;
+in {
+  self = flakeInputs.self.packages.${system} // {
     lib = let libRoot = flakeInputs.self.lib;
-    in libRoot.isolated // libRoot.${final.system};
+    in libRoot.isolated // libRoot.${system};
   };
 }
