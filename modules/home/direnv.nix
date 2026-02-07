@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.modules.direnv;
 in {
   options.modules.direnv = {
@@ -8,7 +8,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages =  with pkgs; [ direnv ];
 
-    xdg.configFile.direnv.source =
-      "${flakeInputs.self.dotfiles.direnv}/.config/direnv";
+    xdg.configFile.direnv.source = config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/direnv/.config/direnv";
   };
 }

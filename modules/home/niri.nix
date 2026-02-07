@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.modules.niri;
 in {
   options.modules.niri.enable = lib.mkEnableOption "niri";
@@ -7,8 +7,8 @@ in {
     xdg = {
       autostart.enable = true;
 
-      configFile.niri.source =
-        "${flakeInputs.self.dotfiles.niri}/.config/niri";
+      configFile.niri.source = config.lib.file.mkOutOfStoreSymlink
+        "${config.dotfiles.path}/niri/.config/niri";
 
       portal = {
         enable = true;

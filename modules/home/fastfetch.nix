@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.modules.fastfetch;
 in {
   options.modules.fastfetch = {
@@ -8,7 +8,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ fastfetch ];
 
-    xdg.configFile.fastfetch.source =
-      "${flakeInputs.self.dotfiles.fastfetch}/.config/fastfetch";
+    xdg.configFile.fastfetch.source = config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/fastfetch/.config/fastfetch";
   };
 }

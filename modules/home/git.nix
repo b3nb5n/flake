@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.modules.git;
 in {
   options.modules.git = {
@@ -8,15 +8,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ git lazygit ];
 
-    programs.gh = {
-      enable = true;
-      package = pkgs.writeShellScriptBin "gh" ''
-        GH_TOKEN=$(cat ${config.age.secrets.github-token.path})
-        "${pkgs.gh}/bin/gh" "$@"
-      '';
-    };
-
-    xdg.configFile.git.source =
-      "${flakeInputs.self.dotfiles.git}/.config/git";
+    xdg.configFile.git.source = config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/git/.config/git";
   };
 }

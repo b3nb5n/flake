@@ -1,4 +1,4 @@
-{ flakeInputs, pkgs, lib, config, ... }:
+{ pkgs, lib, config, ... }:
 let cfg = config.modules.yazi;
 in {
   options.modules.yazi = {
@@ -8,7 +8,7 @@ in {
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [ yazi ouch mediainfo ];
 
-    xdg.configFile.yazi.source =
-      "${flakeInputs.self.dotfiles.yazi}/.config/yazi";
+    xdg.configFile.yazi.source = config.lib.file.mkOutOfStoreSymlink
+      "${config.dotfiles.path}/yazi/.config/yazi";
   };
 }
