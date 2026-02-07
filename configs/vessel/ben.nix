@@ -46,6 +46,7 @@
     direnv.enable = true;
     fastfetch.enable = true;
     firefox.enable = true;
+    floorp.enable = true;
     fonts.enable = true;
     git.enable = true;
     gtk.enable = true;
