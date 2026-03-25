@@ -4,6 +4,9 @@
     nixpkgs-unstable.url = "nixpkgs/nixpkgs-unstable";
     nixpkgs = nixpkgs-stable;
 
+    flake-parts.url = "github:hercules-ci/flake-parts";
+    import-tree.url = "github:vic/import-tree";
+
     home-manager = {
       url = "github:nix-community/home-manager/release-25.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -33,18 +36,9 @@
     };
   };
 
-  outputs = inputs: {
-    lib = import ./lib inputs;
-    overlays = import ./overlays inputs;
-    secrets = import ./secrets inputs;
-    dotfiles = import ./dotfiles inputs;
-    packages = import ./packages inputs;
-    apps = import ./apps inputs;
-
-    nixosModules = import ./modules/nixos inputs;
-    homeModules = import ./modules/home inputs;
-
-    inherit (import ./configs inputs)
-      nixosConfigurations darwinConfigurations homeConfigurations;
-  };
+  outputs = inputs:
+    inputs.flake-parts.lib.mkFlake { inherit inputs; } {
+      systems = inputs.nixpkgs.lib.systems.flakeExposed;
+      imports = (inputs.import-tree ./modules).imports ++ [ ./dotfiles ];
+    };
 }
