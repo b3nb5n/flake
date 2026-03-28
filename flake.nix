@@ -5,6 +5,7 @@
     nixpkgs = nixpkgs-stable;
 
     flake-parts.url = "github:hercules-ci/flake-parts";
+    config-parts.url = "github:b3nb5n/config-parts";
     import-tree.url = "github:vic/import-tree";
 
     home-manager = {

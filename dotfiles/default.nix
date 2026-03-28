@@ -1,15 +1,17 @@
-{ lib, ... }: {
+{ self, lib, ... }: {
   options.flake.dotfiles = lib.mkOption {
     type = lib.types.attrsOf lib.types.path;
-    default = { };
   };
 
   config.flake.dotfiles = let
-    dotfilesDir = builtins.filterSource (_path: type: type == "directory") ./.;
-    dirPaths = (builtins.attrNames (builtins.readDir dotfilesDir));
-    pathEntries = builtins.map (path: {
-      name = "${path}";
-      value = ./${path};
+    dotfilesRoot = "${self.outPath}/dotfiles";
+    dirFilter = (_path: type: type == "directory");
+    dotfilesDir = builtins.filterSource dirFilter dotfilesRoot;
+    dirNames = (builtins.attrNames (builtins.readDir dotfilesDir));
+
+    pathEntries = builtins.map (name: {
+      inherit name;
+      value = "${dotfilesRoot}/${name}";
     });
-  in builtins.listToAttrs (pathEntries dirPaths);
+  in builtins.listToAttrs (pathEntries dirNames);
 }

@@ -2,8 +2,8 @@
   flake.overlays.versioned = final: _prev:
     let
       args = {
-        inherit (final) config overlays;
         inherit (final.stdenv.hostPlatform) system;
+        inherit (final) config overlays;
       };
     in {
       stable = import inputs.nixpkgs-stable args;

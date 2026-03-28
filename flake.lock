@@ -41,6 +41,21 @@
         "type": "github"
       }
     },
+    "config-parts": {
+      "locked": {
+        "lastModified": 1774834226,
+        "narHash": "sha256-OYhIwDwYfRHA8G23y4O4BpIofUiktmN/DbilKTOKLjs=",
+        "owner": "b3nb5n",
+        "repo": "config-parts",
+        "rev": "81cab4e48d23258cbf4bbbebb45b29f9770aa000",
+        "type": "github"
+      },
+      "original": {
+        "owner": "b3nb5n",
+        "repo": "config-parts",
+        "type": "github"
+      }
+    },
     "crane": {
       "locked": {
         "lastModified": 1748047550,
@@ -341,6 +356,7 @@
     "root": {
       "inputs": {
         "agenix": "agenix",
+        "config-parts": "config-parts",
         "flake-parts": "flake-parts",
         "home-manager": "home-manager",
         "import-tree": "import-tree",

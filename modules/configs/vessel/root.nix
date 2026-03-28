@@ -1,0 +1,87 @@
+{ self, ... }: {
+  flake = {
+    keys.vessel.root = rec {
+      default = [ ed25519 rsa ];
+      ed25519 =
+        "ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIGZQkGuCgPRhc4wVmFkoDr+dA0mbnCUP4wHZl/TgqupA";
+      rsa =
+        "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQCxj4zfsaK7Bk0T+UJxJvrMt88Ib8S1g0Oeehj7t+FKo/ulFknhCPz5Vw95FLCUt31beG28yJWtRKj0/eyQzfuFANYzYiOBEX61qh5w8TvF6sdPvVO84UaqY4p60UUul9JX/Ydyxnnsvw5x952pFFI1l9zZTtUuxfKdnndrxxWhiweyed0T2ngzGdxFeMYdZbvExgvRnkN31q9yGoDBhAFCF7ov2RGd/88hTkSBx4/ZELsqKcmRNil4mmzxyevEyIwOUjYFj3XC44ZKYg9+qVcJMDVuj+pyvBB9jjd1WFrxnqkl+fVjjfUb5SSYcltGebWB3sgOaLryUgvFjw5ccYqVQy90KAqoHFS0sjG035tujON+p22Pj09rWhpkwma12YkQVo1L5CnyoXtTzZoNLdv0L2bZGh5TzT253Df16gnpLKN3i2tN9PydZOVL4cTI+pdrwf7DvCJ6SGmOfRr8115Ft/kSZJbVWtio3jU+9Ym7bnhQ5VqXgI8bVjNO1qHN5zTUmh8kAc+QczICeQz1GS1skMHFJd0W26HL+3g1UKncQI3paD0f2tLakzgUqwDJmVbWFLHo8BkrpQKp6zc3BkROBfa8EbXXcLjwaxORAk5ucEysnjd4Q2SnlClxkECnrf7QbMTxvp8q4bJqaBYtQJkMff2//X0T870Qe6G/KR+COQ==";
+    };
+
+    secrets.vessel.root = self.lib.secrets.importSecretsDir {
+      path = ./secrets;
+      defaultPublicKeys = self.keys.vessel.root.default;
+    };
+
+    nixosConfigurationArgs.vessel = {
+      system = "x86_64-linux";
+      modules = (builtins.attrValues self.nixosModules) ++ [
+        ({ pkgs, config, ... }: {
+          system.stateVersion = "25.05";
+
+          hardware = {
+            cpu.amd.updateMicrocode = true;
+            steam-hardware.enable = true;
+          };
+
+          boot = {
+            kernelModules = [ "kvm-amd" ];
+            extraModulePackages = [ ];
+
+            loader = {
+              systemd-boot.enable = true;
+              efi.canTouchEfiVariables = true;
+            };
+
+            initrd = {
+              kernelModules = [ ];
+              availableKernelModules =
+                [ "xhci_pci" "ahci" "nvme" "usbhid" "usb_storage" "sd_mod" ];
+            };
+          };
+
+          fileSystems = {
+            "/" = {
+              device = "/dev/disk/by-label/NIXOS";
+              fsType = "ext4";
+            };
+
+            "/boot" = {
+              device = "/dev/disk/by-label/BOOT";
+              fsType = "vfat";
+              options = [ "fmask=0077" "dmask=0077" ];
+            };
+          };
+
+          users = {
+            defaultUserShell = pkgs.zsh;
+            users.root.hashedPasswordFile =
+              config.age.secrets.password-root.path;
+          };
+
+          modules = {
+            agenix.enable = true;
+            bluetooth.enable = true;
+            gpu-amd.enable = true;
+            ly.enable = true;
+            openrgb.enable = true;
+            pipewire.enable = true;
+            ssh.enable = true;
+          };
+
+          services = {
+            mullvad-vpn.enable = true;
+            udisks2.enable = true;
+          };
+
+          programs = {
+            zsh.enable = true;
+            hyprland.enable = true;
+            niri.enable = true;
+            steam.enable = true;
+          };
+        })
+      ];
+    };
+  };
+}
