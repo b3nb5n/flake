@@ -40,6 +40,9 @@
               gofumpt
               stylua
               yamlfmt
+
+              vscode-extensions.vadimcn.vscode-lldb.adapter
+              vscode-js-debug
             ])
           }
       '';

@@ -16,6 +16,7 @@ return {
 		if vim.fn.executable("lazygit") then
 			local lazygit = terminal.Terminal:new({
 				cmd = "lazygit",
+				hidden = true,
 			})
 
 			vim.keymap.set("n", "<leader>og", function()
